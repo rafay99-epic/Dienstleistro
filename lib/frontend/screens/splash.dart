@@ -1,6 +1,6 @@
 // ignore_for_file: camel_case_types
 
-import 'package:dienstleisto/frontend/screens/introScreen.dart';
+import 'package:dienstleisto/frontend/screens/intro/introScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 

@@ -58,8 +58,8 @@
 //   }
 // }
 
-import 'package:dienstleisto/frontend/screens/introScreens.dart/screen1.dart';
-import 'package:dienstleisto/frontend/screens/introScreens.dart/screen2.dart';
+import 'package:dienstleisto/frontend/screens/intro/screen1.dart';
+import 'package:dienstleisto/frontend/screens/intro/screen2.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -89,9 +89,9 @@ class _IntroState extends State<Intro> {
           Padding(
             padding: const EdgeInsets.all(22.0),
             child: Container(
-                alignment: Alignment.bottomCenter,
-                child:
-                    SmoothPageIndicator(controller: _pageController, count: 2)),
+              alignment: Alignment.bottomCenter,
+              child: SmoothPageIndicator(controller: _pageController, count: 2),
+            ),
           )
         ],
       ),
