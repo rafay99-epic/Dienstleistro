@@ -1,7 +1,7 @@
 import 'package:dienstleisto/frontend/screens/functionality/auth/login.dart';
 import 'package:dienstleisto/frontend/screens/functionality/auth/signup.dart';
+import 'package:dienstleisto/frontend/widgets/cardSlider.dart';
 import 'package:flutter/material.dart';
-import 'package:story_view/story_view.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -12,7 +12,6 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   String dropdownValue = 'Account';
-  final controller = StoryController();
 
   @override
   Widget build(BuildContext context) {
@@ -74,115 +73,154 @@ class _HomeState extends State<Home> {
           ),
         ],
       ),
-      body: Column(
-        children: [
-          Container(
-            height: 200,
-            color: Colors.blue.shade400,
-            child: Column(
-              children: <Widget>[
-                const SizedBox(
-                  height: 15,
-                ),
-                const Align(
-                  alignment: Alignment.center,
-                  child: Text(
-                    "Get the Perfect Workers & Projects",
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w400,
-                      color: Colors.white,
-                    ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Container(
+              height: 200,
+              color: Colors.blue.shade400,
+              child: Column(
+                children: <Widget>[
+                  const SizedBox(
+                    height: 15,
                   ),
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                const Align(
-                  alignment: Alignment.center,
-                  child: Text(
-                    "Within the world's #1 Service marketplace",
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w400,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 25, right: 25),
-                  child: TextField(
-                    decoration: InputDecoration(
-                      suffixIcon: const Icon(Icons.search),
-                      suffix: const VerticalDivider(color: Colors.black),
-                      prefixIcon: const Icon(Icons.filter_list),
-                      prefix: const VerticalDivider(color: Colors.black),
-                      filled: true,
-                      fillColor: Colors.white,
-                      hintText: 'Search Here',
-                      contentPadding: const EdgeInsets.symmetric(
-                        vertical: 20,
-                        horizontal: 15,
-                      ),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        borderSide: BorderSide.none,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(
-            height: 15,
-          ),
-          Container(
-            color: Theme.of(context).colorScheme.background,
-            child: const Column(
-              children: <Widget>[
-                Padding(
-                  padding: EdgeInsets.only(
-                      left: 12.0, right: 12.0), // Add left padding
-                  child: Align(
-                    alignment: Alignment.topLeft,
+                  const Align(
+                    alignment: Alignment.center,
                     child: Text(
-                      "Services",
+                      "Get the Perfect Workers & Projects",
                       style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w400,
+                        color: Colors.white,
                       ),
                     ),
                   ),
-                ),
-                //Flutter Cards for services
-
-                // Text for Stories
-                Padding(
-                  padding: EdgeInsets.only(
-                      left: 12.0, right: 12.0), // Add left padding
-                  child: Align(
-                    alignment: Alignment.topLeft,
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  const Align(
+                    alignment: Alignment.center,
                     child: Text(
-                      "Stories",
+                      "Within the world's #1 Service marketplace",
                       style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w400,
+                        color: Colors.white,
                       ),
                     ),
                   ),
-                ),
-
-                //Stories
-              ],
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 25, right: 25),
+                    child: TextField(
+                      decoration: InputDecoration(
+                        suffixIcon: const Icon(Icons.search),
+                        suffix: const VerticalDivider(color: Colors.black),
+                        prefixIcon: const Icon(Icons.filter_list),
+                        prefix: const VerticalDivider(color: Colors.black),
+                        filled: true,
+                        fillColor: Colors.white,
+                        hintText: 'Search Here',
+                        contentPadding: const EdgeInsets.symmetric(
+                          vertical: 20,
+                          horizontal: 15,
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide: BorderSide.none,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
-          )
-        ],
+            const SizedBox(
+              height: 15,
+            ),
+            Container(
+              color: Theme.of(context).colorScheme.background,
+              child: Column(
+                children: <Widget>[
+                  const Padding(
+                    padding: EdgeInsets.only(
+                        left: 12.0, right: 12.0), // Add left padding
+                    child: Align(
+                      alignment: Alignment.topLeft,
+                      child: Text(
+                        "Services",
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 15),
+                  CardSlider(
+                    items: [
+                      CardItem(
+                        item: Image.network(
+                            'https://plus.unsplash.com/premium_photo-1682145927654-1913ccba955e?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'), // Replace with your image
+                        title: 'Interior Design',
+                        location: 'Berline',
+                        initialRating: 3.0,
+                        subscriptionText: 'Subscription',
+                        buttonText: 'View',
+                        onCardTap: () {
+                          print('Card tapped!');
+                        },
+                        onButtonTap: () {
+                          print('Button tapped!');
+                        },
+                      ),
+                      CardItem(
+                        item: Image.network(
+                            'https://plus.unsplash.com/premium_photo-1682145927654-1913ccba955e?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'), // Replace with your image
+                        title: 'Interior Design',
+                        location: 'Berline',
+                        initialRating: 3.0,
+                        subscriptionText: 'Subscription',
+                        buttonText: 'View',
+                        onCardTap: () {
+                          print('Card tapped!');
+                        },
+                        onButtonTap: () {
+                          print('Button tapped!');
+                        },
+                      ),
+                      // Add more CardItem objects if needed
+                    ],
+                  ),
+                  const SizedBox(height: 15),
+                  // Text for Stories
+                  const Padding(
+                    padding: EdgeInsets.only(
+                      left: 12.0,
+                      right: 12.0,
+                    ), // Add left padding
+                    child: Align(
+                      alignment: Alignment.topLeft,
+                      child: Text(
+                        "Stories",
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+
+                  //Stories
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
