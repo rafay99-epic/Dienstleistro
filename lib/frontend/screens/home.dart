@@ -2,7 +2,6 @@ import 'package:dienstleisto/frontend/screens/functionality/auth/login.dart';
 import 'package:dienstleisto/frontend/screens/functionality/auth/signup.dart';
 import 'package:flutter/material.dart';
 import 'package:story_view/story_view.dart';
-import 'package:video_player/video_player.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
