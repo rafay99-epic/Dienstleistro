@@ -1,369 +1,280 @@
 // ignore_for_file: camel_case_types
 
+import 'package:dienstleisto/frontend/screens/functionality/auth/login.dart';
 import 'package:dienstleisto/frontend/widgets/button.dart';
+import 'package:dienstleisto/frontend/widgets/textStyle.dart';
 import 'package:dienstleisto/frontend/widgets/textfeild.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'dart:io';
+
+import 'package:image_picker/image_picker.dart';
+import 'package:page_transition/page_transition.dart';
 
 class signUp extends StatefulWidget {
-  signUp({super.key});
+  const signUp({super.key});
 
   @override
   State<signUp> createState() => _signUpState();
 }
 
 class _signUpState extends State<signUp> {
-  final TextEditingController firstName = TextEditingController();
-  final TextEditingController lastName = TextEditingController();
-  final TextEditingController username = TextEditingController();
+  final TextEditingController name = TextEditingController();
   final TextEditingController email = TextEditingController();
   final TextEditingController phoneNumber = TextEditingController();
-  final TextEditingController country = TextEditingController();
-  final TextEditingController city = TextEditingController();
-  final TextEditingController address = TextEditingController();
   final TextEditingController password = TextEditingController();
-  final TextEditingController confirmPassword = TextEditingController();
-  bool _isChecked = false;
-  String? selectedCountry;
-  String? selectedCity;
 
-  final List<String> countries = ['USA', 'Canada', 'Mexico'];
-  final List<String> cities = ['New York', 'Toronto', 'Mexico City'];
+  bool _isChecked = false;
+  File? _profileImage;
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    final double imageSize = size.width * 0.2;
+
     return Scaffold(
-      appBar: AppBar(),
       body: SingleChildScrollView(
-        child: Center(
-          child: Padding(
-            padding: const EdgeInsets.all(12),
-            child: Column(
-              children: <Widget>[
-                //Image
-                const Align(
-                  alignment: Alignment.center,
-                  //image for logo
-                  // Image.asset(""),
-                ),
-                const SizedBox(height: 10),
-                const Align(
-                  alignment: Alignment.center,
-                  child: Text(
-                    "Join Diensleisto",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 22,
-                      fontWeight: FontWeight.w500,
+        child: Padding(
+          padding: const EdgeInsets.only(left: 20.0, right: 20.0),
+          child: Column(
+            children: <Widget>[
+              SizedBox(height: size.height * 0.15, width: size.width * 0.5),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: RichText(
+                      text: TextSpan(
+                        children: <TextSpan>[
+                          TextSpan(
+                            text: 'Welcome',
+                            style: TextStyle(
+                              fontSize: 40,
+                              fontWeight: FontWeight.w400,
+                              color: Theme.of(context).colorScheme.primary,
+                              fontStyle: FontStyle.italic,
+                              fontFamily: "ABeeZee",
+                            ),
+                          ),
+                          TextSpan(
+                            text: '\nuser',
+                            style: TextStyle(
+                              fontSize: 40,
+                              fontWeight: FontWeight.w400,
+                              color: Theme.of(context).colorScheme.primary,
+                              fontStyle: FontStyle.italic,
+                              fontFamily: "ABeeZee",
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-                const SizedBox(height: 15),
-                const Align(
-                  alignment: Alignment.center,
-                  child: Text(
-                    "Make the most of your professional life",
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w400,
-                      color: Colors.black,
+                  GestureDetector(
+                    onTap: () async {
+                      final pickedFile = await ImagePicker()
+                          .pickImage(source: ImageSource.gallery);
+                      if (pickedFile != null) {
+                        setState(() {
+                          _profileImage = File(pickedFile.path);
+                        });
+                      }
+                    },
+                    child: Stack(
+                      children: [
+                        Container(
+                          width: imageSize,
+                          height: imageSize,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            image: DecorationImage(
+                              fit: BoxFit.cover,
+                              image: _profileImage != null
+                                  ? FileImage(_profileImage!)
+                                  : const AssetImage(
+                                          'assets/images/profileimage.jpg')
+                                      as ImageProvider<Object>,
+                            ),
+                          ),
+                        ),
+                        if (_profileImage == null)
+                          Container(
+                            width: imageSize,
+                            height: imageSize,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.black.withOpacity(0.5),
+                            ),
+                            child: const Icon(Icons.camera_alt,
+                                color: Colors.white),
+                          ),
+                      ],
                     ),
                   ),
+                ],
+              ),
+              // const SizedBox(height: 15),
+              SizedBox(height: size.height * 0.02),
+
+              Align(
+                alignment: Alignment.centerLeft,
+                child: MyText(
+                  text: "Sign up to join",
+                  fontSize: 17,
+                  fontWeight: FontWeight.w400,
+                  color: Theme.of(context).colorScheme.inversePrimary,
                 ),
-                const SizedBox(height: 15),
-                //row selector
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              ),
+              // const SizedBox(height: 15),
+              SizedBox(height: size.height * 0.01),
+
+              //first Name
+              CustomTextField(
+                hintText: "First Name",
+                controller: name,
+                fillColor: const Color.fromRGBO(239, 239, 244, 1),
+                hintColor: Colors.grey,
+              ),
+              // const SizedBox(height: 10),
+              SizedBox(height: size.height * 0.01),
+
+              //email
+              CustomTextField(
+                hintText: "Email",
+                controller: email,
+                fillColor: const Color.fromRGBO(239, 239, 244, 1),
+                hintColor: Colors.grey,
+              ),
+              // const SizedBox(height: 10),
+              SizedBox(height: size.height * 0.01),
+
+              //phone number
+              CustomTextField(
+                hintText: "Telephone",
+                controller: phoneNumber,
+                enableOnlyNumbers: true,
+                fillColor: const Color.fromRGBO(239, 239, 244, 1),
+                hintColor: Colors.grey,
+              ),
+              // const SizedBox(height: 10),
+              SizedBox(height: size.height * 0.01),
+              //password
+              CustomTextField(
+                hintText: "Password",
+                controller: password,
+                obscureText: true,
+                fillColor: const Color.fromRGBO(239, 239, 244, 1),
+                hintColor: Colors.grey,
+              ),
+              // const SizedBox(height: 5),
+              SizedBox(height: size.height * 0.01),
+
+              //check box wit confirm password
+              Row(
+                children: <Widget>[
+                  Transform.scale(
+                    scale: 1.3,
+                    child: Checkbox(
+                      checkColor: Colors.white,
+                      fillColor: MaterialStateProperty.resolveWith((states) {
+                        if (states.contains(MaterialState.selected)) {
+                          return Colors.green;
+                        }
+                        return Colors.white;
+                      }),
+                      value: _isChecked,
+                      onChanged: (bool? value) {
+                        setState(() {
+                          _isChecked = value!;
+                        });
+                      },
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                  ),
+                  RichText(
+                    text: TextSpan(
+                      style: TextStyle(
+                        fontSize: 15,
+                        fontFamily: "ABeeZee",
+                        fontWeight: FontWeight.w400,
+                        color: Theme.of(context).colorScheme.primary,
+                        fontStyle: FontStyle.italic,
+                      ),
+                      children: const <TextSpan>[
+                        TextSpan(text: 'I agree to the '),
+                        TextSpan(
+                          text: 'Terms of Service',
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+
+              SizedBox(height: size.height * 0.02),
+
+              CustomButton(
+                onPressed: () {
+                  //logic for sign In Button from firebase
+                },
+                text: "Sign Up",
+                enableIcon: false,
+                backgroundColor: Theme.of(context).colorScheme.secondary,
+                buttonTextColor: Theme.of(context).colorScheme.background,
+                buttonTextSize: 17,
+                buttonTextAlign: TextAlign.center,
+                buttonTextFontFamily: 'ABeeZee',
+                buttonTextfontStyle: FontStyle.italic,
+              ),
+
+              // SizedBox(height: size.height * 0.1),
+              Padding(
+                padding: EdgeInsets.only(
+                  top: size.height * 0.13,
+                  bottom: size.height * 0.1,
+                  left: size.width * 0.16,
+                  right: size.width * 0.16,
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    Container(
-                      height: 60, // Set the height of the button
-                      width: MediaQuery.of(context).size.width *
-                          0.45, // Set the width to 45% of the screen width
-                      child: ElevatedButton(
-                        onPressed: () {
-                          // Handle button press for 'Customer'
-                        },
-                        style: ElevatedButton.styleFrom(
-                          foregroundColor: Colors.black,
-                          backgroundColor: Colors.white,
-                          side: const BorderSide(color: Colors.black),
-                          elevation: 0,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
+                    MyText(
+                      text: 'Have an account?',
+                      color: Theme.of(context).colorScheme.inversePrimary,
+                      fontSize: 17,
+                      fontWeight: FontWeight.w400,
+                      textAlign: TextAlign.center,
+                      fontFamily: "ABeeZee",
+                      fontStyle: FontStyle.normal,
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          PageTransition(
+                            type: PageTransitionType.rightToLeftWithFade,
+                            child: const login(),
+                            duration: const Duration(milliseconds: 500),
                           ),
-                        ),
-                        child: const Text('Customer'),
+                        );
+                      },
+                      child: MyText(
+                        text: ' Sign In',
+                        color: Theme.of(context).colorScheme.primary,
+                        fontSize: 17,
+                        fontWeight: FontWeight.bold,
+                        textAlign: TextAlign.center,
+                        fontFamily: "ABeeZee",
+                        fontStyle: FontStyle.normal,
                       ),
                     ),
-                    Container(
-                      height: 60, // Set the height of the button
-                      width: MediaQuery.of(context).size.width *
-                          0.45, // Set the width to 45% of the screen width
-                      child: ElevatedButton(
-                        onPressed: () {
-                          // Handle button press for 'Service Seller'
-                        },
-                        style: ElevatedButton.styleFrom(
-                          foregroundColor: Colors.black,
-                          backgroundColor: Colors.white,
-                          side: const BorderSide(color: Colors.black),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          elevation: 0, // No shadow
-                        ),
-                        child: const Text('Service Seller'),
-                      ),
-                    ),
-                    const SizedBox(height: 5),
-                    // CustomTextField(
-                    //   hintText: "First Name",
-                    //   controller: firstName,
-                    //   padding: const EdgeInsets.only(left: 12, right: 12),
-                    // ),
                   ],
                 ),
-                const SizedBox(height: 15),
-                //first Name
-                CustomTextField(
-                  hintText: "First Name",
-                  controller: firstName,
-                  padding: const EdgeInsets.only(left: 12, right: 12),
-                ),
-                const SizedBox(height: 10),
-                //last Name
-                CustomTextField(
-                  hintText: "Last Name",
-                  controller: lastName,
-                  padding: const EdgeInsets.only(left: 12, right: 12),
-                ),
-                const SizedBox(height: 10),
-                //username
-                CustomTextField(
-                  hintText: "User Name",
-                  controller: username,
-                  padding: const EdgeInsets.only(left: 12, right: 12),
-                ),
-                const SizedBox(height: 10),
-
-                //email
-                CustomTextField(
-                  hintText: "Email",
-                  controller: email,
-                  padding: const EdgeInsets.only(left: 12, right: 12),
-                ),
-                const SizedBox(height: 10),
-                //phone number
-                CustomTextField(
-                  hintText: "Telephone",
-                  controller: phoneNumber,
-                  padding: const EdgeInsets.only(left: 12, right: 12),
-                  enableOnlyNumbers: true,
-                ),
-                const SizedBox(height: 10),
-
-                // Rown two selector
-                // country & City
-                Padding(
-                  padding: const EdgeInsets.only(left: 12.0, right: 12.0),
-                  child: Row(
-                    children: <Widget>[
-                      Expanded(
-                        child: DropdownButtonFormField<String>(
-                          decoration: InputDecoration(
-                            filled: true,
-                            fillColor: Colors.grey,
-                            hintText: 'Select Country',
-                            hintStyle: const TextStyle(color: Colors.white),
-                            border: OutlineInputBorder(
-                              borderSide: BorderSide.none,
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                          ),
-                          value: selectedCountry,
-                          onChanged: (String? newValue) {
-                            setState(() {
-                              selectedCountry = newValue!;
-                            });
-                          },
-                          items: countries
-                              .map<DropdownMenuItem<String>>((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(
-                                value,
-                                style: const TextStyle(color: Colors.black),
-                              ),
-                            );
-                          }).toList(),
-                        ),
-                      ),
-                      const SizedBox(width: 5),
-                      Expanded(
-                        child: DropdownButtonFormField<String>(
-                          decoration: InputDecoration(
-                            filled: true,
-                            fillColor: Colors.grey,
-                            hintText: 'Select City',
-                            hintStyle: const TextStyle(color: Colors.white),
-                            border: OutlineInputBorder(
-                              borderSide: BorderSide.none,
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                          ),
-                          value: selectedCity,
-                          onChanged: (String? newValue) {
-                            setState(() {
-                              selectedCity = newValue!;
-                            });
-                          },
-                          items: cities
-                              .map<DropdownMenuItem<String>>((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(
-                                value,
-                                style: const TextStyle(color: Colors.black),
-                              ),
-                            );
-                          }).toList(),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 10),
-                //address
-                CustomTextField(
-                  hintText: "Adress",
-                  controller: address,
-                  padding: const EdgeInsets.only(left: 12, right: 12),
-                ),
-                const SizedBox(height: 10),
-                //password
-                CustomTextField(
-                  hintText: "Password",
-                  controller: password,
-                  padding: const EdgeInsets.only(left: 12, right: 12),
-                  obscureText: true,
-                ),
-                const SizedBox(height: 10),
-                //confirm password
-                CustomTextField(
-                  hintText: "Confirm Password",
-                  controller: confirmPassword,
-                  padding: const EdgeInsets.only(left: 12, right: 12),
-                  obscureText: true,
-                ),
-                const SizedBox(height: 5),
-                //check box wit confirm password
-                Padding(
-                  padding: const EdgeInsets.only(left: 12.0, right: 12.0),
-                  child: Row(
-                    children: <Widget>[
-                      Transform.scale(
-                        scale: 1.3,
-                        child: Checkbox(
-                          checkColor: Colors.white,
-                          fillColor:
-                              MaterialStateProperty.resolveWith((states) {
-                            if (states.contains(MaterialState.selected)) {
-                              return Colors.black;
-                            }
-                            return Colors.white;
-                          }),
-                          value: _isChecked,
-                          onChanged: (bool? value) {
-                            setState(() {
-                              _isChecked = value!;
-                            });
-                          },
-                          shape: RoundedRectangleBorder(
-                            borderRadius:
-                                BorderRadius.circular(10), // Rounded corners
-                          ),
-                        ),
-                      ),
-                      const Text(
-                        'Privacy Policy',
-                        style: TextStyle(
-                          fontSize:
-                              16, // You can adjust the font size to match the size of the checkbox
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-
-                //two button
-                //register
-
-                // CustomButton(
-                //   onPressed: () {},
-                //   text: "Regiser",
-                //   enableIcon: false,
-                //   padding: const EdgeInsets.only(left: 80.0, right: 80.0),
-                //   backgroundColor: Theme.of(context).colorScheme.secondary,
-                // ),
-                const SizedBox(
-                  height: 10,
-                ),
-                const Align(
-                  alignment: Alignment.center,
-                  child: Text(
-                    "or",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                ),
-                //google register
-                // CustomButton(
-                //   onPressed: () {},
-                //   text: "Google",
-                //   enableIcon: true,
-                //   icon: FontAwesomeIcons.google,
-                // ),
-                const SizedBox(
-                  height: 10,
-                ),
-                // text for login or already have account
-                Padding(
-                  padding: const EdgeInsets.only(left: 90.0, right: 90.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      const Text(
-                        'Already on Diensleisto?',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w400,
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => signUp()),
-                          );
-                        },
-                        child: const Text(
-                          ' Login',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),

@@ -25,7 +25,7 @@ class _loginState extends State<login> {
     final size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
-      body: Container(
+      body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
           child: Column(
@@ -190,13 +190,12 @@ class _loginState extends State<login> {
                 buttonTextfontStyle: FontStyle.italic,
                 iconColor: Theme.of(context).colorScheme.primary,
               ),
-              const Spacer(),
               Padding(
                 padding: EdgeInsets.only(
                   left: size.width * 0.1,
                   right: size.width * 0.1,
                   bottom: size.height * 0.02,
-                  top: size.height * 0.02,
+                  top: size.height * 0.13,
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -214,7 +213,11 @@ class _loginState extends State<login> {
                       onTap: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => signUp()),
+                          PageTransition(
+                            type: PageTransitionType.rightToLeftWithFade,
+                            child: const signUp(),
+                            duration: const Duration(milliseconds: 500),
+                          ),
                         );
                       },
                       child: MyText(
