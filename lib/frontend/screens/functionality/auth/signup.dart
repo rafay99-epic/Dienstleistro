@@ -1,6 +1,7 @@
 // ignore_for_file: camel_case_types
 
 import 'package:dienstleisto/frontend/screens/functionality/auth/login.dart';
+import 'package:dienstleisto/frontend/screens/functionality/auth/verifyNumber.dart';
 import 'package:dienstleisto/frontend/widgets/button.dart';
 import 'package:dienstleisto/frontend/widgets/textStyle.dart';
 import 'package:dienstleisto/frontend/widgets/textfeild.dart';
@@ -219,6 +220,46 @@ class _signUpState extends State<signUp> {
               CustomButton(
                 onPressed: () {
                   //logic for sign In Button from firebase
+
+                  //check all the feild are filled that include.
+
+                  if (name.text.isEmpty ||
+                      email.text.isEmpty ||
+                      phoneNumber.text.isEmpty ||
+                      password.text.isEmpty) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        elevation: 10,
+                        duration: const Duration(seconds: 2),
+                        width: size.width * 0.9,
+                        backgroundColor:
+                            Theme.of(context).colorScheme.secondary,
+                        showCloseIcon: true,
+                        behavior: SnackBarBehavior.floating,
+                        content: Text(
+                          "Please fill all the feilds",
+                          style: TextStyle(
+                            color: Theme.of(context).colorScheme.background,
+                            fontSize: 15,
+                          ),
+                        ),
+                      ),
+                    );
+                  } else {
+                    //Verify phone number
+
+                    //verify Screens
+                    Navigator.push(
+                      context,
+                      PageTransition(
+                        type: PageTransitionType.rightToLeftWithFade,
+                        child: VerifyNumber(),
+                        duration: const Duration(milliseconds: 500),
+                      ),
+                    );
+                  }
+
+                  //then add user into the firebase.
                 },
                 text: "Sign Up",
                 enableIcon: false,

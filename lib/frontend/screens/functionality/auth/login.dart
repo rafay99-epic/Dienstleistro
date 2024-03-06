@@ -151,6 +151,37 @@ class _loginState extends State<login> {
               CustomButton(
                 onPressed: () {
                   //logic for sign In Button from firebase
+
+                  //check for all fields no field is empty
+
+                  if (emailController.text.isEmpty ||
+                      passwordController.text.isEmpty) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        elevation: 10,
+                        duration: const Duration(seconds: 2),
+                        width: size.width * 0.9,
+                        backgroundColor:
+                            Theme.of(context).colorScheme.secondary,
+                        showCloseIcon: true,
+                        behavior: SnackBarBehavior.floating,
+                        content: Text(
+                          "Please fill all the feilds",
+                          style: TextStyle(
+                            color: Theme.of(context).colorScheme.background,
+                            fontSize: 15,
+                          ),
+                        ),
+                      ),
+                    );
+                    return;
+                  } else {
+                    //* check email and password from firebase
+
+                    //* if correct then login in start session
+
+                    //* if not then show case a snak bar telling wrong email or password or a dialog box
+                  }
                 },
                 text: "Sign In",
                 enableIcon: false,
