@@ -298,13 +298,13 @@ class _signUpState extends State<signUp> {
                 //two button
                 //register
 
-                CustomButton(
-                  onPressed: () {},
-                  text: "Regiser",
-                  enableIcon: false,
-                  padding: const EdgeInsets.only(left: 80.0, right: 80.0),
-                  backgroundColor: Theme.of(context).colorScheme.secondary,
-                ),
+                // CustomButton(
+                //   onPressed: () {},
+                //   text: "Regiser",
+                //   enableIcon: false,
+                //   padding: const EdgeInsets.only(left: 80.0, right: 80.0),
+                //   backgroundColor: Theme.of(context).colorScheme.secondary,
+                // ),
                 const SizedBox(
                   height: 10,
                 ),
@@ -320,12 +320,12 @@ class _signUpState extends State<signUp> {
                   ),
                 ),
                 //google register
-                CustomButton(
-                  onPressed: () {},
-                  text: "Google",
-                  enableIcon: true,
-                  icon: FontAwesomeIcons.google,
-                ),
+                // CustomButton(
+                //   onPressed: () {},
+                //   text: "Google",
+                //   enableIcon: true,
+                //   icon: FontAwesomeIcons.google,
+                // ),
                 const SizedBox(
                   height: 10,
                 ),

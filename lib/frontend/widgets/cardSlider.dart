@@ -164,13 +164,13 @@ class CardSlider extends StatelessWidget {
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-                              CustomButton(
-                                onPressed: cardItem.onButtonTap,
-                                text: cardItem.buttonText,
-                                enableIcon: false,
-                                backgroundColor:
-                                    Theme.of(context).colorScheme.secondary,
-                              )
+                              // CustomButton(
+                              //   onPressed: cardItem.onButtonTap,
+                              //   text: cardItem.buttonText,
+                              //   enableIcon: false,
+                              //   backgroundColor:
+                              //       Theme.of(context).colorScheme.secondary,
+                              // )
                             ],
                           ),
                         ),

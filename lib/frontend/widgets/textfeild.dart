@@ -15,7 +15,7 @@ class CustomTextField extends StatelessWidget {
     required this.controller,
     this.fillColor = Colors.grey,
     this.hintColor = Colors.white,
-    this.padding = const EdgeInsets.only(left: 50.0, right: 50),
+    this.padding = const EdgeInsets.only(left: 0.0, right: 0.0),
     this.enableOnlyNumbers = false,
     this.obscureText = false,
   }) : super(key: key);

@@ -13,6 +13,12 @@ class screen1 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Get the screen size
+    final screenSize = MediaQuery.of(context).size;
+
+    // Calculate the scale factor
+    final scaleFactor = screenSize.height / 896;
+
     return Scaffold(
       body: Stack(
         children: [
@@ -28,8 +34,8 @@ class screen1 extends StatelessWidget {
           ),
           Column(
             children: <Widget>[
-              const SizedBox(
-                height: 175,
+              SizedBox(
+                height: 175 * scaleFactor, // Scale the height
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 30.0, right: 15.0),
@@ -44,8 +50,8 @@ class screen1 extends StatelessWidget {
                       fontFamily: "ABeeZee",
                     )),
               ),
-              const SizedBox(
-                height: 40,
+              SizedBox(
+                height: 40 * scaleFactor, // Scale the height
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 30.0),
@@ -83,7 +89,7 @@ class screen1 extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(height: 15),
+              SizedBox(height: 15 * scaleFactor), // Scale the height
               Padding(
                 padding: const EdgeInsets.only(left: 30, right: 30.0),
                 child: Align(
@@ -100,9 +106,7 @@ class screen1 extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(
-                height: 100,
-              ),
+              SizedBox(height: 100 * scaleFactor),
               Padding(
                 padding: const EdgeInsets.only(left: 33, right: 30.0),
                 child: Align(
@@ -150,15 +154,12 @@ class screen1 extends StatelessWidget {
                   size: 5,
                 ),
               ),
-              const SizedBox(
-                height: 120,
-              ),
+              SizedBox(height: 170 * scaleFactor),
               Padding(
                 padding: const EdgeInsets.only(
                   left: 16.0,
                   right: 16.0,
                   top: 16.0,
-                  bottom: 16.0,
                 ),
                 child: SizedBox(
                   width: double.infinity,
@@ -181,19 +182,16 @@ class screen1 extends StatelessWidget {
                             BorderRadius.circular(5), // Adjust as needed
                       ),
                     ),
-                    child: const Text(
-                      'Next',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
+                    child: MyText(
+                      text: 'Next',
+                      color: Theme.of(context).colorScheme.background,
+                      fontSize: 17,
+                      textAlign: TextAlign.center,
+                      fontFamily: "ABeeZee",
+                      fontStyle: FontStyle.italic,
                     ),
                   ),
                 ),
-              ),
-              const SizedBox(
-                height: 30,
               ),
             ],
           ),
