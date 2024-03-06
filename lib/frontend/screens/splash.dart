@@ -1,6 +1,7 @@
 // ignore_for_file: camel_case_types
 
 import 'package:dienstleisto/frontend/screens/intro/introScreen.dart';
+import 'package:dienstleisto/frontend/widgets/textStyle.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 
@@ -15,12 +16,13 @@ class _splashState extends State<splash> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(Duration(seconds: 3), () {
+    Future.delayed(const Duration(seconds: 3), () {
       Navigator.push(
         context,
         PageTransition(
           type: PageTransitionType.rightToLeftWithFade,
           child: Intro(),
+          duration: const Duration(seconds: 2),
         ),
       );
     });
@@ -34,13 +36,13 @@ class _splashState extends State<splash> {
           child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Text(
-            'Dienstleisto',
-            style: TextStyle(
-              fontSize: 40,
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
-            ),
+          MyText(
+            text: "Werktion",
+            color: Colors.white,
+            fontSize: 60,
+            fontWeight: FontWeight.bold,
+            textAlign: TextAlign.center,
+            fontFamily: "ABeeZee",
           ),
         ],
       )),

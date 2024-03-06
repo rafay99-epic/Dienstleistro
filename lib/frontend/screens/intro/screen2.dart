@@ -1,7 +1,11 @@
 import 'package:dienstleisto/frontend/screens/intro/choose.dart';
+import 'package:dienstleisto/frontend/screens/intro/screen3.dart';
+import 'package:dienstleisto/frontend/widgets/textStyle.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_animation_progress_bar/flutter_animation_progress_bar.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:page_transition/page_transition.dart';
 
 class Screen2 extends StatelessWidget {
   const Screen2({super.key});
@@ -16,7 +20,8 @@ class Screen2 extends StatelessWidget {
               gradient: LinearGradient(
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
-                colors: [Colors.black87, Colors.white],
+                colors: [Colors.black87, Colors.grey, Colors.grey, Colors.grey],
+                stops: [0.2, 0.5, 0.5, 1.0],
               ),
             ),
           ),
@@ -26,46 +31,147 @@ class Screen2 extends StatelessWidget {
                 height: 175,
               ),
               Padding(
-                padding: const EdgeInsets.only(right: 15.0, left: 15.0),
+                padding: const EdgeInsets.only(left: 30.0, right: 15.0),
+                child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: MyText(
+                      text: "Werktion",
+                      color: Theme.of(context).colorScheme.background,
+                      fontSize: 35,
+                      fontWeight: FontWeight.w500,
+                      textAlign: TextAlign.right,
+                      fontFamily: "ABeeZee",
+                    )),
+              ),
+              const SizedBox(
+                height: 40,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 30.0),
                 child: Align(
                   alignment: Alignment.centerLeft,
-                  child: Text(
-                    "Diensleisto",
-                    style: GoogleFonts.roboto(
-                      color: Colors.white,
-                      fontSize: 32,
-                      fontWeight: FontWeight.bold,
+                  child: RichText(
+                    text: TextSpan(
+                      children: [
+                        TextSpan(
+                          text: "Hired in a \n",
+                          style: GoogleFonts.getFont(
+                            "ABeeZee",
+                            color: Theme.of(context).colorScheme.background,
+                            fontSize: 40,
+                            fontWeight: FontWeight.w400,
+                            fontStyle: FontStyle.italic,
+                          ),
+                        ),
+                        WidgetSpan(
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: MyText(
+                              text: "dream company",
+                              color: Theme.of(context).colorScheme.background,
+                              fontSize: 40,
+                              fontWeight: FontWeight.w400,
+                              textAlign: TextAlign.right,
+                              fontFamily: "ABeeZee",
+                              fontStyle: FontStyle.italic,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 15),
+              Padding(
+                padding: const EdgeInsets.only(left: 30, right: 30.0),
+                child: Align(
+                  alignment: Alignment.center,
+                  child: MyText(
+                    text:
+                        "Get a job at your dream company very easily without confusing",
+                    color: Theme.of(context).colorScheme.background,
+                    fontSize: 17,
+                    fontWeight: FontWeight.w400,
+                    textAlign: TextAlign.left,
+                    fontFamily: "ABeeZee",
+                    fontStyle: FontStyle.normal,
                   ),
                 ),
               ),
               const SizedBox(
-                height: 15,
+                height: 100,
               ),
               Padding(
-                padding: const EdgeInsets.only(left: 120.0),
+                padding: const EdgeInsets.only(left: 33, right: 30.0),
                 child: Align(
                   alignment: Alignment.centerLeft,
-                  child: Text(
-                    "Hired In A Dream Company",
-                    style: GoogleFonts.roboto(
-                      color: Colors.white,
-                      fontSize: 20,
+                  child: RichText(
+                    text: TextSpan(
+                      children: <TextSpan>[
+                        TextSpan(
+                          text: '02',
+                          style: TextStyle(
+                            color: Theme.of(context).colorScheme.primary,
+                            fontSize: 15,
+                            fontWeight: FontWeight.w400,
+                            fontFamily: "ABeeZee",
+                          ),
+                        ),
+                        const TextSpan(
+                          text: '/03',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 15,
+                            fontWeight: FontWeight.w400,
+                            fontFamily: "ABeeZee",
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ),
               ),
-              Expanded(
-                child: Container(),
+              Padding(
+                padding: const EdgeInsets.only(
+                  left: 30,
+                  right: 30,
+                  bottom: 30,
+                  top: 10,
+                ),
+                child: FAProgressBar(
+                  currentValue: 50,
+                  backgroundColor: Colors.grey.shade300,
+                  progressColor: Theme.of(context).colorScheme.secondary,
+                  maxValue: 100,
+                  animatedDuration: const Duration(seconds: 2),
+                  direction: Axis.horizontal,
+                  size: 5,
+                ),
+              ),
+              const SizedBox(
+                height: 120,
               ),
               Padding(
-                padding: const EdgeInsets.all(16.0),
+                padding: const EdgeInsets.only(
+                  left: 16.0,
+                  right: 16.0,
+                  top: 16.0,
+                  bottom: 16.0,
+                ),
                 child: SizedBox(
                   width: double.infinity,
                   height: 50,
                   child: ElevatedButton(
                     onPressed: () {
-                      // Handle button press
+                      Navigator.push(
+                        context,
+                        PageTransition(
+                          type: PageTransitionType.rightToLeftWithFade,
+                          child: const Screen3(),
+                          duration: const Duration(milliseconds: 500),
+                        ),
+                      );
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Theme.of(context).colorScheme.secondary,
@@ -75,7 +181,7 @@ class Screen2 extends StatelessWidget {
                       ),
                     ),
                     child: const Text(
-                      'Get Started',
+                      'Next',
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 20,
@@ -90,22 +196,30 @@ class Screen2 extends StatelessWidget {
               ),
             ],
           ),
-          SafeArea(
-            child: Align(
-              alignment: Alignment.topRight,
-              child: TextButton(
-                onPressed: () {
-                  // Navigate to the next screen when the skip button is pressed
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (_) => const choosePage(),
-                    ),
-                  );
-                },
-                child: const Text(
-                  "Skip",
-                  style: TextStyle(color: Colors.white),
-                ),
+          Padding(
+            padding: const EdgeInsets.only(top: 8.0),
+            child: SafeArea(
+              child: Align(
+                alignment: Alignment.topRight,
+                child: TextButton(
+                    onPressed: () {
+                      // Navigate to the next screen when the skip button is pressed
+                      Navigator.of(context).push(
+                        PageTransition(
+                          type: PageTransitionType.rightToLeftWithFade,
+                          child: const choosePage(),
+                          duration: const Duration(milliseconds: 500),
+                        ),
+                      );
+                    },
+                    child: const MyText(
+                      text: "Skip",
+                      fontFamily: "ABeeZee",
+                      fontSize: 17,
+                      fontWeight: FontWeight.w400,
+                      color: Colors.white,
+                      fontStyle: FontStyle.normal,
+                    )),
               ),
             ),
           ),

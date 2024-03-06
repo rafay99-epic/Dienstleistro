@@ -1,15 +1,12 @@
-// ignore_for_file: camel_case_types
-
 import 'package:dienstleisto/frontend/screens/intro/choose.dart';
-import 'package:dienstleisto/frontend/screens/intro/screen2.dart';
-import 'package:flutter_animation_progress_bar/flutter_animation_progress_bar.dart';
 import 'package:dienstleisto/frontend/widgets/textStyle.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animation_progress_bar/flutter_animation_progress_bar.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
 
-class screen1 extends StatelessWidget {
-  const screen1({Key? key}) : super(key: key);
+class Screen3 extends StatelessWidget {
+  const Screen3({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +52,7 @@ class screen1 extends StatelessWidget {
                     text: TextSpan(
                       children: [
                         TextSpan(
-                          text: "Apply for jobs\n",
+                          text: "Enjoy your work \n",
                           style: GoogleFonts.getFont(
                             "ABeeZee",
                             color: Theme.of(context).colorScheme.background,
@@ -68,7 +65,7 @@ class screen1 extends StatelessWidget {
                           child: Align(
                             alignment: Alignment.centerLeft,
                             child: MyText(
-                              text: "easily",
+                              text: "right now",
                               color: Theme.of(context).colorScheme.background,
                               fontSize: 40,
                               fontWeight: FontWeight.w400,
@@ -90,7 +87,7 @@ class screen1 extends StatelessWidget {
                   alignment: Alignment.center,
                   child: MyText(
                     text:
-                        "Millions of dream jobs available for your special career today",
+                        "Achieve your dreams and career in the workplace you desire",
                     color: Theme.of(context).colorScheme.background,
                     fontSize: 17,
                     fontWeight: FontWeight.w400,
@@ -111,7 +108,7 @@ class screen1 extends StatelessWidget {
                     text: TextSpan(
                       children: <TextSpan>[
                         TextSpan(
-                          text: '01',
+                          text: '03',
                           style: TextStyle(
                             color: Theme.of(context).colorScheme.primary,
                             fontSize: 15,
@@ -141,7 +138,7 @@ class screen1 extends StatelessWidget {
                   top: 10,
                 ),
                 child: FAProgressBar(
-                  currentValue: 20,
+                  currentValue: 80,
                   backgroundColor: Colors.grey.shade300,
                   progressColor: Theme.of(context).colorScheme.secondary,
                   maxValue: 100,
@@ -169,7 +166,7 @@ class screen1 extends StatelessWidget {
                         context,
                         PageTransition(
                           type: PageTransitionType.rightToLeftWithFade,
-                          child: const Screen2(),
+                          child: const choosePage(),
                           duration: const Duration(milliseconds: 500),
                         ),
                       );

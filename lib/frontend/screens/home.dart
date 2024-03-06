@@ -1,7 +1,11 @@
 import 'package:dienstleisto/frontend/screens/functionality/auth/login.dart';
 import 'package:dienstleisto/frontend/screens/functionality/auth/signup.dart';
+import 'package:dienstleisto/frontend/screens/functionality/services/servicesOffer/action.dart';
 import 'package:dienstleisto/frontend/widgets/cardSlider.dart';
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
+import 'package:story_view/controller/story_controller.dart';
+import 'package:story_view/widgets/story_view.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -12,6 +16,13 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   String dropdownValue = 'Account';
+  final StoryController controller = StoryController();
+  late List<StoryItem> storyItems;
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -171,10 +182,22 @@ class _HomeState extends State<Home> {
                         subscriptionText: 'Subscription',
                         buttonText: 'View',
                         onCardTap: () {
-                          print('Card tapped!');
+                          Navigator.push(
+                            context,
+                            PageTransition(
+                              type: PageTransitionType.rightToLeftWithFade,
+                              child: const services_action(),
+                            ),
+                          );
                         },
                         onButtonTap: () {
-                          print('Button tapped!');
+                          Navigator.push(
+                            context,
+                            PageTransition(
+                              type: PageTransitionType.rightToLeftWithFade,
+                              child: const services_action(),
+                            ),
+                          );
                         },
                       ),
                       CardItem(
@@ -216,6 +239,44 @@ class _HomeState extends State<Home> {
                   ),
 
                   //Stories
+                  // Expanded(
+                  //   child: StoryView(
+                  //     controller: controller,
+                  //     onComplete: () {
+                  //       // Go back to the previous page when the stories are complete
+                  //       Navigator.pop(context);
+                  //     },
+                  //     storyItems: [
+                  //       StoryItem.text(
+                  //           title: 'Hello world!',
+                  //           backgroundColor: Colors.black),
+                  //       StoryItem.pageImage(url: '', controller: controller),
+                  //       StoryItem.pageVideo('https://example.com/video1.mp4',
+                  //           controller: controller),
+                  //     ],
+                  //   ),
+                  // ),
+                  SizedBox(
+                    height: 300,
+                    child: StoryView(
+                      controller: controller,
+                      onComplete: () {
+                        // Go back to the previous page when the stories are complete
+                        Navigator.pop(context);
+                      },
+                      storyItems: [
+                        StoryItem.text(
+                            title: 'Hello world!',
+                            backgroundColor: Colors.black),
+                        StoryItem.pageImage(url: '', controller: controller),
+                        StoryItem.pageVideo(
+                          '',
+                          controller: controller,
+                        ),
+                      ],
+                    ),
+                  ),
+                  // const VideoSlider()
                 ],
               ),
             )
