@@ -1,7 +1,7 @@
 // ignore_for_file: camel_case_types
 
+import 'package:dienstleisto/frontend/screens/functionality/ProfileCreate/verifyNumber.dart';
 import 'package:dienstleisto/frontend/screens/functionality/auth/login.dart';
-import 'package:dienstleisto/frontend/screens/functionality/auth/verifyNumber.dart';
 
 import 'package:dienstleisto/frontend/widgets/button.dart';
 import 'package:dienstleisto/frontend/widgets/textStyle.dart';
