@@ -1,5 +1,6 @@
 // ignore_for_file: library_private_types_in_public_api
 
+import 'package:dienstleisto/frontend/screens/functionality/ProfileCreate/JobPreference.dart';
 import 'package:dienstleisto/frontend/widgets/button.dart';
 import 'package:dienstleisto/frontend/widgets/oneradio.dart';
 import 'package:dienstleisto/frontend/widgets/textStyle.dart';
@@ -85,8 +86,7 @@ class _ExperienceState extends State<Experience> {
                 controller: _jobTitleController,
                 hintColor: Colors.grey,
                 fillColor: const Color.fromRGBO(239, 239, 244, 1),
-                enableDropdown: true,
-                dropdownOptions: const ["US", "UK", "PK"],
+                enableDropdown: false,
               ),
               SizedBox(
                 height: size.height * 0.02,
@@ -132,15 +132,6 @@ class _ExperienceState extends State<Experience> {
               SizedBox(
                 height: size.height * 0.02,
               ),
-              // CustomRadioButton(
-              //   radioName: 'I am currently working here',
-              //   selectedValue: selectedRadio == 'I am currently working here',
-              //   onChanged: (value) {
-              //     setState(() {
-              //       selectedRadio = 'I am currently working here';
-              //     });
-              //   },
-              // ),
               const OneCustomRadioButton(),
               SizedBox(
                 height: size.height * 0.02,
@@ -246,7 +237,7 @@ class _ExperienceState extends State<Experience> {
                       context,
                       PageTransition(
                         type: PageTransitionType.rightToLeftWithFade,
-                        child: const Experience(),
+                        child: const JobPreference(),
                         duration: const Duration(milliseconds: 500),
                       ),
                     );
