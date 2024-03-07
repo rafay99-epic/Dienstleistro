@@ -1,5 +1,6 @@
 // ignore_for_file: library_private_types_in_public_api
 
+import 'package:dienstleisto/frontend/widgets/textStyle.dart';
 import 'package:flutter/material.dart';
 
 class CustomChoiceChip extends StatefulWidget {
@@ -17,13 +18,14 @@ class _CustomChoiceChipState extends State<CustomChoiceChip> {
   @override
   Widget build(BuildContext context) {
     return ChoiceChip(
-      label: Text(
-        widget.label,
-        style: TextStyle(
-          color: _isSelected
-              ? Theme.of(context).colorScheme.background
-              : Theme.of(context).colorScheme.primary,
-        ),
+      label: MyText(
+        text: widget.label,
+        color: _isSelected
+            ? Theme.of(context).colorScheme.background
+            : Theme.of(context).colorScheme.primary,
+        fontSize: 13,
+        fontWeight: FontWeight.w400,
+        textAlign: TextAlign.center,
       ),
       selected: _isSelected,
       onSelected: (bool selected) {

@@ -18,8 +18,6 @@ class _ChooseInterestsState extends State<ChooseInterests> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    final _items = List<String>.generate(33, (i) => 'Interest ${i + 1}');
-    List<String> _selectedItems = [];
 
     return Scaffold(
       appBar: AppBar(
