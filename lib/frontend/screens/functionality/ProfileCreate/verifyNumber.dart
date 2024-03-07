@@ -2,10 +2,12 @@
 
 import 'dart:async';
 
+import 'package:dienstleisto/frontend/screens/functionality/ProfileCreate/setLocation.dart';
 import 'package:dienstleisto/frontend/widgets/button.dart';
 import 'package:dienstleisto/frontend/widgets/textStyle.dart';
 import 'package:dienstleisto/frontend/widgets/textfeild.dart';
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 
 class VerifyNumber extends StatefulWidget {
   VerifyNumber({super.key});
@@ -103,6 +105,14 @@ class _VerifyNumberState extends State<VerifyNumber> {
                   //once verified then add data into the database
 
                   // then redirect to the next page. which is access location.
+                  Navigator.push(
+                    context,
+                    PageTransition(
+                      type: PageTransitionType.rightToLeftWithFade,
+                      child: const SetLocation(),
+                      duration: const Duration(milliseconds: 500),
+                    ),
+                  );
                 },
                 text: "Verify",
                 enableIcon: false,
