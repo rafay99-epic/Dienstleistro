@@ -5,6 +5,7 @@ import 'package:dienstleisto/frontend/screens/functionality/auth/login.dart';
 import 'package:dienstleisto/frontend/screens/functionality/auth/signup.dart';
 import 'package:dienstleisto/frontend/screens/functionality/services/servicesOffer/action.dart';
 import 'package:dienstleisto/frontend/widgets/cardSlider.dart';
+import 'package:dienstleisto/frontend/widgets/textStyle.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:story_view/controller/story_controller.dart';
@@ -32,167 +33,45 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        automaticallyImplyLeading: false,
-        backgroundColor: Colors.blue.shade400,
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Container(
-              padding: const EdgeInsets.all(8.0),
-              child: const Text(
-                'Dinesleisto',
-                style: TextStyle(
-                  color: Colors.white,
-                ),
-              ),
-            )
-          ],
-        ),
-        actions: <Widget>[
-          Padding(
-            padding: const EdgeInsets.only(right: 20),
-            child: PopupMenuButton<String>(
-              iconColor: Colors.white,
-              itemBuilder: (context) => <PopupMenuEntry<String>>[
-                const PopupMenuItem<String>(
-                  value: 'Logout',
-                  child: Text('Logout'),
-                ),
-                const PopupMenuItem<String>(
-                  value: 'Sign Up',
-                  child: Text('Sign Up'),
-                ),
-              ],
-              onSelected: (String newValue) {
-                switch (newValue) {
-                  case 'Logout':
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return AlertDialog(
-                          title: const Text(
-                            'Confirm Logout',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          content: const Text(
-                            'Do you want to log out?',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          actions: <Widget>[
-                            SizedBox(
-                              width: double.infinity,
-                              child: TextButton(
-                                style: TextButton.styleFrom(
-                                  backgroundColor:
-                                      Theme.of(context).colorScheme.secondary,
-                                  foregroundColor:
-                                      Theme.of(context).colorScheme.background,
-                                ),
-                                child: const Text(
-                                  'No',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            SizedBox(
-                              width: double.infinity,
-                              child: TextButton(
-                                style: TextButton.styleFrom(
-                                  foregroundColor:
-                                      Theme.of(context).colorScheme.background,
-                                  backgroundColor:
-                                      Theme.of(context).colorScheme.secondary,
-                                ),
-                                child: const Text(
-                                  'Yes',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                onPressed: () async {
-                                  Navigator.of(context).pop();
-                                  await _authService.signOut();
-
-                                  Navigator.push(
-                                    context,
-                                    PageTransition(
-                                      type: PageTransitionType
-                                          .rightToLeftWithFade,
-                                      child: const login(),
-                                      duration:
-                                          const Duration(milliseconds: 500),
-                                    ),
-                                  );
-                                },
-                              ),
-                            ),
-                          ],
-                        );
-                      },
-                    );
-
-                    break;
-                  case 'Sign Up':
-                    Navigator.push(
-                      context,
-                      PageTransition(
-                        type: PageTransitionType.rightToLeftWithFade,
-                        child: const signUp(),
-                        duration: const Duration(milliseconds: 500),
-                      ),
-                    );
-                    break;
-                }
-              },
-            ),
-          ),
-        ],
+        backgroundColor: Theme.of(context).colorScheme.secondary,
       ),
       body: SingleChildScrollView(
         child: Column(
           children: [
             Container(
               height: 200,
-              color: Colors.blue.shade400,
+              color: Theme.of(context).colorScheme.secondary,
               child: Column(
                 children: <Widget>[
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  const Align(
-                    alignment: Alignment.center,
-                    child: Text(
-                      "Get the Perfect Workers & Projects",
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w400,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  const Align(
-                    alignment: Alignment.center,
-                    child: Text(
-                      "Within the world's #1 Service marketplace",
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w400,
-                        color: Colors.white,
+                  Padding(
+                    padding: const EdgeInsets.only(left: 20, right: 20),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: RichText(
+                        text: TextSpan(
+                          children: <TextSpan>[
+                            TextSpan(
+                              text: 'Find your dream jon in',
+                              style: TextStyle(
+                                fontSize: 28,
+                                fontWeight: FontWeight.w400,
+                                color: Theme.of(context).colorScheme.background,
+                                fontStyle: FontStyle.italic,
+                                fontFamily: "ABeeZee",
+                              ),
+                            ),
+                            TextSpan(
+                              text: '\nSan Francisco',
+                              style: TextStyle(
+                                fontSize: 28,
+                                fontWeight: FontWeight.w400,
+                                color: Theme.of(context).colorScheme.background,
+                                fontStyle: FontStyle.italic,
+                                fontFamily: "ABeeZee",
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
@@ -200,16 +79,13 @@ class _HomeState extends State<Home> {
                     height: 15,
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(left: 25, right: 25),
+                    padding: const EdgeInsets.only(left: 20, right: 20),
                     child: TextField(
                       decoration: InputDecoration(
-                        suffixIcon: const Icon(Icons.search),
-                        suffix: const VerticalDivider(color: Colors.black),
-                        prefixIcon: const Icon(Icons.filter_list),
-                        prefix: const VerticalDivider(color: Colors.black),
+                        prefixIcon: const Icon(Icons.search),
                         filled: true,
-                        fillColor: Colors.white,
-                        hintText: 'Search Here',
+                        fillColor: Theme.of(context).colorScheme.background,
+                        hintText: 'Search for everthing...',
                         contentPadding: const EdgeInsets.symmetric(
                           vertical: 20,
                           horizontal: 15,
@@ -227,117 +103,6 @@ class _HomeState extends State<Home> {
             const SizedBox(
               height: 15,
             ),
-            Container(
-              color: Theme.of(context).colorScheme.background,
-              child: Column(
-                children: <Widget>[
-                  const Padding(
-                    padding: EdgeInsets.only(
-                        left: 12.0, right: 12.0), // Add left padding
-                    child: Align(
-                      alignment: Alignment.topLeft,
-                      child: Text(
-                        "Services",
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 15),
-                  CardSlider(
-                    items: [
-                      CardItem(
-                        item: Image.network(
-                            'https://plus.unsplash.com/premium_photo-1682145927654-1913ccba955e?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'), // Replace with your image
-                        title: 'Interior Design',
-                        location: 'Berline',
-                        initialRating: 3.0,
-                        subscriptionText: 'Subscription',
-                        buttonText: 'View',
-                        onCardTap: () {
-                          Navigator.push(
-                            context,
-                            PageTransition(
-                              type: PageTransitionType.rightToLeftWithFade,
-                              child: const services_action(),
-                            ),
-                          );
-                        },
-                        onButtonTap: () {
-                          Navigator.push(
-                            context,
-                            PageTransition(
-                              type: PageTransitionType.rightToLeftWithFade,
-                              child: const services_action(),
-                            ),
-                          );
-                        },
-                      ),
-                      CardItem(
-                        item: Image.network(
-                            'https://plus.unsplash.com/premium_photo-1682145927654-1913ccba955e?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'), // Replace with your image
-                        title: 'Interior Design',
-                        location: 'Berline',
-                        initialRating: 3.0,
-                        subscriptionText: 'Subscription',
-                        buttonText: 'View',
-                        onCardTap: () {
-                          print('Card tapped!');
-                        },
-                        onButtonTap: () {
-                          print('Button tapped!');
-                        },
-                      ),
-                      // Add more CardItem objects if needed
-                    ],
-                  ),
-                  const SizedBox(height: 15),
-                  // Text for Stories
-                  const Padding(
-                    padding: EdgeInsets.only(
-                      left: 12.0,
-                      right: 12.0,
-                    ), // Add left padding
-                    child: Align(
-                      alignment: Alignment.topLeft,
-                      child: Text(
-                        "Stories",
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ),
-
-                  SizedBox(
-                    height: 300,
-                    child: StoryView(
-                      controller: controller,
-                      onComplete: () {
-                        // Go back to the previous page when the stories are complete
-                        Navigator.pop(context);
-                      },
-                      storyItems: [
-                        StoryItem.text(
-                            title: 'Hello world!',
-                            backgroundColor: Colors.black),
-                        StoryItem.pageImage(url: '', controller: controller),
-                        StoryItem.pageVideo(
-                          '',
-                          controller: controller,
-                        ),
-                      ],
-                    ),
-                  ),
-                  // const VideoSlider()
-                ],
-              ),
-            )
           ],
         ),
       ),

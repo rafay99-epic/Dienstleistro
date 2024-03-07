@@ -1,5 +1,6 @@
 import 'package:dienstleisto/backend/auth/auth_gate.dart';
 import 'package:dienstleisto/frontend/screens/functionality/ProfileCreate/ChooseInterests.dart';
+import 'package:dienstleisto/frontend/screens/home.dart';
 // import 'package:dienstleisto/frontend/screens/splash.dart';
 import 'package:dienstleisto/frontend/theme/colors.dart';
 import 'package:flutter/material.dart';
@@ -23,8 +24,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       theme: lightmode,
       debugShowCheckedModeBanner: false,
-      // home: const AuthGate(),
-      home: const ChooseInterests(),
+      home: const AuthGate(),
+      // home: const Home(),
     );
   }
 }
