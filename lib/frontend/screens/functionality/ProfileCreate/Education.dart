@@ -4,6 +4,7 @@ import 'package:dienstleisto/frontend/screens/functionality/ProfileCreate/Experi
 import 'package:dienstleisto/frontend/widgets/button.dart';
 import 'package:dienstleisto/frontend/widgets/textStyle.dart';
 import 'package:dienstleisto/frontend/widgets/textfeild.dart';
+import 'package:dienstleisto/frontend/widgets/timeline.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 
@@ -69,6 +70,12 @@ class _EducationState extends State<Education> {
           padding: const EdgeInsets.only(left: 30, right: 30),
           child: Column(
             children: <Widget>[
+              SizedBox(
+                height: size.height * 0.01,
+              ),
+              Timeline(
+                currentStep: 2,
+              ),
               const Align(
                 alignment: Alignment.centerLeft,
                 child: MyText(
@@ -194,7 +201,7 @@ class _EducationState extends State<Education> {
                 ],
               ),
               SizedBox(
-                height: size.height * 0.25,
+                height: size.height * 0.20,
               ),
               CustomButton(
                 onPressed: () {

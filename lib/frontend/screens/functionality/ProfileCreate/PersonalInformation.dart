@@ -4,6 +4,7 @@ import 'package:dienstleisto/frontend/screens/functionality/ProfileCreate/Locati
 import 'package:dienstleisto/frontend/widgets/button.dart';
 import 'package:dienstleisto/frontend/widgets/textStyle.dart';
 import 'package:dienstleisto/frontend/widgets/textfeild.dart';
+import 'package:dienstleisto/frontend/widgets/timeline.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 
@@ -67,6 +68,15 @@ class _PersonalInformationState extends State<PersonalInformation> {
           padding: const EdgeInsets.only(left: 30, right: 30),
           child: Column(
             children: <Widget>[
+              SizedBox(
+                height: size.height * 0.01,
+              ),
+              Timeline(
+                currentStep: 0,
+              ),
+              SizedBox(
+                height: size.height * 0.01,
+              ),
               const Align(
                 alignment: Alignment.centerLeft,
                 child: MyText(
@@ -169,7 +179,7 @@ class _PersonalInformationState extends State<PersonalInformation> {
                 enableDate: true,
               ),
               SizedBox(
-                height: size.height * 0.15,
+                height: size.height * 0.05,
               ),
               CustomButton(
                 onPressed: () {
