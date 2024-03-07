@@ -1,9 +1,11 @@
 // ignore_for_file: library_private_types_in_public_api
 
+import 'package:dienstleisto/frontend/screens/functionality/ProfileCreate/PersonalInformation.dart';
 import 'package:dienstleisto/frontend/widgets/button.dart';
 import 'package:dienstleisto/frontend/widgets/radio.dart';
 import 'package:dienstleisto/frontend/widgets/textStyle.dart';
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 
 class ChooseLanguage extends StatefulWidget {
   const ChooseLanguage({super.key});
@@ -200,9 +202,17 @@ class _ChooseLanguageState extends State<ChooseLanguage> {
                     //use shared perferance to store into device
 
                     //naviagate to different page
+                    Navigator.push(
+                      context,
+                      PageTransition(
+                        type: PageTransitionType.rightToLeftWithFade,
+                        child: const PersonalInformation(),
+                        duration: const Duration(milliseconds: 500),
+                      ),
+                    );
                   }
                 },
-                text: "Sign In",
+                text: "Select",
                 enableIcon: false,
                 backgroundColor: Theme.of(context).colorScheme.secondary,
                 buttonTextColor: Theme.of(context).colorScheme.background,
