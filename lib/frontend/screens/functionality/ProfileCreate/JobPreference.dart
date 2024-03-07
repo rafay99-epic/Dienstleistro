@@ -1,5 +1,6 @@
 // ignore_for_file: library_private_types_in_public_api
 
+import 'package:dienstleisto/frontend/screens/functionality/ProfileCreate/ChooseInterests.dart';
 import 'package:dienstleisto/frontend/widgets/button.dart';
 import 'package:dienstleisto/frontend/widgets/textStyle.dart';
 import 'package:dienstleisto/frontend/widgets/textfeild.dart';
@@ -216,7 +217,7 @@ class _JobPreferenceState extends State<JobPreference> {
                       context,
                       PageTransition(
                         type: PageTransitionType.rightToLeftWithFade,
-                        child: const JobPreference(),
+                        child: const ChooseInterests(),
                         duration: const Duration(milliseconds: 500),
                       ),
                     );
