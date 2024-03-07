@@ -1,6 +1,6 @@
 // ignore_for_file: library_private_types_in_public_api
 
-import 'package:dienstleisto/backend/permission/permission.dart';
+import 'package:dienstleisto/backend/permission/location.dart';
 import 'package:dienstleisto/frontend/screens/functionality/ProfileCreate/ChooseLanguage.dart';
 import 'package:dienstleisto/frontend/widgets/button.dart';
 import 'package:dienstleisto/frontend/widgets/textStyle.dart';
