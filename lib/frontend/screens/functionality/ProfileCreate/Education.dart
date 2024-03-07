@@ -1,6 +1,6 @@
 // ignore_for_file: library_private_types_in_public_api
 
-import 'package:dienstleisto/frontend/screens/functionality/ProfileCreate/PersonalInformation.dart';
+import 'package:dienstleisto/frontend/screens/functionality/ProfileCreate/Experience.dart';
 import 'package:dienstleisto/frontend/widgets/button.dart';
 import 'package:dienstleisto/frontend/widgets/textStyle.dart';
 import 'package:dienstleisto/frontend/widgets/textfeild.dart';
@@ -132,49 +132,6 @@ class _EducationState extends State<Education> {
               SizedBox(
                 height: size.height * 0.02,
               ),
-              // const Align(
-              //   alignment: Alignment.centerLeft,
-              //   child: MyText(
-              //     text: "Start Date",
-              //     fontFamily: "ABeeZee",
-              //     fontWeight: FontWeight.w400,
-              //     fontSize: 17,
-              //     fontStyle: FontStyle.italic,
-              //     textAlign: TextAlign.left,
-              //   ),
-              // ),
-              // CustomTextField(
-              //   hintText: "DD/MM/YYYY",
-              //   controller: _startDateController,
-              //   hintColor: Colors.grey,
-              //   fillColor: const Color.fromRGBO(239, 239, 244, 1),
-              //   enableDropdown: false,
-              //   enableOnlyNumbers: false,
-              //   enableDate: true,
-              // ),
-              // SizedBox(
-              //   height: size.height * 0.02,
-              // ),
-              // const Align(
-              //   alignment: Alignment.centerLeft,
-              //   child: MyText(
-              //     text: "End Date",
-              //     fontFamily: "ABeeZee",
-              //     fontWeight: FontWeight.w400,
-              //     fontSize: 17,
-              //     fontStyle: FontStyle.italic,
-              //     textAlign: TextAlign.left,
-              //   ),
-              // ),
-              // CustomTextField(
-              //   hintText: "DD/MM/YYYY",
-              //   controller: _endDateController,
-              //   hintColor: Colors.grey,
-              //   fillColor: const Color.fromRGBO(239, 239, 244, 1),
-              //   enableDropdown: false,
-              //   enableOnlyNumbers: false,
-              //   enableDate: true,
-              // ),
               Row(
                 children: [
                   Expanded(
@@ -276,7 +233,7 @@ class _EducationState extends State<Education> {
                       context,
                       PageTransition(
                         type: PageTransitionType.rightToLeftWithFade,
-                        child: const PersonalInformation(),
+                        child: const Experience(),
                         duration: const Duration(milliseconds: 500),
                       ),
                     );
