@@ -28,8 +28,8 @@ class CustomTextField extends StatelessWidget {
         controller: controller,
         keyboardType: enableOnlyNumbers ? TextInputType.number : null,
         obscureText: obscureText,
-        style: const TextStyle(
-          color: Colors.white,
+        style: TextStyle(
+          color: Theme.of(context).colorScheme.primary,
         ),
         decoration: InputDecoration(
           filled: true,

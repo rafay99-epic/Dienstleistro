@@ -88,6 +88,7 @@
 
 // ignore_for_file: library_private_types_in_public_api
 
+import 'package:dienstleisto/backend/auth/auth_service.dart';
 import 'package:dienstleisto/frontend/widgets/button.dart';
 import 'package:dienstleisto/frontend/widgets/textStyle.dart';
 import 'package:dienstleisto/frontend/widgets/textfeild.dart';
@@ -99,6 +100,7 @@ class ForgetPassword extends StatefulWidget {
   @override
   _ForgetPasswordState createState() => _ForgetPasswordState();
   final TextEditingController _emailforgetpassword = TextEditingController();
+  final AuthService _authService = AuthService();
 }
 
 class _ForgetPasswordState extends State<ForgetPassword> {
@@ -159,6 +161,27 @@ class _ForgetPasswordState extends State<ForgetPassword> {
               CustomButton(
                 onPressed: () {
                   //logic for sign In Button from firebase
+                  widget._authService
+                      .resetPassword(widget._emailforgetpassword.text);
+                  //showing snak bar after reset.
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      elevation: 10,
+                      duration: const Duration(seconds: 2),
+                      width: size.width * 0.9,
+                      backgroundColor: Theme.of(context).colorScheme.secondary,
+                      showCloseIcon: true,
+                      behavior: SnackBarBehavior.floating,
+                      content: Text(
+                        "Email has been sent to reset password. Check your email.",
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.background,
+                          fontSize: 15,
+                        ),
+                      ),
+                    ),
+                  );
+                  widget._emailforgetpassword.clear();
                 },
                 text: "Send",
                 enableIcon: false,

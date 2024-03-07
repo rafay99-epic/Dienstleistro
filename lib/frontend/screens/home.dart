@@ -1,3 +1,6 @@
+// ignore_for_file: use_build_context_synchronously
+
+import 'package:dienstleisto/backend/auth/auth_service.dart';
 import 'package:dienstleisto/frontend/screens/functionality/auth/login.dart';
 import 'package:dienstleisto/frontend/screens/functionality/auth/signup.dart';
 import 'package:dienstleisto/frontend/screens/functionality/services/servicesOffer/action.dart';
@@ -15,6 +18,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  final AuthService _authService = AuthService();
   String dropdownValue = 'Account';
   final StoryController controller = StoryController();
   late List<StoryItem> storyItems;
@@ -33,11 +37,6 @@ class _HomeState extends State<Home> {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            // Image.asset(
-            //   '', // Replace with your logo asset
-            //   fit: BoxFit.contain,
-            //   height: 32,
-            // ),
             Container(
               padding: const EdgeInsets.all(8.0),
               child: const Text(
@@ -56,8 +55,8 @@ class _HomeState extends State<Home> {
               iconColor: Colors.white,
               itemBuilder: (context) => <PopupMenuEntry<String>>[
                 const PopupMenuItem<String>(
-                  value: 'Login',
-                  child: Text('Login'),
+                  value: 'Logout',
+                  child: Text('Logout'),
                 ),
                 const PopupMenuItem<String>(
                   value: 'Sign Up',
@@ -66,16 +65,93 @@ class _HomeState extends State<Home> {
               ],
               onSelected: (String newValue) {
                 switch (newValue) {
-                  case 'Login':
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const login()),
+                  case 'Logout':
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: const Text(
+                            'Confirm Logout',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          content: const Text(
+                            'Do you want to log out?',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          actions: <Widget>[
+                            SizedBox(
+                              width: double.infinity,
+                              child: TextButton(
+                                style: TextButton.styleFrom(
+                                  backgroundColor:
+                                      Theme.of(context).colorScheme.secondary,
+                                  foregroundColor:
+                                      Theme.of(context).colorScheme.background,
+                                ),
+                                child: const Text(
+                                  'No',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            SizedBox(
+                              width: double.infinity,
+                              child: TextButton(
+                                style: TextButton.styleFrom(
+                                  foregroundColor:
+                                      Theme.of(context).colorScheme.background,
+                                  backgroundColor:
+                                      Theme.of(context).colorScheme.secondary,
+                                ),
+                                child: const Text(
+                                  'Yes',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                onPressed: () async {
+                                  Navigator.of(context).pop();
+                                  await _authService.signOut();
+
+                                  Navigator.push(
+                                    context,
+                                    PageTransition(
+                                      type: PageTransitionType
+                                          .rightToLeftWithFade,
+                                      child: const login(),
+                                      duration:
+                                          const Duration(milliseconds: 500),
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+                          ],
+                        );
+                      },
                     );
+
                     break;
                   case 'Sign Up':
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => signUp()),
+                      PageTransition(
+                        type: PageTransitionType.rightToLeftWithFade,
+                        child: const signUp(),
+                        duration: const Duration(milliseconds: 500),
+                      ),
                     );
                     break;
                 }
@@ -238,24 +314,6 @@ class _HomeState extends State<Home> {
                     ),
                   ),
 
-                  //Stories
-                  // Expanded(
-                  //   child: StoryView(
-                  //     controller: controller,
-                  //     onComplete: () {
-                  //       // Go back to the previous page when the stories are complete
-                  //       Navigator.pop(context);
-                  //     },
-                  //     storyItems: [
-                  //       StoryItem.text(
-                  //           title: 'Hello world!',
-                  //           backgroundColor: Colors.black),
-                  //       StoryItem.pageImage(url: '', controller: controller),
-                  //       StoryItem.pageVideo('https://example.com/video1.mp4',
-                  //           controller: controller),
-                  //     ],
-                  //   ),
-                  // ),
                   SizedBox(
                     height: 300,
                     child: StoryView(

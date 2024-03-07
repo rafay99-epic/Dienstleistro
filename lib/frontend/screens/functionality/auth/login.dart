@@ -1,8 +1,13 @@
+// ignore_for_file: use_build_context_synchronously, camel_case_types
+
+import 'package:dienstleisto/backend/auth/auth_service.dart';
 import 'package:dienstleisto/frontend/screens/functionality/auth/forgetPassword.dart';
 import 'package:dienstleisto/frontend/screens/functionality/auth/signup.dart';
+import 'package:dienstleisto/frontend/screens/home.dart';
 import 'package:dienstleisto/frontend/widgets/button.dart';
 import 'package:dienstleisto/frontend/widgets/textStyle.dart';
 import 'package:dienstleisto/frontend/widgets/textfeild.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:page_transition/page_transition.dart';
@@ -15,6 +20,7 @@ class login extends StatefulWidget {
 }
 
 class _loginState extends State<login> {
+  final AuthService _authService = AuthService();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   bool rememberMe = false;
@@ -85,6 +91,7 @@ class _loginState extends State<login> {
                 fillColor: const Color.fromRGBO(239, 239, 244, 1),
                 hintColor: Colors.grey,
                 controller: passwordController,
+                obscureText: true,
               ),
               const SizedBox(height: 15),
               Row(
@@ -149,13 +156,14 @@ class _loginState extends State<login> {
               ),
               const SizedBox(height: 20),
               CustomButton(
-                onPressed: () {
+                onPressed: () async {
                   //logic for sign In Button from firebase
 
                   //check for all fields no field is empty
 
                   if (emailController.text.isEmpty ||
                       passwordController.text.isEmpty) {
+                    //snak bar
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         elevation: 10,
@@ -176,11 +184,10 @@ class _loginState extends State<login> {
                     );
                     return;
                   } else {
-                    //* check email and password from firebase
-
-                    //* if correct then login in start session
-
-                    //* if not then show case a snak bar telling wrong email or password or a dialog box
+                    await handleLogin(context);
+                    //making sure to clear the controller
+                    emailController.clear();
+                    passwordController.clear();
                   }
                 },
                 text: "Sign In",
@@ -269,5 +276,75 @@ class _loginState extends State<login> {
         ),
       ),
     );
+  }
+
+  //Login Function
+  Future<void> handleLogin(BuildContext context) async {
+    try {
+      UserCredential? userCredential =
+          await _authService.signInWithEmailAndPassword(
+        emailController.text,
+        passwordController.text,
+      );
+
+      // If the user is authenticated, navigate to the next screen
+      if (userCredential != null && userCredential.user != null) {
+        Navigator.push(
+          context,
+          PageTransition(
+            type: PageTransitionType.rightToLeftWithFade,
+            child: const Home(),
+            duration: const Duration(milliseconds: 500),
+          ),
+        );
+      }
+    } catch (e) {
+      String errorMessage;
+      if (e is FirebaseAuthException) {
+        switch (e.code) {
+          case 'auth/user-not-found':
+            errorMessage = 'No user found for that email.';
+            break;
+          case 'auth/wrong-password':
+            errorMessage = 'Wrong password provided for that user.';
+            break;
+          case 'auth/invalid-email':
+            errorMessage = 'The email address is not valid.';
+            break;
+          case 'auth/invalid-credential':
+            errorMessage = 'The credential data is malformed or has expired.';
+            break;
+          default:
+            errorMessage = 'An unknown error occurred.';
+            break;
+        }
+      } else {
+        errorMessage = 'An error occurred.';
+      }
+
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const MyText(
+              text: 'Login Error',
+              fontSize: 14,
+            ),
+            content: Text(errorMessage),
+            actions: <Widget>[
+              TextButton(
+                child: const MyText(
+                  text: 'OK',
+                  fontSize: 14,
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop(); // Close the dialog box
+                },
+              ),
+            ],
+          );
+        },
+      );
+    }
   }
 }
