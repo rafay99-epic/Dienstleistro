@@ -12,6 +12,7 @@ class CustomTextField extends StatelessWidget {
   final bool enableDropdown;
   final List<String> dropdownOptions;
   final bool enableDate;
+  final int? maxLines;
 
   const CustomTextField({
     Key? key,
@@ -25,6 +26,7 @@ class CustomTextField extends StatelessWidget {
     this.enableDropdown = false,
     this.dropdownOptions = const [],
     this.enableDate = false,
+    this.maxLines = 1,
   }) : super(key: key);
 
   @override
@@ -91,6 +93,7 @@ class CustomTextField extends StatelessWidget {
                 )
               : TextField(
                   controller: controller,
+                  maxLines: maxLines,
                   keyboardType: enableOnlyNumbers ? TextInputType.number : null,
                   obscureText: obscureText,
                   style: TextStyle(

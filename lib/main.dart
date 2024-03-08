@@ -22,6 +22,7 @@ class MyApp extends StatelessWidget {
       theme: lightmode,
       debugShowCheckedModeBanner: false,
       home: const AuthGate(),
+      // home: const Navbar(),
     );
   }
 }

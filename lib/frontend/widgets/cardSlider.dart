@@ -1,28 +1,24 @@
 import 'package:carousel_slider/carousel_slider.dart';
-// import 'package:dienstleisto/frontend/widgets/button.dart';
+import 'package:dienstleisto/frontend/widgets/textStyle.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class CardItem {
-  final Widget item;
-  final String title;
+  final String profileImage;
+  final String profileTitle;
+  final String jobTitle;
   final String location;
-  final double initialRating;
-  final String subscriptionText;
-  final String buttonText;
-  final VoidCallback onCardTap;
-  final VoidCallback onButtonTap;
+  final String payment;
+  final String time;
+  final VoidCallback onBookmarkTap;
 
   CardItem({
-    required this.item,
-    required this.title,
+    required this.profileImage,
+    required this.profileTitle,
+    required this.jobTitle,
     required this.location,
-    required this.initialRating,
-    required this.subscriptionText,
-    required this.buttonText,
-    required this.onCardTap,
-    required this.onButtonTap,
+    required this.payment,
+    required this.time,
+    required this.onBookmarkTap,
   });
 }
 
@@ -46,8 +42,8 @@ class CardSlider extends StatelessWidget {
   Widget build(BuildContext context) {
     return CarouselSlider(
       options: CarouselOptions(
-        height: 450.0,
-        autoPlay: true,
+        height: MediaQuery.of(context).size.height * 0.15,
+        autoPlay: false,
         enlargeCenterPage: false,
         enableInfiniteScroll: false,
       ),
@@ -62,7 +58,7 @@ class CardSlider extends StatelessWidget {
                 borderRadius: BorderRadius.circular(borderRadius),
                 border: Border.all(
                   color: Colors.grey,
-                  width: 2.0,
+                  width: 1.0,
                 ),
                 boxShadow: showShadow
                     ? [
@@ -73,110 +69,85 @@ class CardSlider extends StatelessWidget {
                       ]
                     : [],
               ),
-              child: GestureDetector(
-                onTap: cardItem.onCardTap,
-                child: Card(
-                  child: Column(
-                    children: <Widget>[
-                      const Padding(
-                        padding: EdgeInsets.only(left: 5.0, right: 12),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              child: Card(
+                child: Column(
+                  children: <Widget>[
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Row(
                           children: <Widget>[
-                            FaIcon(FontAwesomeIcons.arrowsLeftRight),
-                            FaIcon(
-                              FontAwesomeIcons.heart,
-                              color: Colors.red,
+                            CircleAvatar(
+                              radius: 23,
+                              backgroundImage:
+                                  AssetImage(cardItem.profileImage),
+                            ),
+                            const SizedBox(width: 8.0),
+                            MyText(
+                              text: cardItem.profileTitle,
+                              fontSize: 13.0,
+                              fontFamily: "ABeeZee",
+                              fontWeight: FontWeight.w400,
+                              fontStyle: FontStyle.italic,
+                              color:
+                                  Theme.of(context).colorScheme.inversePrimary,
                             ),
                           ],
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 12, right: 12),
-                        child: Center(
-                          child: Column(
-                            children: <Widget>[
-                              // ClipOval(
-                              //   child: cardItem.item,
-                              // ),
-                              // ClipRRect(
-                              //   borderRadius: BorderRadius.circular(100),
-                              //   child: SizedBox(
-                              //     width: 200,
-                              //     height: 200,
-                              //     child: cardItem.item,
-                              //   ),
-                              // ),
-                              ClipOval(
-                                child: SizedBox(
-                                  width: 150,
-                                  height: 150,
-                                  child: cardItem.item,
-                                ),
-                              ),
-
-                              const SizedBox(height: 5),
-                              Center(
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: <Widget>[
-                                    const Icon(
-                                      Icons.location_on,
-                                      color: Colors.black,
-                                    ),
-                                    Text(
-                                      cardItem.location,
-                                      style: const TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: <Widget>[
-                                  RatingBar.builder(
-                                    initialRating: cardItem.initialRating,
-                                    minRating: 1,
-                                    direction: Axis.horizontal,
-                                    allowHalfRating: true,
-                                    itemCount: 5,
-                                    itemPadding: const EdgeInsets.symmetric(
-                                        horizontal: 4.0),
-                                    itemBuilder: (context, _) => const Icon(
-                                      Icons.star,
-                                      color: Colors.amber,
-                                    ),
-                                    onRatingUpdate: (rating) {
-                                      print(rating);
-                                    },
-                                  ),
-                                ],
-                              ),
-                              Text(
-                                cardItem.subscriptionText,
-                                style: const TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              // CustomButton(
-                              //   onPressed: cardItem.onButtonTap,
-                              //   text: cardItem.buttonText,
-                              //   enableIcon: false,
-                              //   backgroundColor:
-                              //       Theme.of(context).colorScheme.secondary,
-                              // )
-                            ],
+                        IconButton(
+                          icon: Icon(
+                            Icons.bookmark_border,
+                            color: Theme.of(context).colorScheme.primary,
                           ),
+                          onPressed: cardItem.onBookmarkTap,
                         ),
-                      )
-                    ],
-                  ),
+                      ],
+                    ),
+                    const SizedBox(height: 8.0),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        MyText(
+                          text: cardItem.jobTitle,
+                          fontSize: 17.0,
+                          fontFamily: "ABeeZee",
+                          fontWeight: FontWeight.w400,
+                          fontStyle: FontStyle.italic,
+                          color: Theme.of(context).colorScheme.primary,
+                        ),
+                        MyText(
+                          text: cardItem.payment,
+                          fontSize: 17.0,
+                          fontFamily: "ABeeZee",
+                          fontWeight: FontWeight.w400,
+                          fontStyle: FontStyle.italic,
+                          color: Theme.of(context).colorScheme.primary,
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 8.0),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        MyText(
+                          text: cardItem.location,
+                          fontSize: 13.0,
+                          fontFamily: "ABeeZee",
+                          fontWeight: FontWeight.w400,
+                          fontStyle: FontStyle.italic,
+                          color: Theme.of(context).colorScheme.inversePrimary,
+                        ),
+                        MyText(
+                          text: cardItem.time,
+                          fontSize: 13.0,
+                          fontFamily: "ABeeZee",
+                          fontWeight: FontWeight.w400,
+                          fontStyle: FontStyle.italic,
+                          color: Theme.of(context).colorScheme.inversePrimary,
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
               ),
             );
