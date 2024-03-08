@@ -25,8 +25,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       theme: lightmode,
       debugShowCheckedModeBanner: false,
-      // home: const AuthGate(),
-      home: const Navbar(),
+      home: const AuthGate(),
+      // home: const Navbar(),
     );
   }
 }
