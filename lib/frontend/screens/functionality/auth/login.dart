@@ -3,7 +3,7 @@
 import 'package:dienstleisto/backend/auth/auth_service.dart';
 import 'package:dienstleisto/frontend/screens/functionality/auth/forgetPassword.dart';
 import 'package:dienstleisto/frontend/screens/functionality/auth/signup.dart';
-import 'package:dienstleisto/frontend/screens/home.dart';
+import 'package:dienstleisto/frontend/screens/home/home.dart';
 import 'package:dienstleisto/frontend/widgets/button.dart';
 import 'package:dienstleisto/frontend/widgets/textStyle.dart';
 import 'package:dienstleisto/frontend/widgets/textfeild.dart';
