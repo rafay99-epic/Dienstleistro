@@ -92,8 +92,7 @@ class _EducationState extends State<Education> {
                 controller: _universityController,
                 hintColor: Colors.grey,
                 fillColor: const Color.fromRGBO(239, 239, 244, 1),
-                enableDropdown: true,
-                dropdownOptions: const ["US", "UK", "PK"],
+                enableDropdown: false,
               ),
               SizedBox(
                 height: size.height * 0.02,

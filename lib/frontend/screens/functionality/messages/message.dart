@@ -1,7 +1,7 @@
 // ignore_for_file: library_private_types_in_public_api
 
-import 'package:dienstleisto/frontend/screens/messages/messageUI.dart';
-import 'package:dienstleisto/frontend/screens/messages/messagecardUi.dart';
+import 'package:dienstleisto/frontend/screens/functionality/messages/messageUI.dart';
+import 'package:dienstleisto/frontend/screens/functionality/messages/messagecardUi.dart';
 import 'package:dienstleisto/frontend/widgets/textStyle.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';

@@ -1,8 +1,4 @@
 import 'package:dienstleisto/backend/auth/auth_gate.dart';
-import 'package:dienstleisto/frontend/screens/functionality/ProfileCreate/ChooseInterests.dart';
-import 'package:dienstleisto/frontend/screens/home/home.dart';
-import 'package:dienstleisto/frontend/screens/home/navbar.dart';
-// import 'package:dienstleisto/frontend/screens/splash.dart';
 import 'package:dienstleisto/frontend/theme/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -26,7 +22,6 @@ class MyApp extends StatelessWidget {
       theme: lightmode,
       debugShowCheckedModeBanner: false,
       home: const AuthGate(),
-      // home: const Navbar(),
     );
   }
 }

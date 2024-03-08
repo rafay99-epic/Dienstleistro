@@ -1,6 +1,6 @@
 // ignore_for_file: library_private_types_in_public_api
 
-import 'package:dienstleisto/frontend/screens/home/home.dart';
+import 'package:dienstleisto/frontend/screens/home/navbar.dart';
 import 'package:dienstleisto/frontend/widgets/button.dart';
 import 'package:dienstleisto/frontend/widgets/choiceChip.dart';
 import 'package:dienstleisto/frontend/widgets/textStyle.dart';
@@ -111,7 +111,7 @@ class _ChooseInterestsState extends State<ChooseInterests> {
                     context,
                     PageTransition(
                       type: PageTransitionType.rightToLeftWithFade,
-                      child: const Home(),
+                      child: const Navbar(),
                       duration: const Duration(milliseconds: 500),
                     ),
                   );

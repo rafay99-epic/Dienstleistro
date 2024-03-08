@@ -1,4 +1,4 @@
-import 'package:dienstleisto/frontend/screens/home/home.dart';
+import 'package:dienstleisto/frontend/screens/home/navbar.dart';
 import 'package:dienstleisto/frontend/screens/splash.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -13,7 +13,7 @@ class AuthGate extends StatelessWidget {
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            return const Home();
+            return const Navbar();
           } else {
             return const splash();
           }

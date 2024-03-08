@@ -3,7 +3,8 @@
 import 'package:dienstleisto/backend/auth/auth_service.dart';
 import 'package:dienstleisto/frontend/screens/functionality/auth/forgetPassword.dart';
 import 'package:dienstleisto/frontend/screens/functionality/auth/signup.dart';
-import 'package:dienstleisto/frontend/screens/home/home.dart';
+
+import 'package:dienstleisto/frontend/screens/home/navbar.dart';
 import 'package:dienstleisto/frontend/widgets/button.dart';
 import 'package:dienstleisto/frontend/widgets/textStyle.dart';
 import 'package:dienstleisto/frontend/widgets/textfeild.dart';
@@ -293,7 +294,7 @@ class _loginState extends State<login> {
           context,
           PageTransition(
             type: PageTransitionType.rightToLeftWithFade,
-            child: const Home(),
+            child: const Navbar(),
             duration: const Duration(milliseconds: 500),
           ),
         );
