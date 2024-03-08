@@ -66,34 +66,35 @@ class _NotificationShowState extends State<NotificationShow> {
         ],
       ),
       body: SingleChildScrollView(
-          child: Padding(
-        padding: const EdgeInsets.only(left: 20.0, right: 20.0),
-        child: Column(
-          children: <Widget>[
-            Align(
-              alignment: Alignment.centerLeft,
-              child: MyText(
-                text: "Notifications",
-                fontSize: 34,
-                fontFamily: "ABeeZee",
-                fontWeight: FontWeight.w400,
-                textAlign: TextAlign.left,
-                color: Theme.of(context).colorScheme.primary,
-                fontStyle: FontStyle.italic,
+        child: Padding(
+          padding: const EdgeInsets.only(left: 20.0, right: 20.0),
+          child: Column(
+            children: <Widget>[
+              Align(
+                alignment: Alignment.centerLeft,
+                child: MyText(
+                  text: "Notifications",
+                  fontSize: 34,
+                  fontFamily: "ABeeZee",
+                  fontWeight: FontWeight.w400,
+                  textAlign: TextAlign.left,
+                  color: Theme.of(context).colorScheme.primary,
+                  fontStyle: FontStyle.italic,
+                ),
               ),
-            ),
-            const SizedBox(height: 10),
-            ...notifications.map((notification) {
-              return NotificationCard(
-                notificationTitle: notification['notificationTitle']!,
-                jobTitle: notification['jobTitle']!,
-                message: notification['message']!,
-                time: notification['time']!,
-              );
-            }).toList(),
-          ],
+              const SizedBox(height: 10),
+              ...notifications.map((notification) {
+                return NotificationCard(
+                  notificationTitle: notification['notificationTitle']!,
+                  jobTitle: notification['jobTitle']!,
+                  message: notification['message']!,
+                  time: notification['time']!,
+                );
+              }).toList(),
+            ],
+          ),
         ),
-      )),
+      ),
     );
   }
 }
