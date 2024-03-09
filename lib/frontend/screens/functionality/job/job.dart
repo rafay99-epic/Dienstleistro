@@ -84,7 +84,7 @@ class _JobState extends State<Job> {
                 children: [
                   SingleChildScrollView(
                     child: Padding(
-                      padding: EdgeInsets.only(left: 10.0, right: 10.0),
+                      padding: const EdgeInsets.only(left: 10.0, right: 10.0),
                       child: Column(
                         children: <Widget>[
                           // Your widgets for the 'Applied For' tab...

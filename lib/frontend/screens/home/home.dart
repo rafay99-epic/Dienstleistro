@@ -1,11 +1,13 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:dienstleisto/frontend/screens/functionality/job/savedCard.dart';
+import 'package:dienstleisto/frontend/screens/home/filter.dart';
 import 'package:dienstleisto/frontend/screens/home/search.dart';
 import 'package:dienstleisto/frontend/widgets/cardSlider.dart';
 import 'package:dienstleisto/frontend/widgets/textStyle.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:page_transition/page_transition.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -222,7 +224,14 @@ class _HomeState extends State<Home> {
                         ),
                         TextButton(
                           onPressed: () {
-                            // Handle filter action here
+                            Navigator.push(
+                              context,
+                              PageTransition(
+                                type: PageTransitionType.rightToLeftWithFade,
+                                child: const Filter(),
+                                duration: const Duration(milliseconds: 500),
+                              ),
+                            );
                           },
                           child: MyText(
                             text: 'Filter',
