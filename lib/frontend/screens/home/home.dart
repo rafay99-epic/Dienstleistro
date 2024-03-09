@@ -1,7 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:dienstleisto/frontend/screens/functionality/job/savedCard.dart';
-import 'package:dienstleisto/frontend/screens/functionality/search/search.dart';
+import 'package:dienstleisto/frontend/screens/home/search.dart';
 import 'package:dienstleisto/frontend/widgets/cardSlider.dart';
 import 'package:dienstleisto/frontend/widgets/textStyle.dart';
 import 'package:flutter/material.dart';
