@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:dienstleisto/frontend/screens/functionality/job/savedCard.dart';
+import 'package:dienstleisto/frontend/screens/functionality/search/search.dart';
 import 'package:dienstleisto/frontend/widgets/cardSlider.dart';
 import 'package:dienstleisto/frontend/widgets/textStyle.dart';
 import 'package:flutter/material.dart';
@@ -72,11 +73,22 @@ class _HomeState extends State<Home> {
                   Padding(
                     padding: const EdgeInsets.only(left: 20, right: 20),
                     child: TextField(
+                      readOnly:
+                          true, // Make TextField read-only to ensure onTap is always triggered
+                      onTap: () {
+                        // Handle tap event here
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => Search(),
+                          ),
+                        );
+                      },
                       decoration: InputDecoration(
                         prefixIcon: const Icon(Icons.search),
                         filled: true,
                         fillColor: Theme.of(context).colorScheme.background,
-                        hintText: 'Search for everthing...',
+                        hintText: 'Search for everything...',
                         contentPadding: const EdgeInsets.symmetric(
                           vertical: 20,
                           horizontal: 15,
@@ -120,6 +132,17 @@ class _HomeState extends State<Home> {
                   location: '7363 California, USA',
                   payment: "9K/mo",
                   time: '1hour ago',
+                  onBookmarkTap: () {
+                    // Handle bookmark tap here
+                  },
+                ),
+                CardItem(
+                  profileImage: "assets/images/image.jpg",
+                  profileTitle: 'Future Insight Technology',
+                  jobTitle: 'Project Manager',
+                  location: '7363 California, USA',
+                  payment: "9K/mo",
+                  time: '3hour ago',
                   onBookmarkTap: () {
                     // Handle bookmark tap here
                   },

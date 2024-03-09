@@ -1,9 +1,11 @@
 // ignore_for_file: library_private_types_in_public_api
 
 import 'package:dienstleisto/frontend/screens/functionality/job/appliedCards.dart';
+import 'package:dienstleisto/frontend/screens/functionality/job/appliedjobdetail.dart';
 import 'package:dienstleisto/frontend/screens/functionality/job/savedCard.dart';
 import 'package:dienstleisto/frontend/widgets/textStyle.dart';
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 
 class Job extends StatefulWidget {
   const Job({super.key});
@@ -77,7 +79,7 @@ class _JobState extends State<Job> {
                 ),
               ],
             ),
-            const Expanded(
+            Expanded(
               child: TabBarView(
                 children: [
                   SingleChildScrollView(
@@ -91,33 +93,46 @@ class _JobState extends State<Job> {
                             companyName: '3D Animator',
                             location: 'Best Studio ',
                             action: 'Interviewed',
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                PageTransition(
+                                  type: PageTransitionType.rightToLeftWithFade,
+                                  child: const AppliedJobDetail(),
+                                  duration: const Duration(milliseconds: 500),
+                                ),
+                              );
+                            },
                           ),
-                          SizedBox(height: 5),
+                          const SizedBox(height: 5),
                           JobCard(
                             logoPath: "assets/images/image.jpg",
                             companyName: 'Ux Designer',
                             location: 'Creative Studio',
                             action: 'Reviewed',
+                            onTap: () {},
                           ),
-                          SizedBox(height: 5),
+                          const SizedBox(height: 5),
                           JobCard(
                             logoPath: "assets/images/image.jpg",
                             companyName: 'Product Designer',
                             location: 'Creative Studio',
                             action: 'Reviewed',
+                            onTap: () {},
                           ),
-                          SizedBox(height: 5),
+                          const SizedBox(height: 5),
                           JobCard(
                             logoPath: "assets/images/image.jpg",
                             companyName: '3D Animator',
                             location: 'Limited Studio',
                             action: 'Pending',
+                            onTap: () {},
                           ),
                         ],
                       ),
                     ),
                   ),
-                  SingleChildScrollView(
+                  const SingleChildScrollView(
                     child: Padding(
                       padding: EdgeInsets.only(left: 20.0, right: 20.0),
                       child: Column(

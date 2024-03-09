@@ -32,6 +32,7 @@ class MyText extends StatelessWidget {
         fontWeight: fontWeight,
         fontStyle: fontStyle,
       ),
+      overflow: TextOverflow.fade,
       textAlign: textAlign,
     );
   }

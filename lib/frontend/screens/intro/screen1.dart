@@ -42,7 +42,7 @@ class screen1 extends StatelessWidget {
                 child: Align(
                     alignment: Alignment.centerLeft,
                     child: MyText(
-                      text: "Werktion",
+                      text: "Dienstleisto",
                       color: Theme.of(context).colorScheme.background,
                       fontSize: 35,
                       fontWeight: FontWeight.w500,

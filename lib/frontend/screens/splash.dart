@@ -37,7 +37,7 @@ class _splashState extends State<splash> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           MyText(
-            text: "Werktion",
+            text: "Dienstleisto",
             color: Colors.white,
             fontSize: 60,
             fontWeight: FontWeight.bold,
