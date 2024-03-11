@@ -1,4 +1,6 @@
 import 'package:dienstleisto/backend/auth/auth_gate.dart';
+import 'package:dienstleisto/frontend/screens/home/home2/category.dart';
+import 'package:dienstleisto/frontend/screens/home/home2/home2.dart';
 import 'package:dienstleisto/frontend/theme/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -22,7 +24,7 @@ class MyApp extends StatelessWidget {
       theme: lightmode,
       debugShowCheckedModeBanner: false,
       home: const AuthGate(),
-      // home: const Navbar(),
+      // home: const BrowserTwo(),
     );
   }
 }

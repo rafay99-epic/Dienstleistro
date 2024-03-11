@@ -26,7 +26,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: null,
+        automaticallyImplyLeading: false,
         backgroundColor: Theme.of(context).colorScheme.secondary,
       ),
       body: SingleChildScrollView(
@@ -82,7 +82,7 @@ class _HomeState extends State<Home> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => Search(),
+                            builder: (context) => const Search(),
                           ),
                         );
                       },
