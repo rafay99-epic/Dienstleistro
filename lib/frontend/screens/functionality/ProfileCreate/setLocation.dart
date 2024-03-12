@@ -2,6 +2,7 @@
 
 import 'package:dienstleisto/backend/permission/location.dart';
 import 'package:dienstleisto/frontend/screens/functionality/ProfileCreate/ChooseLanguage.dart';
+import 'package:dienstleisto/frontend/screens/functionality/ProfileCreate/setManuallLocation.dart';
 import 'package:dienstleisto/frontend/widgets/button.dart';
 import 'package:dienstleisto/frontend/widgets/textStyle.dart';
 import 'package:flutter/material.dart';
@@ -138,6 +139,14 @@ class _SetLocationState extends State<SetLocation> {
                   child: GestureDetector(
                     onTap: () {
                       // Handle the tap.
+                      Navigator.push(
+                        context,
+                        PageTransition(
+                          type: PageTransitionType.rightToLeftWithFade,
+                          child: const MapScreen(),
+                          duration: const Duration(milliseconds: 500),
+                        ),
+                      );
                     },
                     child: MyText(
                       text: "or set your location manually",

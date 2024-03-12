@@ -1,5 +1,3 @@
-import 'package:carousel_slider/carousel_slider.dart';
-import 'package:dienstleisto/frontend/widgets/textStyle.dart';
 import 'package:flutter/material.dart';
 
 class CardItemFeatureJob {
