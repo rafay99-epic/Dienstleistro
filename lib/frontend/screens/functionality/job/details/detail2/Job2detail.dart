@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_unnecessary_containers
+
 import 'package:dienstleisto/frontend/screens/functionality/job/apply/savedCard.dart';
 import 'package:dienstleisto/frontend/widgets/choiceChip.dart';
 import 'package:dienstleisto/frontend/widgets/textStyle.dart';

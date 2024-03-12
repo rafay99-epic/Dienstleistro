@@ -1,5 +1,4 @@
 import 'package:dienstleisto/backend/auth/auth_gate.dart';
-import 'package:dienstleisto/frontend/screens/functionality/job/details/detail2/Job2detail.dart';
 import 'package:dienstleisto/frontend/theme/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -22,8 +21,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       theme: lightmode,
       debugShowCheckedModeBanner: false,
-      // home: const AuthGate(),
-      home: const Job2Detail(),
+      home: const AuthGate(),
     );
   }
 }
