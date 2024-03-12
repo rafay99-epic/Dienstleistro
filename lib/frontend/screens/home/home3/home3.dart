@@ -1,8 +1,9 @@
 // ignore_for_file: library_private_types_in_public_api
 
 import 'package:dienstleisto/frontend/screens/home/search.dart';
-import 'package:dienstleisto/frontend/widgets/FeaturedJobsHeader';
+
 import 'package:dienstleisto/frontend/widgets/Jobcardtitel.dart';
+import 'package:dienstleisto/frontend/widgets/TagRow.dart';
 import 'package:dienstleisto/frontend/widgets/cardSlider.dart';
 import 'package:dienstleisto/frontend/widgets/citycard.dart';
 import 'package:dienstleisto/frontend/widgets/hone3ResetPost.dart';

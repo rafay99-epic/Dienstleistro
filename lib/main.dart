@@ -1,5 +1,4 @@
 import 'package:dienstleisto/backend/auth/auth_gate.dart';
-import 'package:dienstleisto/frontend/screens/home/home3/home3.dart';
 import 'package:dienstleisto/frontend/theme/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -22,8 +21,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       theme: lightmode,
       debugShowCheckedModeBanner: false,
-      // home: const AuthGate(),
-      home: const Home3(),
+      home: const AuthGate(),
     );
   }
 }
