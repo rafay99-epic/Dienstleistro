@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "727644051148",
+    "project_id": "werktion",
+    "storage_bucket": "werktion.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:727644051148:android:2a3d245ce8364d7061d469",
+        "android_client_info": {
+          "package_name": "com.example.dienstleisto"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCdw1zrOKKbdNjpFIyTm48ndXdL--zIQ2o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
