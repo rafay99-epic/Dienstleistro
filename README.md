@@ -46,14 +46,16 @@ To get started with Dienstleisto, follow these steps:
    git clone https://github.com/your-username/dienstleisto.git
    ```
 
-2. **Install Dependencies:** Navigate to the project directory and install the necessary dependencies.
+2. **Flutter Version:** Dienstleisto requires Flutter version 3.19 or higher. Make sure you have the appropriate Flutter version installed on your system.
+
+3. **Install Dependencies:** Navigate to the project directory and install the necessary dependencies.
 
    ```
    cd dienstleisto
    flutter pub get
    ```
 
-3. **Run the App:** Launch the app on your preferred emulator or connected device.
+4. **Run the App:** Launch the app on your preferred emulator or connected device.
 
    ```
    flutter run
