@@ -1,14 +1,31 @@
 # Dienstleisto
 
- <div style="display: flex; justify-content: center; align-items: center; height: 100vh;">
-    <img src="/assets/ReadMe/Worker.png" alt="Avatar" style="width: 100px; height: 100px; border-radius: 50%; object-fit: cover;">
-</div>
+<p align="center">
+    <a herf="">
+    <img src="/assets/ReadMe/Worker.png"   width="230px" height="230px">
+    </a>
+  <br>
+</p>
+
+<h1 align="center">
+    Hi there
+    <img src="https://raw.githubusercontent.com/nixin72/nixin72/master/wave.gif" 
+         alt="Waving hand animated gif"
+         height="35"
+         width="35" />
+     Welcome to Dienstleisto
+</h1>
 
 Dienstleisto is a versatile job-finding application designed and developed using Flutter. Its primary goal is to assist users in discovering various job opportunities across different domains and industries. Whether you're seeking employment in technology, healthcare, education, or any other field, Dienstleisto aims to streamline the job search process and connect you with relevant opportunities.
 
-## Ui Overview
+## UI Overview
 
-![image](/assets/ReadMe/Dienstleisto%20Intro%20Screen.png)
+<div style="display: flex; justify-content: center;">
+  <div style="justify-content: center; align-items: center; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);">
+    <img src="/assets/ReadMe/Dienstleisto Intro Screen.png" alt="Future Insight Preview" style="display: block; max-width: 100%; height: auto; border-radius: 10px;">
+  </div>
+</div>
+<br>
 
 ## Features
 
