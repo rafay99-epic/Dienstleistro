@@ -2,7 +2,7 @@
 
 import 'package:dienstleisto/frontend/screens/about/aboutme.dart';
 import 'package:dienstleisto/frontend/screens/home/home.dart';
-import 'package:dienstleisto/frontend/screens/functionality/job/job.dart';
+import 'package:dienstleisto/frontend/screens/functionality/job/apply/job.dart';
 import 'package:dienstleisto/frontend/screens/functionality/messages/message.dart';
 import 'package:dienstleisto/frontend/screens/functionality/notification/notification.dart';
 import 'package:flutter/material.dart';

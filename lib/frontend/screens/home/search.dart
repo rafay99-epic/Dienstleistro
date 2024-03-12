@@ -1,6 +1,6 @@
 // ignore_for_file: library_private_types_in_public_api
 
-import 'package:dienstleisto/frontend/screens/functionality/job/savedCard.dart';
+import 'package:dienstleisto/frontend/screens/functionality/job/apply/savedCard.dart';
 import 'package:dienstleisto/frontend/widgets/textStyle.dart';
 import 'package:flutter/material.dart';
 
