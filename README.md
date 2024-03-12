@@ -2,7 +2,7 @@
 
 <p align="center">
     <a herf="">
-    <img src="/assets/ReadMe/fotor-20240312235013.jpg"   width="230px" height="230px">
+    <img src="/assets/ReadMe/Worker (1).png"   width="230px" height="230px">
     </a>
   <br>
 </p>
