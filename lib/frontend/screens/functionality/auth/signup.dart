@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'dart:io';
 
 import 'package:image_picker/image_picker.dart';
+import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:page_transition/page_transition.dart';
 
 class signUp extends StatefulWidget {
@@ -151,12 +152,38 @@ class _signUpState extends State<signUp> {
               SizedBox(height: size.height * 0.01),
 
               //phone number
-              CustomTextField(
-                hintText: "Telephone",
-                controller: phoneNumber,
-                enableOnlyNumbers: true,
-                fillColor: const Color.fromRGBO(239, 239, 244, 1),
-                hintColor: Colors.grey,
+              // CustomTextField(
+              //   hintText: "Telephone",
+              //   controller: phoneNumber,
+              //   enableOnlyNumbers: true,
+              //   fillColor: const Color.fromRGBO(239, 239, 244, 1),
+              //   hintColor: Colors.grey,
+              // ),
+              InternationalPhoneNumberInput(
+                onInputChanged: (PhoneNumber number) {
+                  phoneNumber.text = number.phoneNumber ?? '';
+                },
+                onInputValidated: (bool value) {
+                  print(value);
+                },
+                selectorConfig: const SelectorConfig(
+                  selectorType: PhoneInputSelectorType.DROPDOWN,
+                ),
+                ignoreBlank: false,
+                autoValidateMode: AutovalidateMode.disabled,
+                selectorTextStyle: const TextStyle(color: Colors.black),
+                initialValue: PhoneNumber(isoCode: 'DE'),
+                formatInput: false,
+                keyboardType: const TextInputType.numberWithOptions(
+                    signed: true, decimal: true),
+                inputDecoration: const InputDecoration(
+                  fillColor: Color.fromRGBO(239, 239, 244, 1),
+                  filled: true,
+                  hintText: "Telephone",
+                  hintStyle: TextStyle(color: Colors.grey),
+                  enabledBorder: InputBorder.none,
+                  focusedBorder: InputBorder.none,
+                ),
               ),
               // const SizedBox(height: 10),
               SizedBox(height: size.height * 0.01),

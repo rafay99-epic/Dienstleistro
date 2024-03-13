@@ -6,6 +6,7 @@ import 'package:dienstleisto/frontend/widgets/textStyle.dart';
 import 'package:dienstleisto/frontend/widgets/textfeild.dart';
 import 'package:dienstleisto/frontend/widgets/timeline.dart';
 import 'package:flutter/material.dart';
+import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:page_transition/page_transition.dart';
 
 class PersonalInformation extends StatefulWidget {
@@ -108,12 +109,31 @@ class _PersonalInformationState extends State<PersonalInformation> {
                   textAlign: TextAlign.left,
                 ),
               ),
-              CustomTextField(
-                hintText: "Phone",
-                controller: _phoneController,
-                hintColor: Colors.grey,
-                fillColor: const Color.fromRGBO(239, 239, 244, 1),
-                enableOnlyNumbers: true,
+              InternationalPhoneNumberInput(
+                onInputChanged: (PhoneNumber number) {
+                  _phoneController.text = number.phoneNumber ?? '';
+                },
+                onInputValidated: (bool value) {
+                  print(value);
+                },
+                selectorConfig: const SelectorConfig(
+                  selectorType: PhoneInputSelectorType.DROPDOWN,
+                ),
+                ignoreBlank: false,
+                autoValidateMode: AutovalidateMode.disabled,
+                selectorTextStyle: const TextStyle(color: Colors.black),
+                initialValue: PhoneNumber(isoCode: 'DE'),
+                formatInput: false,
+                keyboardType: const TextInputType.numberWithOptions(
+                    signed: true, decimal: true),
+                inputDecoration: const InputDecoration(
+                  fillColor: Color.fromRGBO(239, 239, 244, 1),
+                  filled: true,
+                  hintText: "Telephone",
+                  hintStyle: TextStyle(color: Colors.grey),
+                  enabledBorder: InputBorder.none,
+                  focusedBorder: InputBorder.none,
+                ),
               ),
               SizedBox(
                 height: size.height * 0.02,
