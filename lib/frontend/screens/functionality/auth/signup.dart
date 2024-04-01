@@ -4,6 +4,7 @@ import 'package:dienstleisto/frontend/screens/functionality/ProfileCreate/verify
 import 'package:dienstleisto/frontend/screens/functionality/auth/login.dart';
 
 import 'package:dienstleisto/frontend/widgets/button.dart';
+import 'package:dienstleisto/frontend/widgets/snakbar.dart';
 import 'package:dienstleisto/frontend/widgets/textStyle.dart';
 import 'package:dienstleisto/frontend/widgets/textfeild.dart';
 import 'package:flutter/material.dart';
@@ -255,36 +256,29 @@ class _signUpState extends State<signUp> {
                       email.text.isEmpty ||
                       phoneNumber.text.isEmpty ||
                       password.text.isEmpty) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        elevation: 10,
-                        duration: const Duration(seconds: 2),
-                        width: size.width * 0.9,
-                        backgroundColor:
-                            Theme.of(context).colorScheme.secondary,
-                        showCloseIcon: true,
-                        behavior: SnackBarBehavior.floating,
-                        content: Text(
-                          "Please fill all the feilds",
-                          style: TextStyle(
-                            color: Theme.of(context).colorScheme.background,
-                            fontSize: 15,
-                          ),
-                        ),
-                      ),
-                    );
+                    const SnackBarWidget(text: "Please fill all the feilds");
                   } else {
                     //Verify phone number
-
-                    //verify Screens
-                    Navigator.push(
-                      context,
-                      PageTransition(
-                        type: PageTransitionType.rightToLeftWithFade,
-                        child: VerifyNumber(),
-                        duration: const Duration(milliseconds: 500),
-                      ),
-                    );
+                    try {
+                      // _auth.signUpWithEmailPassword(email.text, password.text);
+                      const SnackBarWidget(
+                        text:
+                            "Your Account is Created Successfully. Please Verify Your Phone Number.",
+                      );
+                      Navigator.push(
+                        context,
+                        PageTransition(
+                          type: PageTransitionType.rightToLeftWithFade,
+                          child: VerifyNumber(),
+                          duration: const Duration(milliseconds: 500),
+                        ),
+                      );
+                    } catch (e) {
+                      SnackBarWidget(
+                        text:
+                            "Account is Not Created Sorry for the inconvenience.$e",
+                      );
+                    }
                   }
 
                   //then add user into the firebase.

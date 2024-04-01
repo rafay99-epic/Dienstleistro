@@ -1,26 +1,29 @@
 // ignore_for_file: library_private_types_in_public_api, use_build_context_synchronously, avoid_unnecessary_containers
 
 import 'package:dienstleisto/backend/api/auth/auth_api.dart';
+import 'package:dienstleisto/backend/provider/provider.dart';
 import 'package:dienstleisto/frontend/widgets/button.dart';
 import 'package:dienstleisto/frontend/widgets/textStyle.dart';
 import 'package:dienstleisto/frontend/widgets/textfeild.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class ForgetPassword extends StatefulWidget {
-  ForgetPassword({super.key});
+class ChangePassword extends StatelessWidget {
+  ChangePassword({super.key});
 
-  @override
-  _ForgetPasswordState createState() => _ForgetPasswordState();
-  final TextEditingController _emailforgetpassword = TextEditingController();
-}
-
-class _ForgetPasswordState extends State<ForgetPassword> {
   final Authentication _auth = Authentication();
+  final passwordController = TextEditingController();
+  final confirmPasswordController = TextEditingController();
+  final currentPasswordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
+    //Calling the Provider
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    //Calling the Provider and getting the email address
+    final email = userProvider.email;
     // Get the screen size
     final size = MediaQuery.of(context).size;
-
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -36,7 +39,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
               color: Theme.of(context).colorScheme.primary,
             )),
         title: MyText(
-          text: 'Forget Password',
+          text: 'Update Password',
           color: Theme.of(context).colorScheme.primary,
           fontFamily: "ABeeZee",
           fontWeight: FontWeight.w400,
@@ -52,8 +55,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
             children: <Widget>[
               SizedBox(height: size.height * 0.05),
               MyText(
-                text:
-                    "Enter your email and will send you instruction on how to reset it",
+                text: "Password Update",
                 fontFamily: "ABeeZee",
                 fontWeight: FontWeight.w400,
                 fontStyle: FontStyle.normal,
@@ -62,10 +64,28 @@ class _ForgetPasswordState extends State<ForgetPassword> {
               ),
               SizedBox(height: size.height * 0.05), // 3% of screen height
               CustomTextField(
-                hintText: "Email",
-                controller: widget._emailforgetpassword,
+                hintText: "Current Password",
+                controller: currentPasswordController,
                 enableOnlyNumbers: false,
-                obscureText: false,
+                obscureText: true,
+                fillColor: const Color.fromRGBO(239, 239, 244, 1),
+                hintColor: Colors.grey,
+              ),
+              SizedBox(height: size.height * 0.03),
+              CustomTextField(
+                hintText: "New  Password",
+                controller: passwordController,
+                enableOnlyNumbers: false,
+                obscureText: true,
+                fillColor: const Color.fromRGBO(239, 239, 244, 1),
+                hintColor: Colors.grey,
+              ),
+              SizedBox(height: size.height * 0.03),
+              CustomTextField(
+                hintText: "Re-Enter New  Password",
+                controller: confirmPasswordController,
+                enableOnlyNumbers: false,
+                obscureText: true,
                 fillColor: const Color.fromRGBO(239, 239, 244, 1),
                 hintColor: Colors.grey,
               ),
@@ -73,35 +93,45 @@ class _ForgetPasswordState extends State<ForgetPassword> {
               CustomButton(
                 onPressed: () async {
                   try {
-                    String email = widget._emailforgetpassword.text;
-                    bool isReset = await _auth.resetPassword(email);
-                    String message;
-                    if (isReset) {
-                      message =
-                          "Email has been sent to reset password. Check your email.";
+                    if (currentPasswordController.text.isEmpty) {
+                      throw Exception('Please enter your current password');
+                    } else if (passwordController.text.isEmpty) {
+                      throw Exception('Please enter a new password');
+                    } else if (confirmPasswordController.text.isEmpty) {
+                      throw Exception('Please confirm your new password');
+                    } else if (passwordController.text !=
+                        confirmPasswordController.text) {
+                      throw Exception(
+                          'New password and password confirmation do not match');
                     } else {
-                      message =
-                          "Failed to send reset password email. Please try again.";
-                    }
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        elevation: 10,
-                        duration: const Duration(seconds: 2),
-                        width: size.width * 0.9,
-                        backgroundColor:
-                            Theme.of(context).colorScheme.secondary,
-                        showCloseIcon: true,
-                        behavior: SnackBarBehavior.floating,
-                        content: Text(
-                          message,
-                          style: TextStyle(
-                            color: Theme.of(context).colorScheme.background,
-                            fontSize: 15,
+                      await _auth.updatePassword(
+                        email,
+                        currentPasswordController.text,
+                        passwordController.text,
+                        confirmPasswordController.text,
+                      );
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          elevation: 10,
+                          duration: const Duration(seconds: 2),
+                          width: size.width * 0.9,
+                          backgroundColor:
+                              Theme.of(context).colorScheme.secondary,
+                          showCloseIcon: true,
+                          behavior: SnackBarBehavior.floating,
+                          content: Text(
+                            "Your Password has been updated successfully",
+                            style: TextStyle(
+                              color: Theme.of(context).colorScheme.background,
+                              fontSize: 15,
+                            ),
                           ),
                         ),
-                      ),
-                    );
-                    widget._emailforgetpassword.clear();
+                      );
+                      confirmPasswordController.clear();
+                      passwordController.clear();
+                      currentPasswordController.clear();
+                    }
                   } catch (e) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(

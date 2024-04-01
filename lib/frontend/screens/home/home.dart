@@ -45,30 +45,37 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                     padding: const EdgeInsets.only(left: 20, right: 20),
                     child: Align(
                       alignment: Alignment.centerLeft,
-                      child: RichText(
-                        text: TextSpan(
-                          children: <TextSpan>[
-                            TextSpan(
-                              text: 'Find your dream jon in',
-                              style: TextStyle(
-                                fontSize: 28,
-                                fontWeight: FontWeight.w400,
-                                color: Theme.of(context).colorScheme.background,
-                                fontStyle: FontStyle.italic,
-                                fontFamily: "ABeeZee",
-                              ),
+                      child: Center(
+                        child: Align(
+                          alignment: Alignment.center,
+                          child: RichText(
+                            text: TextSpan(
+                              children: <TextSpan>[
+                                TextSpan(
+                                  text: 'Get the Perfect Workers & Projects',
+                                  style: TextStyle(
+                                    fontSize: 28,
+                                    fontWeight: FontWeight.w400,
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .background,
+                                    fontStyle: FontStyle.italic,
+                                    fontFamily: "ABeeZee",
+                                  ),
+                                ),
+                                // TextSpan(
+                                //   text: '\nSan Francisco',
+                                //   style: TextStyle(
+                                //     fontSize: 28,
+                                //     fontWeight: FontWeight.w400,
+                                //     color: Theme.of(context).colorScheme.background,
+                                //     fontStyle: FontStyle.italic,
+                                //     fontFamily: "ABeeZee",
+                                //   ),
+                                // ),
+                              ],
                             ),
-                            TextSpan(
-                              text: '\nSan Francisco',
-                              style: TextStyle(
-                                fontSize: 28,
-                                fontWeight: FontWeight.w400,
-                                color: Theme.of(context).colorScheme.background,
-                                fontStyle: FontStyle.italic,
-                                fontFamily: "ABeeZee",
-                              ),
-                            ),
-                          ],
+                          ),
                         ),
                       ),
                     ),

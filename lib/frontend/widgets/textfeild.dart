@@ -1,57 +1,65 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first, must_be_immutable
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-class CustomTextField extends StatelessWidget {
+class CustomTextField extends StatefulWidget {
   final String hintText;
   final Color fillColor;
   final Color hintColor;
   final EdgeInsets padding;
   final TextEditingController controller;
   final bool enableOnlyNumbers;
-  final bool obscureText;
+  bool obscureText;
   final bool enableDropdown;
   final List<String> dropdownOptions;
   final bool enableDate;
   final int? maxLines;
+  final bool showPassword;
 
-  const CustomTextField({
+  CustomTextField({
     Key? key,
     required this.hintText,
-    required this.controller,
     this.fillColor = Colors.grey,
     this.hintColor = Colors.white,
     this.padding = const EdgeInsets.only(left: 0.0, right: 0.0),
+    required this.controller,
     this.enableOnlyNumbers = false,
     this.obscureText = false,
     this.enableDropdown = false,
     this.dropdownOptions = const [],
     this.enableDate = false,
     this.maxLines = 1,
+    this.showPassword = false,
   }) : super(key: key);
 
   @override
+  State<CustomTextField> createState() => _CustomTextFieldState();
+}
+
+class _CustomTextFieldState extends State<CustomTextField> {
+  @override
   Widget build(BuildContext context) {
-    final dateFormat = DateFormat('dd/MM/yyyy'); // Initialize DateFormat here
+    final dateFormat = DateFormat('dd/MM/yyyy');
 
     return Padding(
-      padding: padding,
-      child: enableDropdown
+      padding: widget.padding,
+      child: widget.enableDropdown
           ? DropdownButtonFormField<String>(
-              items: dropdownOptions.map((String value) {
+              items: widget.dropdownOptions.map((String value) {
                 return DropdownMenuItem<String>(
                   value: value,
                   child: Text(value),
                 );
               }).toList(),
               onChanged: (String? newValue) {
-                controller.text = newValue ?? '';
+                widget.controller.text = newValue ?? '';
               },
               decoration: InputDecoration(
                 filled: true,
-                fillColor: fillColor,
-                hintText: hintText,
+                fillColor: widget.fillColor,
+                hintText: widget.hintText,
                 hintStyle: TextStyle(
-                  color: hintColor,
+                  color: widget.hintColor,
                 ),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
@@ -59,9 +67,9 @@ class CustomTextField extends StatelessWidget {
                 ),
               ),
             )
-          : enableDate
+          : widget.enableDate
               ? TextFormField(
-                  controller: controller,
+                  controller: widget.controller,
                   readOnly: true,
                   onTap: () async {
                     final date = await showDatePicker(
@@ -71,15 +79,15 @@ class CustomTextField extends StatelessWidget {
                       lastDate: DateTime.now(),
                     );
                     if (date != null) {
-                      controller.text = dateFormat.format(date);
+                      widget.controller.text = dateFormat.format(date);
                     }
                   },
                   decoration: InputDecoration(
                     filled: true,
-                    fillColor: fillColor,
-                    hintText: hintText,
+                    fillColor: widget.fillColor,
+                    hintText: widget.hintText,
                     hintStyle: TextStyle(
-                      color: hintColor,
+                      color: widget.hintColor,
                     ),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
@@ -92,26 +100,68 @@ class CustomTextField extends StatelessWidget {
                   ),
                 )
               : TextField(
-                  controller: controller,
-                  maxLines: maxLines,
-                  keyboardType: enableOnlyNumbers ? TextInputType.number : null,
-                  obscureText: obscureText,
+                  controller: widget.controller,
+                  maxLines: widget.maxLines,
+                  keyboardType:
+                      widget.enableOnlyNumbers ? TextInputType.number : null,
+                  obscureText: widget.obscureText,
                   style: TextStyle(
                     color: Theme.of(context).colorScheme.primary,
                   ),
                   decoration: InputDecoration(
                     filled: true,
-                    fillColor: fillColor,
-                    hintText: hintText,
+                    fillColor: widget.fillColor,
+                    hintText: widget.hintText,
                     hintStyle: TextStyle(
-                      color: hintColor,
+                      color: widget.hintColor,
                     ),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
                       borderSide: BorderSide.none,
                     ),
+                    suffixIcon: widget.showPassword
+                        ? IconButton(
+                            // Check the value of showPassword here
+                            icon: Icon(
+                              widget.obscureText
+                                  ? Icons.visibility
+                                  : Icons.visibility_off,
+                              color: widget.obscureText
+                                  ? Colors.black
+                                  : Colors.grey,
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                widget.obscureText = !widget.obscureText;
+                              });
+                            },
+                          )
+                        : null,
                   ),
                 ),
     );
+
+    // TextField(
+    //     controller: widget.controller,
+    //     maxLines: widget.maxLines,
+    //     keyboardType:
+    //         widget.enableOnlyNumbers ? TextInputType.number : null,
+    //     obscureText: widget.obscureText,
+    //     style: TextStyle(
+    //       color: Theme.of(context).colorScheme.primary,
+    //     ),
+    //     decoration: InputDecoration(
+    //       filled: true,
+    //       fillColor: widget.fillColor,
+    //       hintText: widget.hintText,
+    //       hintStyle: TextStyle(
+    //         color: widget.hintColor,
+    //       ),
+    //       border: OutlineInputBorder(
+    //         borderRadius: BorderRadius.circular(10),
+    //         borderSide: BorderSide.none,
+    //       ),
+    //     ),
+    //   ),
   }
 }

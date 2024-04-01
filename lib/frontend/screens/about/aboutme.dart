@@ -1,6 +1,5 @@
 // ignore_for_file: library_private_types_in_public_api, use_build_context_synchronously
 
-import 'package:dienstleisto/backend/auth/auth_service.dart';
 import 'package:dienstleisto/frontend/screens/about/aboutmetemplate.dart';
 import 'package:dienstleisto/frontend/screens/about/setting.dart';
 import 'package:dienstleisto/frontend/screens/functionality/auth/login.dart';
@@ -18,7 +17,7 @@ class AboutMe extends StatefulWidget {
 
 class _AboutMeState extends State<AboutMe> {
   //autho controller for logout service
-  final AuthService _authService = AuthService();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -68,7 +67,7 @@ class _AboutMeState extends State<AboutMe> {
                           child: const Text('Yes'),
                           onPressed: () async {
                             Navigator.of(context).pop();
-                            await _authService.signOut();
+
                             Navigator.push(
                               context,
                               PageTransition(

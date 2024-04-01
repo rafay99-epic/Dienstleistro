@@ -1,10 +1,13 @@
 // ignore_for_file: library_private_types_in_public_api, use_build_context_synchronously
 
-import 'package:dienstleisto/backend/auth/auth_service.dart';
+import 'package:dienstleisto/backend/api/auth/auth_api.dart';
+import 'package:dienstleisto/backend/provider/provider.dart';
 import 'package:dienstleisto/frontend/screens/functionality/auth/login.dart';
+import 'package:dienstleisto/frontend/screens/functionality/auth/update_password.dart';
 import 'package:dienstleisto/frontend/widgets/textStyle.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:provider/provider.dart';
 
 class SettingPage extends StatefulWidget {
   const SettingPage({super.key});
@@ -17,8 +20,7 @@ class _SettingPageState extends State<SettingPage> {
   bool isNewsletterEnabled = false;
   bool isTextMessagesEnabled = false;
   bool isPhoneCallsEnabled = false;
-
-  final AuthService _authService = AuthService();
+  final Authentication _auth = Authentication();
 
   @override
   Widget build(BuildContext context) {
@@ -99,7 +101,12 @@ class _SettingPageState extends State<SettingPage> {
                     size: 14,
                   ),
                   onTap: () {
-                    // Handle privacy policy tap
+                    Navigator.of(context).push(
+                      PageTransition(
+                        type: PageTransitionType.leftToRightWithFade,
+                        child: ChangePassword(),
+                      ),
+                    );
                   },
                 ),
                 // Change Notifcation
@@ -192,15 +199,58 @@ class _SettingPageState extends State<SettingPage> {
                     size: 14,
                   ),
                   onTap: () async {
-                    await _authService.signOut();
-                    Navigator.push(
-                      context,
-                      PageTransition(
-                        type: PageTransitionType.rightToLeftWithFade,
-                        child: const login(),
-                        duration: const Duration(milliseconds: 500),
-                      ),
-                    );
+                    try {
+                      UserProvider userProvider =
+                          Provider.of<UserProvider>(context, listen: false);
+                      String email = userProvider.email;
+                      bool isLoggedOut = await _auth.logoutAPI(email);
+                      if (isLoggedOut) {
+                        Navigator.push(
+                          context,
+                          PageTransition(
+                            type: PageTransitionType.rightToLeftWithFade,
+                            child: const login(),
+                            duration: const Duration(milliseconds: 500),
+                          ),
+                        );
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            elevation: 10,
+                            duration: const Duration(seconds: 2),
+                            backgroundColor:
+                                Theme.of(context).colorScheme.secondary,
+                            showCloseIcon: true,
+                            behavior: SnackBarBehavior.floating,
+                            content: Text(
+                              "Logout failed. Please try again.",
+                              style: TextStyle(
+                                color: Theme.of(context).colorScheme.background,
+                                fontSize: 15,
+                              ),
+                            ),
+                          ),
+                        );
+                      }
+                    } catch (e) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          elevation: 10,
+                          duration: const Duration(seconds: 2),
+                          backgroundColor:
+                              Theme.of(context).colorScheme.secondary,
+                          showCloseIcon: true,
+                          behavior: SnackBarBehavior.floating,
+                          content: Text(
+                            "'Failed to logout: $e'",
+                            style: TextStyle(
+                              color: Theme.of(context).colorScheme.background,
+                              fontSize: 15,
+                            ),
+                          ),
+                        ),
+                      );
+                    }
                   },
                 ),
               ],

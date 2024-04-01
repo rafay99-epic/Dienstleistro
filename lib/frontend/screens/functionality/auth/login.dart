@@ -1,6 +1,7 @@
-// ignore_for_file: use_build_context_synchronously, camel_case_types
+// ignore_for_file: use_build_context_synchronously, camel_case_types, library_private_types_in_public_api
 
-import 'package:dienstleisto/backend/auth/auth_service.dart';
+import 'package:dienstleisto/backend/api/auth/auth_api.dart';
+import 'package:dienstleisto/backend/provider/provider.dart';
 import 'package:dienstleisto/frontend/screens/functionality/auth/forgetPassword.dart';
 import 'package:dienstleisto/frontend/screens/functionality/auth/signup.dart';
 
@@ -8,28 +9,28 @@ import 'package:dienstleisto/frontend/screens/home/navbar.dart';
 import 'package:dienstleisto/frontend/widgets/button.dart';
 import 'package:dienstleisto/frontend/widgets/textStyle.dart';
 import 'package:dienstleisto/frontend/widgets/textfeild.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:provider/provider.dart';
 
 class login extends StatefulWidget {
-  const login({super.key});
+  const login({Key? key}) : super(key: key);
 
   @override
-  State<login> createState() => _loginState();
+  _loginState createState() => _loginState();
 }
 
 class _loginState extends State<login> {
-  final AuthService _authService = AuthService();
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
-  bool rememberMe = false;
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  bool _rememberMe = false;
+  final Authentication _auth = Authentication();
 
   @override
   Widget build(BuildContext context) {
-    // Get the screen size
     final size = MediaQuery.of(context).size;
+
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
       body: SingleChildScrollView(
@@ -38,240 +39,22 @@ class _loginState extends State<login> {
           child: Column(
             children: <Widget>[
               SizedBox(height: size.height * 0.15, width: size.width * 0.5),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: RichText(
-                  text: TextSpan(
-                    children: <TextSpan>[
-                      TextSpan(
-                        text: 'Welcome',
-                        style: TextStyle(
-                          fontSize: 40,
-                          fontWeight: FontWeight.w400,
-                          color: Theme.of(context).colorScheme.primary,
-                          fontStyle: FontStyle.italic,
-                          fontFamily: "ABeeZee",
-                        ),
-                      ),
-                      TextSpan(
-                        text: '\nback',
-                        style: TextStyle(
-                          fontSize: 40,
-                          fontWeight: FontWeight.w400,
-                          color: Theme.of(context).colorScheme.primary,
-                          fontStyle: FontStyle.italic,
-                          fontFamily: "ABeeZee",
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+              _buildWelcomeText(),
               const SizedBox(height: 10),
-              const Align(
-                alignment: Alignment.centerLeft,
-                child: MyText(
-                  text: "Sign in to continue",
-                  fontSize: 17,
-                  fontFamily: "ABeeZee",
-                  fontWeight: FontWeight.w400,
-                  textAlign: TextAlign.left,
-                  color: Colors.grey,
-                ),
-              ),
+              _buildSignInText(),
               const SizedBox(height: 25),
-              CustomTextField(
-                hintText: 'Email',
-                fillColor: const Color.fromRGBO(239, 239, 244, 1),
-                hintColor: Colors.grey,
-                controller: emailController,
-              ),
+              _buildEmailField(),
               const SizedBox(height: 10),
-              CustomTextField(
-                hintText: 'Password',
-                fillColor: const Color.fromRGBO(239, 239, 244, 1),
-                hintColor: Colors.grey,
-                controller: passwordController,
-                obscureText: true,
-              ),
+              _buildPasswordField(),
               const SizedBox(height: 15),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Row(
-                    children: [
-                      ClipOval(
-                        child: Material(
-                          color: Colors.transparent,
-                          child: InkWell(
-                            splashColor: Colors.green, // inkwell color
-                            child: SizedBox(
-                              width: 30,
-                              height: 30,
-                              child: Icon(
-                                rememberMe
-                                    ? Icons.check
-                                    : Icons.check_box_outline_blank,
-                                color: rememberMe ? Colors.green : Colors.black,
-                              ),
-                            ),
-                            onTap: () {
-                              setState(() {
-                                rememberMe = !rememberMe;
-                              });
-                            },
-                          ),
-                        ),
-                      ),
-                      MyText(
-                        text: 'Remember Me',
-                        fontFamily: "ABeeZee",
-                        fontSize: 15,
-                        fontWeight: FontWeight.w400,
-                        color: Theme.of(context).colorScheme.inversePrimary,
-                      ),
-                    ],
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      // Handle forgot password here
-                      Navigator.push(
-                        context,
-                        PageTransition(
-                          type: PageTransitionType.rightToLeftWithFade,
-                          child: ForgetPassword(),
-                          duration: const Duration(milliseconds: 500),
-                        ),
-                      );
-                    },
-                    child: MyText(
-                      text: 'Forgot Password?',
-                      fontFamily: "ABeeZee",
-                      fontSize: 15,
-                      fontWeight: FontWeight.w400,
-                      textAlign: TextAlign.right,
-                      color: Theme.of(context).colorScheme.inversePrimary,
-                    ),
-                  ),
-                ],
-              ),
+              _buildRememberMeAndForgotPasswordRow(context),
               const SizedBox(height: 20),
-              CustomButton(
-                onPressed: () async {
-                  //logic for sign In Button from firebase
-
-                  //check for all fields no field is empty
-
-                  if (emailController.text.isEmpty ||
-                      passwordController.text.isEmpty) {
-                    //snak bar
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        elevation: 10,
-                        duration: const Duration(seconds: 2),
-                        width: size.width * 0.9,
-                        backgroundColor:
-                            Theme.of(context).colorScheme.secondary,
-                        showCloseIcon: true,
-                        behavior: SnackBarBehavior.floating,
-                        content: Text(
-                          "Please fill all the feilds",
-                          style: TextStyle(
-                            color: Theme.of(context).colorScheme.background,
-                            fontSize: 15,
-                          ),
-                        ),
-                      ),
-                    );
-                    return;
-                  } else {
-                    await handleLogin(context);
-                    //making sure to clear the controller
-                    emailController.clear();
-                    passwordController.clear();
-                  }
-                },
-                text: "Sign In",
-                enableIcon: false,
-                backgroundColor: Theme.of(context).colorScheme.secondary,
-                buttonTextColor: Theme.of(context).colorScheme.background,
-                buttonTextSize: 17,
-                buttonTextAlign: TextAlign.center,
-                buttonTextFontFamily: 'ABeeZee',
-                buttonTextfontStyle: FontStyle.italic,
-              ),
+              _buildSignInButton(context, size),
               const SizedBox(height: 10),
-              const Align(
-                alignment: Alignment.center,
-                child: Text(
-                  "or",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              ),
+              _buildOrText(),
               const SizedBox(height: 10),
-              CustomButton(
-                onPressed: () {
-                  // Handle button press
-                },
-                icon: FontAwesomeIcons.facebook,
-                text: 'Sign in with Facebook',
-                enableIcon: true,
-                backgroundColor: Theme.of(context).colorScheme.background,
-                borderRadius: 10.0,
-                buttonTextColor: Theme.of(context).colorScheme.primary,
-                buttonTextSize: 17,
-                buttonTextAlign: TextAlign.center,
-                buttonTextFontFamily: 'ABeeZee',
-                buttonTextfontStyle: FontStyle.italic,
-                iconColor: Theme.of(context).colorScheme.primary,
-              ),
-              Padding(
-                padding: EdgeInsets.only(
-                  left: size.width * 0.1,
-                  right: size.width * 0.1,
-                  bottom: size.height * 0.02,
-                  top: size.height * 0.13,
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    MyText(
-                      text: "Don't have an account?",
-                      color: Theme.of(context).colorScheme.inversePrimary,
-                      fontSize: 17,
-                      textAlign: TextAlign.center,
-                      fontFamily: "ABeeZee",
-                      fontWeight: FontWeight.w400,
-                      fontStyle: FontStyle.italic,
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          PageTransition(
-                            type: PageTransitionType.rightToLeftWithFade,
-                            child: const signUp(),
-                            duration: const Duration(milliseconds: 500),
-                          ),
-                        );
-                      },
-                      child: MyText(
-                        text: ' Sign Up',
-                        color: Theme.of(context).colorScheme.primary,
-                        fontSize: 17,
-                        textAlign: TextAlign.center,
-                        fontFamily: "ABeeZee",
-                        fontWeight: FontWeight.w400,
-                        fontStyle: FontStyle.italic,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+              _buildGoogleSignInButton(context),
+              _buildSignUpRow(context, size),
             ],
           ),
         ),
@@ -279,72 +62,307 @@ class _loginState extends State<login> {
     );
   }
 
-  //Login Function
-  Future<void> handleLogin(BuildContext context) async {
-    try {
-      UserCredential? userCredential =
-          await _authService.signInWithEmailAndPassword(
-        emailController.text,
-        passwordController.text,
-      );
+  Widget _buildWelcomeText() {
+    return Align(
+      alignment: Alignment.centerLeft,
+      child: RichText(
+        text: TextSpan(
+          children: <TextSpan>[
+            TextSpan(
+              text: 'Welcome\nback',
+              style: TextStyle(
+                fontSize: 40,
+                fontWeight: FontWeight.w400,
+                color: Theme.of(context).colorScheme.primary,
+                fontStyle: FontStyle.italic,
+                fontFamily: "ABeeZee",
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 
-      // If the user is authenticated, navigate to the next screen
-      if (userCredential != null && userCredential.user != null) {
+  Widget _buildSignInText() {
+    return const Align(
+      alignment: Alignment.centerLeft,
+      child: MyText(
+        text: "Sign in to continue",
+        fontSize: 17,
+        fontFamily: "ABeeZee",
+        fontWeight: FontWeight.w400,
+        textAlign: TextAlign.left,
+        color: Colors.grey,
+      ),
+    );
+  }
+
+  Widget _buildEmailField() {
+    return CustomTextField(
+      hintText: 'Email',
+      fillColor: const Color.fromRGBO(239, 239, 244, 1),
+      hintColor: Colors.grey,
+      controller: _emailController,
+    );
+  }
+
+  Widget _buildPasswordField() {
+    return CustomTextField(
+      hintText: 'Password',
+      fillColor: const Color.fromRGBO(239, 239, 244, 1),
+      hintColor: Colors.grey,
+      controller: _passwordController,
+      obscureText: true,
+    );
+  }
+
+  Widget _buildRememberMeAndForgotPasswordRow(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: <Widget>[
+        Row(
+          children: [
+            ClipOval(
+              child: Material(
+                color: Colors.transparent,
+                child: InkWell(
+                  splashColor: Colors.green,
+                  child: SizedBox(
+                    width: 30,
+                    height: 30,
+                    child: Icon(
+                      _rememberMe ? Icons.check : Icons.check_box_outline_blank,
+                      color: _rememberMe ? Colors.green : Colors.black,
+                    ),
+                  ),
+                  onTap: () {
+                    setState(() {
+                      _rememberMe = !_rememberMe;
+                    });
+                  },
+                ),
+              ),
+            ),
+            MyText(
+              text: 'Remember Me',
+              fontFamily: "ABeeZee",
+              fontSize: 15,
+              fontWeight: FontWeight.w400,
+              color: Theme.of(context).colorScheme.inversePrimary,
+            ),
+          ],
+        ),
+        TextButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              PageTransition(
+                type: PageTransitionType.rightToLeftWithFade,
+                child: ForgetPassword(),
+                duration: const Duration(milliseconds: 500),
+              ),
+            );
+          },
+          child: MyText(
+            text: 'Forgot Password?',
+            fontFamily: "ABeeZee",
+            fontSize: 15,
+            fontWeight: FontWeight.w400,
+            textAlign: TextAlign.right,
+            color: Theme.of(context).colorScheme.inversePrimary,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildSignInButton(BuildContext context, Size size) {
+    return CustomButton(
+      onPressed: () async {
+        if (_emailController.text.isEmpty || _passwordController.text.isEmpty) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              elevation: 10,
+              duration: const Duration(seconds: 2),
+              width: size.width * 0.9,
+              backgroundColor: Theme.of(context).colorScheme.secondary,
+              showCloseIcon: true,
+              behavior: SnackBarBehavior.floating,
+              content: Text(
+                "Please fill all the fields",
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.background,
+                  fontSize: 15,
+                ),
+              ),
+            ),
+          );
+          return;
+        } else {
+          await _handleLogin(context);
+          _emailController.clear();
+          _passwordController.clear();
+        }
+      },
+      text: "Sign In",
+      enableIcon: false,
+      backgroundColor: Theme.of(context).colorScheme.secondary,
+      buttonTextColor: Theme.of(context).colorScheme.background,
+      buttonTextSize: 17,
+      buttonTextAlign: TextAlign.center,
+      buttonTextFontFamily: 'ABeeZee',
+      buttonTextfontStyle: FontStyle.italic,
+    );
+  }
+
+  Widget _buildOrText() {
+    return const Align(
+      alignment: Alignment.center,
+      child: Text(
+        "or",
+        textAlign: TextAlign.center,
+        style: TextStyle(
+          fontSize: 20,
+          fontWeight: FontWeight.w500,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildGoogleSignInButton(BuildContext context) {
+    return CustomButton(
+      onPressed: () async {
+        try {
+          await _auth.signInWithGoogle();
+          // Navigate to the next page or update the UI here
+        } catch (e) {
+          print('Error occurred while signing in with Google: $e');
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              elevation: 10,
+              duration: const Duration(seconds: 2),
+              backgroundColor: Theme.of(context).colorScheme.secondary,
+              showCloseIcon: true,
+              behavior: SnackBarBehavior.floating,
+              content: Text(
+                "'Failed to login: $e'",
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.background,
+                  fontSize: 15,
+                ),
+              ),
+            ),
+          );
+          // Show an error message or handle the error here
+        }
+      },
+      icon: FontAwesomeIcons.google,
+      text: 'Sign in with Google',
+      enableIcon: true,
+      backgroundColor: Theme.of(context).colorScheme.background,
+      borderRadius: 10.0,
+      buttonTextColor: Theme.of(context).colorScheme.primary,
+      buttonTextSize: 17,
+      buttonTextAlign: TextAlign.center,
+      buttonTextFontFamily: 'ABeeZee',
+      buttonTextfontStyle: FontStyle.italic,
+      iconColor: Theme.of(context).colorScheme.primary,
+    );
+  }
+
+  Widget _buildSignUpRow(BuildContext context, Size size) {
+    return Padding(
+      padding: EdgeInsets.only(
+        left: size.width * 0.1,
+        right: size.width * 0.1,
+        bottom: size.height * 0.02,
+        top: size.height * 0.13,
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          MyText(
+            text: "Don't have an account?",
+            color: Theme.of(context).colorScheme.inversePrimary,
+            fontSize: 17,
+            textAlign: TextAlign.center,
+            fontFamily: "ABeeZee",
+            fontWeight: FontWeight.w400,
+            fontStyle: FontStyle.italic,
+          ),
+          GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                PageTransition(
+                  type: PageTransitionType.rightToLeftWithFade,
+                  child: const signUp(),
+                  duration: const Duration(milliseconds: 500),
+                ),
+              );
+            },
+            child: MyText(
+              text: ' Sign Up',
+              color: Theme.of(context).colorScheme.primary,
+              fontSize: 17,
+              textAlign: TextAlign.center,
+              fontFamily: "ABeeZee",
+              fontWeight: FontWeight.w400,
+              fontStyle: FontStyle.italic,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future<void> _handleLogin(BuildContext context) async {
+    String email = _emailController.text;
+    String password = _passwordController.text;
+
+    try {
+      bool loginSuccess = await _auth.loginAPI(email, password);
+      if (loginSuccess) {
+        UserProvider userProvider =
+            Provider.of<UserProvider>(context, listen: false);
+        userProvider.setEmail(email);
         Navigator.push(
           context,
-          PageTransition(
-            type: PageTransitionType.rightToLeftWithFade,
-            child: const Navbar(),
-            duration: const Duration(milliseconds: 500),
-          ),
+          MaterialPageRoute(builder: (context) => const Navbar()),
         );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          elevation: 10,
+          duration: const Duration(seconds: 2),
+          backgroundColor: Theme.of(context).colorScheme.secondary,
+          showCloseIcon: true,
+          behavior: SnackBarBehavior.floating,
+          content: Text(
+            'Invalid email or password. Please try again.',
+            style: TextStyle(
+              color: Theme.of(context).colorScheme.background,
+              fontSize: 15,
+            ),
+          ),
+        ));
       }
     } catch (e) {
-      String errorMessage;
-      if (e is FirebaseAuthException) {
-        switch (e.code) {
-          case 'auth/user-not-found':
-            errorMessage = 'No user found for that email.';
-            break;
-          case 'auth/wrong-password':
-            errorMessage = 'Wrong password provided for that user.';
-            break;
-          case 'auth/invalid-email':
-            errorMessage = 'The email address is not valid.';
-            break;
-          case 'auth/invalid-credential':
-            errorMessage = 'The credential data is malformed or has expired.';
-            break;
-          default:
-            errorMessage = 'An unknown error occurred.';
-            break;
-        }
-      } else {
-        errorMessage = 'An error occurred.';
-      }
-
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: const MyText(
-              text: 'Login Error',
-              fontSize: 14,
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          elevation: 10,
+          duration: const Duration(seconds: 2),
+          backgroundColor: Theme.of(context).colorScheme.secondary,
+          showCloseIcon: true,
+          behavior: SnackBarBehavior.floating,
+          content: Text(
+            "'Failed to login: $e'",
+            style: TextStyle(
+              color: Theme.of(context).colorScheme.background,
+              fontSize: 15,
             ),
-            content: Text(errorMessage),
-            actions: <Widget>[
-              TextButton(
-                child: const MyText(
-                  text: 'OK',
-                  fontSize: 14,
-                ),
-                onPressed: () {
-                  Navigator.of(context).pop(); // Close the dialog box
-                },
-              ),
-            ],
-          );
-        },
+          ),
+        ),
       );
     }
   }
