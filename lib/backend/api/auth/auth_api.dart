@@ -1,15 +1,29 @@
+// ignore_for_file: use_build_context_synchronously, avoid_print, unnecessary_null_comparison
+
 import 'dart:io';
 
+import 'package:dienstleisto/backend/provider/provider.dart';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:provider/provider.dart';
 
 class Authentication {
+  //-----------------
+  // Google Sign In
+  //-----------------
   final GoogleSignIn googleSignIn = GoogleSignIn();
-  // Login API with Auth Gate
 
-  Future<bool> loginAPI(String email, String password) async {
+  //-----------------------
+  // Login API
+  //  Role Based Login
+  //    1. Seller
+  //    2. Customer
+  //  Auth Gate
+  //----------------------
+  Future<bool> loginAPI(
+      String email, String password, BuildContext context) async {
     try {
       final response = await http.post(
         Uri.parse('https://dienstleisto.chumairabdullah.com/api/login'),
@@ -20,14 +34,18 @@ class Authentication {
       );
 
       if (response.statusCode == 200) {
-        print('Login successful');
-        print('Response body: ${response.body}');
+        //     print('Login successful');
+        //   print('Response body: ${response.body}');
         Map<String, dynamic> responseBody = jsonDecode(response.body);
-        print('Response body map: $responseBody');
+        // print('Response body map: $responseBody');
         String? token = responseBody['token'];
+        print('Token: $token');
+        Map<String, dynamic> user = responseBody['user'];
+        String? role = user['role']; // Extract the role from the user object
         if (token != null) {
-          SharedPreferences prefs = await SharedPreferences.getInstance();
-          await prefs.setString('token', token);
+          // Update the UserProvider with the new token and role
+          Provider.of<UserProvider>(context, listen: false).setToken(token);
+          Provider.of<UserProvider>(context, listen: false).setRole(role ?? '');
           return true;
         } else {
           print('Token is null');
@@ -44,19 +62,23 @@ class Authentication {
     }
   }
 
-  //Is user logged in function
-  Future<bool> isLoggedIn() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? token = prefs.getString('token');
-    return token != null;
+  //---------------------------------
+  // Check for User is Logged in
+  //---------------------------------
+  Future<bool> isLoggedIn(BuildContext context) {
+    String? token = Provider.of<UserProvider>(context, listen: false).token;
+    return Future.value(token != null && token.isNotEmpty);
   }
 
-  //Logout API
-  Future<bool> logoutAPI(String email) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? token = prefs.getString('token');
+  //-----------------
+  // Logout API
+  //-----------------
+  Future<bool> logoutAPI(String email, BuildContext context) async {
+    UserProvider userProvider =
+        Provider.of<UserProvider>(context, listen: false);
+    String? token = userProvider.token;
 
-    if (token != null) {
+    if (token.isNotEmpty) {
       final response = await http.post(
         Uri.parse('https://dienstleisto.chumairabdullah.com/api/logout'),
         headers: {
@@ -69,7 +91,7 @@ class Authentication {
 
       if (response.statusCode == 200) {
         print('Logout successful');
-        await prefs.remove('token');
+        userProvider.clear();
         return true;
       } else {
         print('Failed to logout. Status code: ${response.statusCode}');
@@ -82,7 +104,9 @@ class Authentication {
     }
   }
 
-  //forget Password
+  //-----------------
+  // Forget Password
+  //-----------------
   Future<bool> resetPassword(String email) async {
     try {
       final response = await http.post(
@@ -110,8 +134,10 @@ class Authentication {
     }
   }
 
+  //-------------------------------
   // Sign in with google
   //Problem: need to sign key
+  //-------------------------------
   Future<void> signInWithGoogle() async {
     try {
       final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
@@ -149,7 +175,9 @@ class Authentication {
     }
   }
 
-  // Update the password
+  //-------------------------
+  // Update the Password
+  //-------------------------
   Future<void> updatePassword(String email, String currentPassword,
       String newPassword, String passwordConfirmation) async {
     try {
@@ -182,6 +210,66 @@ class Authentication {
     } catch (e) {
       print('Error occurred while updating password: $e');
       // handle any other types of exceptions
+    }
+  }
+
+  //-----------------
+  // Register User
+  //-----------------
+
+  Future<bool> registerUser({
+    required String name,
+    required String email,
+    required String password,
+    required String phone,
+    required String selectedCountryName,
+    required String city,
+    required String address,
+    required String firstName,
+    required String lastName,
+    required String passwordConfirmation,
+    required String mode,
+    required String role,
+  }) async {
+    try {
+      final response = await http.post(
+        Uri.parse('https://dienstleisto.chumairabdullah.com/api/register'),
+        body: {
+          'name': name,
+          'email': email,
+          'password': password,
+          'phone': phone,
+          'selectedCountryName': selectedCountryName,
+          'city': city,
+          'address': address,
+          'firstName': firstName,
+          'lastName': lastName,
+          'passwordConfirmation': passwordConfirmation,
+          'mode': mode,
+          'role': role,
+        },
+      );
+
+      if (response.statusCode == 200) {
+        print('User registered successfully');
+        return true;
+      } else {
+        print('Failed to register user. Status code: ${response.statusCode}');
+        print('Response body: ${response.body}');
+        return false;
+      }
+    } on SocketException {
+      print('No Internet connection');
+      return false;
+    } on HttpException {
+      print('Could not find the server');
+      return false;
+    } on FormatException {
+      print('Bad response format');
+      return false;
+    } catch (e) {
+      print('An error occurred: $e');
+      return false;
     }
   }
 }

@@ -203,7 +203,7 @@ class _SettingPageState extends State<SettingPage> {
                       UserProvider userProvider =
                           Provider.of<UserProvider>(context, listen: false);
                       String email = userProvider.email;
-                      bool isLoggedOut = await _auth.logoutAPI(email);
+                      bool isLoggedOut = await _auth.logoutAPI(email, context);
                       if (isLoggedOut) {
                         Navigator.push(
                           context,

@@ -38,7 +38,7 @@ class _loginState extends State<login> {
           padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
           child: Column(
             children: <Widget>[
-              SizedBox(height: size.height * 0.15, width: size.width * 0.5),
+              const SizedBox(height: 130.0),
               _buildWelcomeText(),
               const SizedBox(height: 10),
               _buildSignInText(),
@@ -113,6 +113,7 @@ class _loginState extends State<login> {
       fillColor: const Color.fromRGBO(239, 239, 244, 1),
       hintColor: Colors.grey,
       controller: _passwordController,
+      showPassword: true,
       obscureText: true,
     );
   }
@@ -322,15 +323,58 @@ class _loginState extends State<login> {
     String password = _passwordController.text;
 
     try {
-      bool loginSuccess = await _auth.loginAPI(email, password);
+      bool loginSuccess = await _auth.loginAPI(email, password, context);
       if (loginSuccess) {
         UserProvider userProvider =
             Provider.of<UserProvider>(context, listen: false);
         userProvider.setEmail(email);
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => const Navbar()),
-        );
+        String role = userProvider.role;
+        print('Role: $role');
+        if (role == 'Seller' || role == 'Customer') {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const Navbar()),
+          );
+        } else if (role == 'Admin') {
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: const Text('Admin not available'),
+                content: const Text(
+                    'Admin is not available on mobile. Please use the website for admin account.'),
+                actions: <Widget>[
+                  ElevatedButton(
+                    child: const Text('OK'),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ],
+              );
+            },
+          );
+        } else {
+          print('Invalid role: $role');
+          // Handle invalid role or show error message
+          // showDialog(
+          //   context: context,
+          //   builder: (BuildContext context) {
+          //     return AlertDialog(
+          //       title: const Text('Error'),
+          //       content: const Text('There is some Error, Please Try again.'),
+          //       actions: <Widget>[
+          //         ElevatedButton(
+          //           child: const Text('OK'),
+          //           onPressed: () {
+          //             Navigator.of(context).pop();
+          //           },
+          //         ),
+          //       ],
+          //     );
+          //   },
+          // );
+        }
       } else {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           elevation: 10,
