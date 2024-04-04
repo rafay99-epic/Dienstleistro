@@ -217,7 +217,7 @@ class Authentication {
   // Register User
   //-----------------
 
-  Future<bool> registerUser({
+  Future<Map<String, dynamic>> registerUser({
     required String name,
     required String email,
     required String password,
@@ -233,7 +233,7 @@ class Authentication {
   }) async {
     try {
       final response = await http.post(
-        Uri.parse('https://dienstleisto.chumairabdullah.com/api/register'),
+        Uri.parse('http://18.195.68.122/api/register'),
         body: {
           'name': name,
           'email': email,
@@ -252,24 +252,28 @@ class Authentication {
 
       if (response.statusCode == 200) {
         print('User registered successfully');
-        return true;
+        return {'success': true, 'message': 'User registered successfully'};
       } else {
         print('Failed to register user. Status code: ${response.statusCode}');
         print('Response body: ${response.body}');
-        return false;
+        return {
+          'success': false,
+          'message':
+              'Failed to register user. Status code: ${response.statusCode}. Response body: ${response.body}'
+        };
       }
     } on SocketException {
       print('No Internet connection');
-      return false;
+      return {'success': false, 'message': 'No Internet connection'};
     } on HttpException {
       print('Could not find the server');
-      return false;
+      return {'success': false, 'message': 'Could not find the server'};
     } on FormatException {
       print('Bad response format');
-      return false;
+      return {'success': false, 'message': 'Bad response format'};
     } catch (e) {
       print('An error occurred: $e');
-      return false;
+      return {'success': false, 'message': 'An error occurred: $e'};
     }
   }
 }
