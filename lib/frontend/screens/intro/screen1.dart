@@ -1,6 +1,6 @@
 // ignore_for_file: camel_case_types
 
-import 'package:dienstleisto/frontend/screens/functionality/auth/login.dart';
+import 'package:dienstleisto/frontend/screens/functionality/auth/login/login.dart';
 // import 'package:dienstleisto/frontend/screens/intro/choose.dart';
 import 'package:dienstleisto/frontend/screens/intro/screen2.dart';
 import 'package:flutter_animation_progress_bar/flutter_animation_progress_bar.dart';

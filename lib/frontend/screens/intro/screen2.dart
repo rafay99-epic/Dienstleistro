@@ -1,4 +1,4 @@
-import 'package:dienstleisto/frontend/screens/functionality/auth/login.dart';
+import 'package:dienstleisto/frontend/screens/functionality/auth/login/login.dart';
 
 import 'package:dienstleisto/frontend/screens/intro/screen3.dart';
 import 'package:dienstleisto/frontend/widgets/textStyle.dart';

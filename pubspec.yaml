@@ -43,6 +43,7 @@ dependencies:
   shared_preferences: ^2.2.2
   provider: ^6.1.2
   google_sign_in: ^6.2.1
+  csc_picker: ^0.2.7
 
 dev_dependencies:
   flutter_test:

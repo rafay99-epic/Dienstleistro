@@ -2,8 +2,8 @@
 
 import 'package:dienstleisto/backend/api/auth/auth_api.dart';
 import 'package:dienstleisto/backend/provider/provider.dart';
-import 'package:dienstleisto/frontend/screens/functionality/auth/forgetPassword.dart';
-import 'package:dienstleisto/frontend/screens/functionality/auth/signup.dart';
+import 'package:dienstleisto/frontend/screens/functionality/auth/forgetPassword/forgetPassword.dart';
+import 'package:dienstleisto/frontend/screens/functionality/auth/register/connertor.dart';
 
 import 'package:dienstleisto/frontend/screens/home/navbar.dart';
 import 'package:dienstleisto/frontend/widgets/button.dart';
@@ -298,8 +298,9 @@ class _loginState extends State<login> {
                 context,
                 PageTransition(
                   type: PageTransitionType.rightToLeftWithFade,
-                  child: const signUp(),
+                  // child: const signUp(),
                   duration: const Duration(milliseconds: 500),
+                  child: const RegisterCustomerSeller(),
                 ),
               );
             },
@@ -357,23 +358,23 @@ class _loginState extends State<login> {
         } else {
           print('Invalid role: $role');
           // Handle invalid role or show error message
-          // showDialog(
-          //   context: context,
-          //   builder: (BuildContext context) {
-          //     return AlertDialog(
-          //       title: const Text('Error'),
-          //       content: const Text('There is some Error, Please Try again.'),
-          //       actions: <Widget>[
-          //         ElevatedButton(
-          //           child: const Text('OK'),
-          //           onPressed: () {
-          //             Navigator.of(context).pop();
-          //           },
-          //         ),
-          //       ],
-          //     );
-          //   },
-          // );
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: const Text('Error'),
+                content: const Text('There is some Error, Please Try again.'),
+                actions: <Widget>[
+                  ElevatedButton(
+                    child: const Text('OK'),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ],
+              );
+            },
+          );
         }
       } else {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(

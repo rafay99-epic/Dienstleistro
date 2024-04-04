@@ -2,7 +2,7 @@
 
 import 'package:dienstleisto/backend/api/auth/auth_api.dart';
 import 'package:dienstleisto/backend/provider/provider.dart';
-import 'package:dienstleisto/frontend/screens/functionality/auth/login.dart';
+import 'package:dienstleisto/frontend/screens/functionality/auth/login/login.dart';
 import 'package:dienstleisto/frontend/screens/functionality/auth/update_password.dart';
 import 'package:dienstleisto/frontend/widgets/textStyle.dart';
 import 'package:flutter/material.dart';
