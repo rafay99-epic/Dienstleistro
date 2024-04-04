@@ -1,8 +1,8 @@
 import 'package:dienstleisto/backend/api/auth/auth_api.dart';
 import 'package:dienstleisto/backend/provider/provider.dart';
 import 'package:dienstleisto/frontend/screens/home/navbar.dart';
-import 'package:dienstleisto/frontend/screens/splash.dart';
-import 'package:dienstleisto/frontend/theme/colors.dart';
+import 'package:dienstleisto/frontend/screens/splash/splash.dart';
+import 'package:dienstleisto/constants/theme/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';

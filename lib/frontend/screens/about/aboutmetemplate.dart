@@ -1,7 +1,7 @@
 // ignore_for_file: library_private_types_in_public_api
 
-import 'package:dienstleisto/frontend/widgets/choiceChip.dart';
-import 'package:dienstleisto/frontend/widgets/textStyle.dart';
+import 'package:dienstleisto/constants/widgets/choiceChip.dart';
+import 'package:dienstleisto/constants/widgets/textStyle.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animation_progress_bar/flutter_animation_progress_bar.dart';
 

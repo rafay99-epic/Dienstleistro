@@ -1,9 +1,9 @@
-import 'package:dienstleisto/frontend/widgets/textStyle.dart';
+import 'package:dienstleisto/constants/widgets/textStyle.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animation_progress_bar/flutter_animation_progress_bar.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:dienstleisto/frontend/screens/functionality/auth/login/login.dart';
+import 'package:dienstleisto/frontend/screens/auth/login/login.dart';
 
 class Screen3 extends StatelessWidget {
   const Screen3({super.key});

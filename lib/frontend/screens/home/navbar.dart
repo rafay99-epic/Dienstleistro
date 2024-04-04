@@ -2,9 +2,9 @@
 
 import 'package:dienstleisto/frontend/screens/about/aboutme.dart';
 import 'package:dienstleisto/frontend/screens/home/home.dart';
-import 'package:dienstleisto/frontend/screens/functionality/job/apply/job.dart';
-import 'package:dienstleisto/frontend/screens/functionality/messages/message.dart';
-import 'package:dienstleisto/frontend/screens/functionality/notification/notification.dart';
+import 'package:dienstleisto/frontend/screens/jobs/apply/job.dart';
+import 'package:dienstleisto/frontend/screens/messages/message.dart';
+import 'package:dienstleisto/frontend/screens/notification/notification.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
