@@ -8,6 +8,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Authentication {
   //-----------------
@@ -22,11 +23,49 @@ class Authentication {
   //    2. Customer
   //  Auth Gate
   //----------------------
+  // Future<bool> loginAPI(
+  //     String email, String password, BuildContext context) async {
+  //   try {
+  //     final response = await http.post(
+  //       Uri.parse('http://dienstleisto.de/api/login'),
+  //       body: {
+  //         'email': email,
+  //         'password': password,
+  //       },
+  //     );
+
+  //     if (response.statusCode == 200) {
+  //       print('Login successful');
+  //       print('Response body: ${response.body}');
+  //       Map<String, dynamic> responseBody = jsonDecode(response.body);
+  //       print('Response body map: $responseBody');
+  //       String? token = responseBody['token'];
+  //       print('Token: $token');
+  //       Map<String, dynamic> user = responseBody['user'];
+  //       String? role = user['role'];
+  //       if (token != null) {
+  //         Provider.of<UserProvider>(context, listen: false).setToken(token);
+  //         Provider.of<UserProvider>(context, listen: false).setRole(role ?? '');
+  //         return true;
+  //       } else {
+  //         print('Token is null');
+  //         return false;
+  //       }
+  //     } else {
+  //       print('Failed to login. Status code: ${response.statusCode}');
+  //       print('Response body: ${response.body}');
+  //       return false;
+  //     }
+  //   } catch (e) {
+  //     print('An error occurred: $e');
+  //     return false;
+  //   }
+  // }
   Future<bool> loginAPI(
       String email, String password, BuildContext context) async {
     try {
       final response = await http.post(
-        Uri.parse('https://dienstleisto.chumairabdullah.com/api/login'),
+        Uri.parse('http://dienstleisto.de/api/login'),
         body: {
           'email': email,
           'password': password,
@@ -34,16 +73,20 @@ class Authentication {
       );
 
       if (response.statusCode == 200) {
-        //     print('Login successful');
-        //   print('Response body: ${response.body}');
+        print('Login successful');
+        print('Response body: ${response.body}');
         Map<String, dynamic> responseBody = jsonDecode(response.body);
-        // print('Response body map: $responseBody');
+        print('Response body map: $responseBody');
         String? token = responseBody['token'];
         print('Token: $token');
         Map<String, dynamic> user = responseBody['user'];
-        String? role = user['role']; // Extract the role from the user object
+        String? role = user['role'];
         if (token != null) {
-          // Update the UserProvider with the new token and role
+          // Save the token to SharedPreferences
+          SharedPreferences prefs = await SharedPreferences.getInstance();
+          await prefs.setString('token', token);
+
+          // Save the token to UserProvider
           Provider.of<UserProvider>(context, listen: false).setToken(token);
           Provider.of<UserProvider>(context, listen: false).setRole(role ?? '');
           return true;
@@ -65,9 +108,14 @@ class Authentication {
   //---------------------------------
   // Check for User is Logged in
   //---------------------------------
-  Future<bool> isLoggedIn(BuildContext context) {
-    String? token = Provider.of<UserProvider>(context, listen: false).token;
-    return Future.value(token != null && token.isNotEmpty);
+  // Future<bool> isLoggedIn(BuildContext context) {
+  //   String? token = Provider.of<UserProvider>(context, listen: false).token;
+  //   return Future.value(token != null && token.isNotEmpty);
+  // }
+  Future<bool> isLoggedIn(BuildContext context) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString('token');
+    return token != null && token.isNotEmpty;
   }
 
   //-----------------
@@ -80,7 +128,8 @@ class Authentication {
 
     if (token.isNotEmpty) {
       final response = await http.post(
-        Uri.parse('https://dienstleisto.chumairabdullah.com/api/logout'),
+        // Uri.parse('https://dienstleisto.chumairabdullah.com/api/logout'),
+        Uri.parse('http://dienstleisto.de/api/logout'),
         headers: {
           'Authorization': 'Bearer $token',
         },
@@ -110,8 +159,7 @@ class Authentication {
   Future<bool> resetPassword(String email) async {
     try {
       final response = await http.post(
-        Uri.parse(
-            'https://dienstleisto.chumairabdullah.com/api/forgotpassword'),
+        Uri.parse('http://dienstleisto.de/api/forgotpassword'),
         body: {
           'email': email,
         },
@@ -147,9 +195,9 @@ class Authentication {
       }
 
       final response = await http.post(
-        Uri.parse('https://dienstleisto.chumairabdullah.com/api/googlelogin'),
+        Uri.parse('http://dienstleisto.de/api/googlelogin'),
         body: {
-          'email': googleUser.email, // Send the email to your server
+          'email': googleUser.email,
         },
       );
 
@@ -182,7 +230,7 @@ class Authentication {
       String newPassword, String passwordConfirmation) async {
     try {
       final response = await http.post(
-        Uri.parse('https://dienstleisto.chumairabdullah.com/api/login'),
+        Uri.parse('http://dienstleisto.de/api/login'),
         body: {
           'email': email,
           'current_password': currentPassword,
@@ -233,26 +281,30 @@ class Authentication {
   }) async {
     try {
       final response = await http.post(
-        Uri.parse('http://18.195.68.122/api/register'),
+        Uri.parse('http://dienstleisto.de/api/register'),
         body: {
           'name': name,
           'email': email,
           'password': password,
-          'phone': phone,
+          'phoneno': phone,
           'selectedCountryName': selectedCountryName,
           'city': city,
           'address': address,
-          'firstName': firstName,
-          'lastName': lastName,
-          'passwordConfirmation': passwordConfirmation,
+          'first_name': firstName,
+          'last_name': lastName,
+          'password_confirmation': passwordConfirmation,
           'mode': mode,
           'role': role,
         },
       );
 
-      if (response.statusCode == 200) {
+      if (response.statusCode == 200 || response.statusCode == 201) {
         print('User registered successfully');
-        return {'success': true, 'message': 'User registered successfully'};
+        return {
+          'success': true,
+          'message':
+              'User registered successfully!! Please check your email for verification link.'
+        };
       } else {
         print('Failed to register user. Status code: ${response.statusCode}');
         print('Response body: ${response.body}');

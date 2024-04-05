@@ -8,6 +8,7 @@ import 'package:dienstleisto/constants/widgets/textStyle.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SettingPage extends StatefulWidget {
   const SettingPage({super.key});
@@ -200,24 +201,33 @@ class _SettingPageState extends State<SettingPage> {
                   ),
                   onTap: () async {
                     try {
+                      //getting the email from the Provider
                       UserProvider userProvider =
                           Provider.of<UserProvider>(context, listen: false);
                       String email = userProvider.email;
+                      // Calling the logout APi
                       bool isLoggedOut = await _auth.logoutAPI(email, context);
+                      //Clear the current User data and provider
+                      userProvider.clear();
+                      // Clearing the shared perferance
+                      SharedPreferences prefs =
+                          await SharedPreferences.getInstance();
+                      await prefs.remove('token');
+                      //if sucess then logout from the system
                       if (isLoggedOut) {
-                        Navigator.push(
-                          context,
+                        Navigator.of(context).pushAndRemoveUntil(
                           PageTransition(
                             type: PageTransitionType.rightToLeftWithFade,
                             child: const login(),
                             duration: const Duration(milliseconds: 500),
                           ),
+                          (Route<dynamic> route) => false,
                         );
                       } else {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             elevation: 10,
-                            duration: const Duration(seconds: 2),
+                            duration: const Duration(seconds: 4),
                             backgroundColor:
                                 Theme.of(context).colorScheme.secondary,
                             showCloseIcon: true,

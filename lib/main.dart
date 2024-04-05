@@ -35,7 +35,10 @@ class MyApp extends StatelessWidget {
         future: _auth.isLoggedIn(context),
         builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const CircularProgressIndicator();
+            return CircularProgressIndicator(
+              backgroundColor: Theme.of(context).colorScheme.background,
+              color: Theme.of(context).colorScheme.secondary,
+            );
           } else if (snapshot.data == true) {
             return const Navbar();
           } else {
