@@ -23,44 +23,6 @@ class Authentication {
   //    2. Customer
   //  Auth Gate
   //----------------------
-  // Future<bool> loginAPI(
-  //     String email, String password, BuildContext context) async {
-  //   try {
-  //     final response = await http.post(
-  //       Uri.parse('http://dienstleisto.de/api/login'),
-  //       body: {
-  //         'email': email,
-  //         'password': password,
-  //       },
-  //     );
-
-  //     if (response.statusCode == 200) {
-  //       print('Login successful');
-  //       print('Response body: ${response.body}');
-  //       Map<String, dynamic> responseBody = jsonDecode(response.body);
-  //       print('Response body map: $responseBody');
-  //       String? token = responseBody['token'];
-  //       print('Token: $token');
-  //       Map<String, dynamic> user = responseBody['user'];
-  //       String? role = user['role'];
-  //       if (token != null) {
-  //         Provider.of<UserProvider>(context, listen: false).setToken(token);
-  //         Provider.of<UserProvider>(context, listen: false).setRole(role ?? '');
-  //         return true;
-  //       } else {
-  //         print('Token is null');
-  //         return false;
-  //       }
-  //     } else {
-  //       print('Failed to login. Status code: ${response.statusCode}');
-  //       print('Response body: ${response.body}');
-  //       return false;
-  //     }
-  //   } catch (e) {
-  //     print('An error occurred: $e');
-  //     return false;
-  //   }
-  // }
   Future<bool> loginAPI(
       String email, String password, BuildContext context) async {
     try {
@@ -108,10 +70,7 @@ class Authentication {
   //---------------------------------
   // Check for User is Logged in
   //---------------------------------
-  // Future<bool> isLoggedIn(BuildContext context) {
-  //   String? token = Provider.of<UserProvider>(context, listen: false).token;
-  //   return Future.value(token != null && token.isNotEmpty);
-  // }
+
   Future<bool> isLoggedIn(BuildContext context) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString('token');
@@ -128,7 +87,6 @@ class Authentication {
 
     if (token.isNotEmpty) {
       final response = await http.post(
-        // Uri.parse('https://dienstleisto.chumairabdullah.com/api/logout'),
         Uri.parse('http://dienstleisto.de/api/logout'),
         headers: {
           'Authorization': 'Bearer $token',
@@ -166,17 +124,14 @@ class Authentication {
       );
 
       if (response.statusCode == 200) {
-        // If the server returns a 200 OK response, parse the JSON.
         print('Password reset successful');
         print('Response body: ${response.body}');
         return true;
       } else {
-        // If the server returns an unsuccessful response code, throw an exception.
         print('Failed to reset password');
         return false;
       }
     } catch (e) {
-      // If an error occurs, print it to the console and return false.
       print('An error occurred: $e');
       return false;
     }

@@ -332,9 +332,13 @@ class _loginState extends State<login> {
         String role = userProvider.role;
         print('Role: $role');
         if (role == 'Seller' || role == 'Customer') {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const Navbar()),
+          Navigator.of(context).pushAndRemoveUntil(
+            PageTransition(
+              type: PageTransitionType.rightToLeftWithFade,
+              child: const Navbar(),
+              duration: const Duration(milliseconds: 500),
+            ),
+            (Route<dynamic> route) => false,
           );
         } else if (role == 'Admin') {
           showDialog(
