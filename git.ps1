@@ -1,15 +1,37 @@
-# Prompt the user for the commit message
-$commitMessage = Read-Host -Prompt "Enter your commit message"
+# Display introduction
+Write-Host "🚀 Welcome to the Git Commit Script! 🚀"
+Write-Host "This script helps you to commit and push your changes to Git."
+Write-Host
 
-Write-Host "Running Git commands..."
+$commitMessage = Read-Host -Prompt "Enter your commit message:"
 
-# Add all changes to the staging area
-git add *
+Write-Host "🛠️ Running Git commands... 🛠️"
 
-# Commit the changes
-git commit -m $commitMessage
+$gitCommands = @(
+    @{
+        Command        = { git add * }
+        SuccessMessage = "✅ Git command: git add * executed successfully."
+    },
+    @{
+        Command        = { git commit -m $commitMessage }
+        SuccessMessage = "✅ Git command: git commit -m '$commitMessage' executed successfully."
+    },
+    @{
+        Command        = { git push }
+        SuccessMessage = "✅ Git command: git push executed successfully."
+    }
+)
 
-# Push the changes
-git push
+foreach ($gitCommand in $gitCommands) {
+    try {
+        & $gitCommand.Command
+        Write-Host $gitCommand.SuccessMessage
+    }
+    catch {
+        Write-Host "❌ An error occurred while executing the Git commands: $_"
+        $_ | Out-File -FilePath .\error.log -Append
+        break
+    }
+}
 
-Write-Host "Git commands executed successfully."
+Write-Host "✅ Git commands executed successfully. Your changes have been committed and pushed."
