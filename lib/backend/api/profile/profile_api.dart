@@ -100,44 +100,78 @@ class ProfileAPI {
 
   //update Education
   Future<bool> updateEducation({
-    required String title,
-    required String type,
-    required String startYear,
-    required String endYear,
-    required String summary,
-  }) {
-    return postRequest('http://dienstleisto.de/api/education', {
-      'd_title[0]': title,
-      'd_type[0]': type,
-      'd_syear[0]': startYear,
-      'd_eyear[0]': endYear,
-      'd_summary[0]': summary,
-    });
+    required List<String> titles,
+    required List<String> types,
+    required List<String> startYears,
+    required List<String> endYears,
+    required List<String> summaries,
+  }) async {
+    if (titles.length != types.length ||
+        types.length != startYears.length ||
+        startYears.length != endYears.length ||
+        endYears.length != summaries.length) {
+      print(
+          'The number of titles, types, start years, end years, and summaries must be the same.');
+      return false;
+    }
+
+    Map<String, String> body = {};
+    for (int i = 0; i < titles.length; i++) {
+      body['d_title[$i]'] = titles[i];
+      body['d_type[$i]'] = types[i];
+      body['d_syear[$i]'] = startYears[i];
+      body['d_eyear[$i]'] = endYears[i];
+      body['d_summary[$i]'] = summaries[i];
+    }
+
+    return postRequest('http://dienstleisto.de/api/education', body);
   }
 
   //update Expereince
   Future<bool> updateExperience({
-    required String title,
-    required String company,
-    required String companyStartDate,
-    required String summary,
-    required String companyEndDate,
-  }) {
-    return postRequest('http://dienstleisto.de/api/experience', {
-      'etitle[0]': title,
-      'ecomany[0]': company,
-      'companysd[0]': companyStartDate,
-      'esummry[0]': summary,
-      'companyed[0]': companyEndDate,
-    });
+    required List<String> titles,
+    required List<String> companies,
+    required List<String> companyStartDates,
+    required List<String> summaries,
+    required List<String> companyEndDates,
+  }) async {
+    if (titles.length != companies.length ||
+        companies.length != companyStartDates.length ||
+        companyStartDates.length != summaries.length ||
+        summaries.length != companyEndDates.length) {
+      print(
+          'The number of titles, companies, company start dates, summaries, and company end dates must be the same.');
+      return false;
+    }
+
+    Map<String, String> body = {};
+    for (int i = 0; i < titles.length; i++) {
+      body['etitle[$i]'] = titles[i];
+      body['ecomany[$i]'] = companies[i];
+      body['companysd[$i]'] = companyStartDates[i];
+      body['esummry[$i]'] = summaries[i];
+      body['companyed[$i]'] = companyEndDates[i];
+    }
+
+    return postRequest('http://dienstleisto.de/api/experience', body);
   }
 
   // Update Skills
-  Future<bool> updateSkills({
-    required List<String> skills,
-  }) {
-    return postRequest('http://dienstleisto.de/api/skills', {
-      'skills': skills.join(','),
-    });
+  Future<bool> updateLanguages({
+    required List<String> languages,
+    required List<String> proficiencies,
+  }) async {
+    if (languages.length != proficiencies.length) {
+      print('The number of languages and proficiencies must be the same.');
+      return false;
+    }
+
+    Map<String, String> body = {};
+    for (int i = 0; i < languages.length; i++) {
+      body['languages[$i]'] = languages[i];
+      body['p_lang[$i]'] = proficiencies[i];
+    }
+
+    return postRequest('http://dienstleisto.de/api/language', body);
   }
 }
