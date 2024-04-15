@@ -51,3 +51,6 @@ foreach ($gitCommand in $gitCommands) {
 }
 
 Write-Host "✅ Git commands executed successfully. Your changes have been committed and pushed."
+
+
+
