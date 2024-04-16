@@ -1,13 +1,20 @@
 import 'package:http/http.dart' as http;
 import 'dart:io';
 import 'dart:convert';
+import 'package:dienstleisto/backend/provider/provider.dart';
 
 class ProfileAPI {
   //Request Methods
   Future<bool> postRequest(String url, Map<String, String> body) async {
+    String userLoginToken = UserProvider().token;
+
     try {
       final response = await http.post(
         Uri.parse(url),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': 'Bearer $userLoginToken',
+        },
         body: body,
       );
 

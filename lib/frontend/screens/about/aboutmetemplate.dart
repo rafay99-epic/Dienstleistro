@@ -1,9 +1,14 @@
 // ignore_for_file: library_private_types_in_public_api
 
-import 'package:dienstleisto/constants/widgets/choiceChip.dart';
+import 'package:dienstleisto/constants/widgets/social.dart';
 import 'package:dienstleisto/constants/widgets/textStyle.dart';
+import 'package:dienstleisto/frontend/screens/about/setting/aboutme/edit_aboutme.dart';
+import 'package:dienstleisto/frontend/screens/about/setting/contactMe/edit_contactme.dart';
+import 'package:dienstleisto/frontend/screens/about/setting/social/edit_social.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animation_progress_bar/flutter_animation_progress_bar.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:page_transition/page_transition.dart';
 
 class AboutMeTemplate extends StatefulWidget {
   final String name;
@@ -47,8 +52,7 @@ class _AboutMeTemplateState extends State<AboutMeTemplate> {
                 children: <Widget>[
                   CircleAvatar(
                     radius: 43, // 86/2
-                    backgroundImage: NetworkImage(
-                        widget.profileImageUrl), // Replace with your image URL
+                    backgroundImage: NetworkImage(widget.profileImageUrl),
                   ),
                   const SizedBox(width: 10),
                   Column(
@@ -110,28 +114,39 @@ class _AboutMeTemplateState extends State<AboutMeTemplate> {
                     fontSize: 17,
                     color: Theme.of(context).colorScheme.primary,
                   ),
-                  Container(
-                    padding: const EdgeInsets.all(8.0), // Add some padding
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey),
-                      borderRadius: BorderRadius.circular(
-                          20.0), // Make the border rounded
-                    ),
-                    child: Row(
-                      mainAxisAlignment:
-                          MainAxisAlignment.center, // Center the text and icon
-                      children: <Widget>[
-                        const Icon(Icons.edit),
-                        const SizedBox(width: 4.0),
-                        MyText(
-                          text: 'Edit',
-                          fontFamily: "ABeeZee",
-                          fontWeight: FontWeight.w400,
-                          fontStyle: FontStyle.italic,
-                          fontSize: 13,
-                          color: Theme.of(context).colorScheme.primary,
+                  InkWell(
+                    onTap: () {
+                      Navigator.of(context).push(
+                        PageTransition(
+                          type: PageTransitionType.rightToLeftWithFade,
+                          child: const EditAboutMe(),
+                          duration: const Duration(milliseconds: 500),
                         ),
-                      ],
+                      );
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.all(8.0), // Add some padding
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.grey),
+                        borderRadius: BorderRadius.circular(
+                            20.0), // Make the border rounded
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment
+                            .center, // Center the text and icon
+                        children: <Widget>[
+                          const Icon(Icons.edit),
+                          const SizedBox(width: 4.0),
+                          MyText(
+                            text: 'Edit',
+                            fontFamily: "ABeeZee",
+                            fontWeight: FontWeight.w400,
+                            fontStyle: FontStyle.italic,
+                            fontSize: 13,
+                            color: Theme.of(context).colorScheme.primary,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ],
@@ -161,28 +176,39 @@ class _AboutMeTemplateState extends State<AboutMeTemplate> {
                     fontSize: 17,
                     color: Theme.of(context).colorScheme.primary,
                   ),
-                  Container(
-                    padding: const EdgeInsets.all(8.0), // Add some padding
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey),
-                      borderRadius: BorderRadius.circular(
-                          20.0), // Make the border rounded
-                    ),
-                    child: Row(
-                      mainAxisAlignment:
-                          MainAxisAlignment.center, // Center the text and icon
-                      children: <Widget>[
-                        const Icon(Icons.edit),
-                        const SizedBox(width: 4.0),
-                        MyText(
-                          text: 'Edit',
-                          fontFamily: "ABeeZee",
-                          fontWeight: FontWeight.w400,
-                          fontStyle: FontStyle.italic,
-                          fontSize: 13,
-                          color: Theme.of(context).colorScheme.primary,
+                  InkWell(
+                    onTap: () {
+                      Navigator.of(context).push(
+                        PageTransition(
+                          type: PageTransitionType.rightToLeftWithFade,
+                          child: const UpdateContactInformation(),
+                          duration: const Duration(milliseconds: 500),
                         ),
-                      ],
+                      );
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.all(8.0), // Add some padding
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.grey),
+                        borderRadius: BorderRadius.circular(
+                            20.0), // Make the border rounded
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment
+                            .center, // Center the text and icon
+                        children: <Widget>[
+                          const Icon(Icons.edit),
+                          const SizedBox(width: 4.0),
+                          MyText(
+                            text: 'Edit',
+                            fontFamily: "ABeeZee",
+                            fontWeight: FontWeight.w400,
+                            fontStyle: FontStyle.italic,
+                            fontSize: 13,
+                            color: Theme.of(context).colorScheme.primary,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ],
@@ -264,45 +290,87 @@ class _AboutMeTemplateState extends State<AboutMeTemplate> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   MyText(
-                    text: 'Skills',
+                    text: 'Socials',
                     fontFamily: "ABeeZee",
                     fontWeight: FontWeight.w400,
                     fontStyle: FontStyle.italic,
                     fontSize: 17,
                     color: Theme.of(context).colorScheme.primary,
                   ),
-                  Container(
-                    padding: const EdgeInsets.all(8.0),
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey),
-                      borderRadius: BorderRadius.circular(20.0),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        const Icon(Icons.edit),
-                        const SizedBox(width: 4.0),
-                        MyText(
-                          text: 'Edit',
-                          fontFamily: "ABeeZee",
-                          fontWeight: FontWeight.w400,
-                          fontStyle: FontStyle.italic,
-                          fontSize: 13,
-                          color: Theme.of(context).colorScheme.primary,
+                  InkWell(
+                    onTap: () {
+                      Navigator.of(context).push(
+                        PageTransition(
+                          type: PageTransitionType.rightToLeftWithFade,
+                          child: const updateSocailAccount(),
+                          duration: const Duration(milliseconds: 500),
                         ),
-                      ],
+                      );
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.all(8.0),
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.grey),
+                        borderRadius: BorderRadius.circular(20.0),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          const Icon(Icons.edit),
+                          const SizedBox(width: 4.0),
+                          MyText(
+                            text: 'Edit',
+                            fontFamily: "ABeeZee",
+                            fontWeight: FontWeight.w400,
+                            fontStyle: FontStyle.italic,
+                            fontSize: 13,
+                            color: Theme.of(context).colorScheme.primary,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ],
               ),
               const SizedBox(height: 10),
               // List of skills
-              Wrap(
-                spacing: 4.0,
-                runSpacing: 4.0,
-                children: widget.skills
-                    .map((skill) => CustomChoiceChip(label: skill))
-                    .toList(),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  SocialMediaButton(
+                    icon: FontAwesomeIcons.facebook,
+                    url: 'https://www.linkedin.com/in/abdul-rafay1999/',
+                    color: Theme.of(context).colorScheme.secondary,
+                  ),
+                  SocialMediaButton(
+                    icon: FontAwesomeIcons.youtube,
+                    url: 'https://www.instagram.com/abdul_rafay99/',
+                    color: Theme.of(context).colorScheme.secondary,
+                  ),
+                  SocialMediaButton(
+                    icon: FontAwesomeIcons.twitter,
+                    url: 'https://twitter.com/future_insight9',
+                    color: Theme.of(context).colorScheme.secondary,
+                  ),
+                  SocialMediaButton(
+                    icon: FontAwesomeIcons.instagram,
+                    url:
+                        'https://www.upwork.com/freelancers/~018c78c37a53bf3cac',
+                    color: Theme.of(context).colorScheme.secondary,
+                  ),
+                  SocialMediaButton(
+                    icon: FontAwesomeIcons.globe,
+                    url:
+                        'https://www.upwork.com/freelancers/~018c78c37a53bf3cac',
+                    color: Theme.of(context).colorScheme.secondary,
+                  ),
+                  SocialMediaButton(
+                    icon: FontAwesomeIcons.plus,
+                    url:
+                        'https://www.upwork.com/freelancers/~018c78c37a53bf3cac',
+                    color: Theme.of(context).colorScheme.secondary,
+                  ),
+                ],
               ),
 
               // My Resume heading and edit clip button
