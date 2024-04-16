@@ -23,6 +23,49 @@ class Authentication {
   //    2. Customer
   //  Auth Gate
   //----------------------
+  // Future<bool> loginAPI(
+  //     String email, String password, BuildContext context) async {
+  //   try {
+  //     final response = await http.post(
+  //       Uri.parse('http://dienstleisto.de/api/login'),
+  //       body: {
+  //         'email': email,
+  //         'password': password,
+  //       },
+  //     );
+
+  //     if (response.statusCode == 200) {
+  //       print('Login successful');
+  //       print('Response body: ${response.body}');
+  //       Map<String, dynamic> responseBody = jsonDecode(response.body);
+  //       print('Response body map: $responseBody');
+  //       String? token = responseBody['token'];
+  //       print('Token: $token');
+  //       Map<String, dynamic> user = responseBody['user'];
+  //       String? role = user['role'];
+  //       if (token != null) {
+  //         // Save the token to SharedPreferences
+  //         SharedPreferences prefs = await SharedPreferences.getInstance();
+  //         await prefs.setString('token', token);
+
+  //         // Save the token to UserProvider
+  //         Provider.of<UserProvider>(context, listen: false).setToken(token);
+  //         Provider.of<UserProvider>(context, listen: false).setRole(role ?? '');
+  //         return true;
+  //       } else {
+  //         print('Token is null');
+  //         return false;
+  //       }
+  //     } else {
+  //       print('Failed to login. Status code: ${response.statusCode}');
+  //       print('Response body: ${response.body}');
+  //       return false;
+  //     }
+  //   } catch (e) {
+  //     print('An error occurred: $e');
+  //     return false;
+  //   }
+  // }
   Future<bool> loginAPI(
       String email, String password, BuildContext context) async {
     try {
@@ -36,7 +79,10 @@ class Authentication {
 
       if (response.statusCode == 200) {
         print('Login successful');
-        print('Response body: ${response.body}');
+        // print('Response body: ${response.body}');
+        print("-----------------------------------");
+        print("respond Code: ${response.statusCode}");
+        print("---------------------------------------");
         Map<String, dynamic> responseBody = jsonDecode(response.body);
         print('Response body map: $responseBody');
         String? token = responseBody['token'];
@@ -48,9 +94,50 @@ class Authentication {
           SharedPreferences prefs = await SharedPreferences.getInstance();
           await prefs.setString('token', token);
 
-          // Save the token to UserProvider
-          Provider.of<UserProvider>(context, listen: false).setToken(token);
-          Provider.of<UserProvider>(context, listen: false).setRole(role ?? '');
+          // Save the user data to UserProvider
+          UserProvider userProvider =
+              Provider.of<UserProvider>(context, listen: false);
+          userProvider.setToken(token);
+          userProvider.setToken(token);
+          userProvider.setRole(role ?? '');
+          userProvider.setEmail(user['email'] ?? '');
+          userProvider.setName(user['name'] ?? '');
+          userProvider.setProfilePic(user['profilepic'] ?? '');
+          userProvider.setPhoneNo(user['phoneno'] ?? '');
+          userProvider.setUserAddress(user['address'] ?? '');
+          userProvider.setUserCountry(user['country'] ?? '');
+          userProvider.setUserState(user['state'] ?? '');
+          userProvider.setUserLanguage(user['language'] ?? '');
+          userProvider.setUserZipcode(user['zipcode'] ?? '');
+          userProvider.setAboutMe(user['about'] ?? '');
+          userProvider.setTwitter(user['twitter'] ?? '');
+          userProvider.setInstagram(user['instagram'] ?? '');
+          userProvider.setWebsite(user['website'] ?? '');
+          userProvider.setUsergender(user['gender'] ?? '');
+
+          print(
+              "------------------------Provider has Data--------------------------------------------");
+          print('Token: ${userProvider.token}');
+          print('Role: ${userProvider.role}');
+          print('Email: ${userProvider.email}');
+          print('Name: ${userProvider.name}');
+          print('Profile Pic: ${userProvider.profilePic}');
+          print('Phone No: ${userProvider.phoneNo}');
+          print('Address: ${userProvider.userAddress}');
+          print('Country: ${userProvider.userCountry}');
+          print('State: ${userProvider.userState}');
+          print('Language: ${userProvider.userlanguage}');
+          print('Zipcode: ${userProvider.userZipcode}');
+          print('About Me: ${userProvider.aboutMe}');
+          print('Facebook: ${userProvider.facebook}');
+          print('Twitter: ${userProvider.twitter}');
+          print('Instagram: ${userProvider.instagram}');
+          print('Website: ${userProvider.website}');
+          print('Other: ${userProvider.other}');
+          print('Proffesion: ${userProvider.proffesion}');
+
+          print(
+              "------------------------Provider has Data--------------------------------------------");
           return true;
         } else {
           print('Token is null');
