@@ -114,6 +114,10 @@ class Authentication {
           userProvider.setInstagram(user['instagram'] ?? '');
           userProvider.setWebsite(user['website'] ?? '');
           userProvider.setUsergender(user['gender'] ?? '');
+          userProvider.setProffesion(user['proffesion'] ?? '');
+          userProvider.setOther(user['other'] ?? '');
+          userProvider.setYoutube(user['youtube'] ?? '');
+          userProvider.setFacebook(user['facebook'] ?? '');
 
           print(
               "------------------------Provider has Data--------------------------------------------");
@@ -135,7 +139,7 @@ class Authentication {
           print('Website: ${userProvider.website}');
           print('Other: ${userProvider.other}');
           print('Proffesion: ${userProvider.proffesion}');
-
+          print('Youtube: ${userProvider.youtube}');
           print(
               "------------------------Provider has Data--------------------------------------------");
           return true;

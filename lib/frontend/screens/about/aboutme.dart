@@ -1,10 +1,12 @@
 // ignore_for_file: library_private_types_in_public_api, use_build_context_synchronously
 
+import 'package:dienstleisto/backend/provider/provider.dart';
 import 'package:dienstleisto/frontend/screens/about/aboutmetemplate.dart';
 import 'package:dienstleisto/frontend/screens/about/setting/setting.dart';
 import 'package:dienstleisto/frontend/screens/auth/login/login.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:provider/provider.dart';
 
 class AboutMe extends StatefulWidget {
   const AboutMe({
@@ -20,6 +22,23 @@ class _AboutMeState extends State<AboutMe> {
 
   @override
   Widget build(BuildContext context) {
+    UserProvider userProvider =
+        Provider.of<UserProvider>(context, listen: false);
+
+    String aboutMeText = userProvider.aboutMe;
+    String name = userProvider.name;
+    String jobTitle = userProvider.proffesion;
+    String profileImageUrl = userProvider.profilePic;
+    String mobilePhone = userProvider.phoneNo;
+    String emailAddress = userProvider.email;
+    String address = userProvider.userAddress;
+    String facebookLink = userProvider.facebook;
+    String twitterLink = userProvider.twitter;
+    String instagramLink = userProvider.instagram;
+    String websiteLink = userProvider.website;
+    String otherLink = userProvider.other;
+    String youtubeLink = userProvider.youtube;
+
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBar(
@@ -87,26 +106,20 @@ class _AboutMeState extends State<AboutMe> {
           ),
         ],
       ),
-      body: const AboutMeTemplate(
-        aboutMeText:
-            "I know I can help your company create stunning visuals. As someone who has worked in marketing and graphic design for over a decade, I know what brands need to capture their audiences' attention. With my pow…. read more",
-        name: 'Ayesha Vassilieva',
-        jobTitle: 'Senior Designer',
-        profileImageUrl:
-            'https://images.unsplash.com/photo-1573165850883-9b0e18c44bd2?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTV8fHByb2Zlc3Npb25hbCUyMHdvbWFufGVufDB8fDB8fHww',
-        mobilePhone: '123 456 7890',
-        emailAddress: 'ayesha@mail.com',
-        address: 'Los Angeles, CA',
-        skills: [
-          "Problem solving",
-          "Technical skill",
-          "Android",
-          "IOS",
-          "Design",
-          "Website",
-          "Mobile"
-        ],
-        profileComplete: 80,
+      body: AboutMeTemplate(
+        aboutMeText: aboutMeText,
+        name: name,
+        jobTitle: jobTitle,
+        profileImageUrl: profileImageUrl,
+        mobilePhone: mobilePhone,
+        emailAddress: emailAddress,
+        address: address,
+        facebookLink: facebookLink,
+        twitterLink: twitterLink,
+        instagramLink: instagramLink,
+        websiteLink: websiteLink,
+        otherLink: otherLink,
+        youtubeLink: youtubeLink,
       ),
     );
   }

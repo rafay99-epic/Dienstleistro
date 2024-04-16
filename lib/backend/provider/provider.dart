@@ -29,6 +29,7 @@ class UserProvider with ChangeNotifier {
   String _other = '';
   String _proffesion = '';
   String _usergender = '';
+  String _youtube = '';
 
   // Getters for Auth Functionality
   String get email => _email;
@@ -50,6 +51,7 @@ class UserProvider with ChangeNotifier {
   String get other => _other;
   String get proffesion => _proffesion;
   String get usergender => _usergender;
+  String get youtube => _youtube;
 
   // Setters for Auth Functionality
   void setEmail(String email) {
@@ -147,6 +149,11 @@ class UserProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  void setYoutube(String youtube) {
+    _youtube = youtube;
+    notifyListeners();
+  }
+
   // Clear Functionality
   void clear() {
     _email = '';
@@ -158,6 +165,17 @@ class UserProvider with ChangeNotifier {
     _address = '';
     _country = '';
     _state = '';
+    _userlanguage = '';
+    _userZipcode = '';
+    _aboutMe = '';
+    _facebook = '';
+    _twitter = '';
+    _instagram = '';
+    _website = '';
+    _other = '';
+    _proffesion = '';
+    _usergender = '';
+    _youtube = '';
     notifyListeners();
   }
   //------------------------------------------------------------------------------------------------------------------------------------

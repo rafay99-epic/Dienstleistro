@@ -1,14 +1,16 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 // ignore_for_file: library_private_types_in_public_api
+
+import 'package:flutter/material.dart';
+
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:page_transition/page_transition.dart';
 
 import 'package:dienstleisto/constants/widgets/social.dart';
 import 'package:dienstleisto/constants/widgets/textStyle.dart';
 import 'package:dienstleisto/frontend/screens/about/setting/aboutme/edit_aboutme.dart';
 import 'package:dienstleisto/frontend/screens/about/setting/contactMe/edit_contactme.dart';
 import 'package:dienstleisto/frontend/screens/about/setting/social/edit_social.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_animation_progress_bar/flutter_animation_progress_bar.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:page_transition/page_transition.dart';
 
 class AboutMeTemplate extends StatefulWidget {
   final String name;
@@ -17,12 +19,16 @@ class AboutMeTemplate extends StatefulWidget {
   final String aboutMeText;
   final String mobilePhone;
   final String emailAddress;
-  final int profileComplete;
-  final String address;
-  final List<String> skills;
 
+  final String address;
+  final String facebookLink;
+  final String twitterLink;
+  final String instagramLink;
+  final String websiteLink;
+  final String otherLink;
+  final String youtubeLink;
   const AboutMeTemplate({
-    super.key,
+    Key? key,
     required this.name,
     required this.jobTitle,
     required this.profileImageUrl,
@@ -30,9 +36,13 @@ class AboutMeTemplate extends StatefulWidget {
     required this.mobilePhone,
     required this.emailAddress,
     required this.address,
-    required this.skills,
-    required this.profileComplete,
-  });
+    required this.facebookLink,
+    required this.twitterLink,
+    required this.instagramLink,
+    required this.websiteLink,
+    required this.otherLink,
+    required this.youtubeLink,
+  }) : super(key: key);
 
   @override
   _AboutMeTemplateState createState() => _AboutMeTemplateState();
@@ -79,29 +89,7 @@ class _AboutMeTemplateState extends State<AboutMeTemplate> {
                 ],
               ),
               const SizedBox(height: 20),
-              //Progress bar commpletetion
-              Align(
-                alignment: Alignment.centerLeft,
-                child: MyText(
-                  text: 'Profile completeness ${widget.profileComplete}%',
-                  fontSize: 15,
-                  fontWeight: FontWeight.w400,
-                  fontFamily: "ABeeZee",
-                  color: Theme.of(context).colorScheme.primary,
-                  fontStyle: FontStyle.normal,
-                  textAlign: TextAlign.left,
-                ),
-              ),
-              FAProgressBar(
-                currentValue: widget.profileComplete.toDouble(),
-                backgroundColor: Colors.grey.shade300,
-                progressColor: Theme.of(context).colorScheme.secondary,
-                maxValue: 100,
-                animatedDuration: const Duration(seconds: 2),
-                direction: Axis.horizontal,
-                size: 5,
-              ),
-              const SizedBox(height: 15),
+
               //about me heading and clip edit button
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -339,35 +327,37 @@ class _AboutMeTemplateState extends State<AboutMeTemplate> {
                 children: <Widget>[
                   SocialMediaButton(
                     icon: FontAwesomeIcons.facebook,
-                    url: 'https://www.linkedin.com/in/abdul-rafay1999/',
+                    url: widget.facebookLink,
                     color: Theme.of(context).colorScheme.secondary,
                   ),
                   SocialMediaButton(
                     icon: FontAwesomeIcons.youtube,
-                    url: 'https://www.instagram.com/abdul_rafay99/',
+                    url: widget.youtubeLink,
                     color: Theme.of(context).colorScheme.secondary,
                   ),
                   SocialMediaButton(
                     icon: FontAwesomeIcons.twitter,
-                    url: 'https://twitter.com/future_insight9',
+                    url: widget.twitterLink,
                     color: Theme.of(context).colorScheme.secondary,
                   ),
                   SocialMediaButton(
                     icon: FontAwesomeIcons.instagram,
-                    url:
-                        'https://www.upwork.com/freelancers/~018c78c37a53bf3cac',
+                    url: widget.instagramLink,
+                    color: Theme.of(context).colorScheme.secondary,
+                  ),
+                  SocialMediaButton(
+                    icon: FontAwesomeIcons.youtube,
+                    url: widget.youtubeLink,
                     color: Theme.of(context).colorScheme.secondary,
                   ),
                   SocialMediaButton(
                     icon: FontAwesomeIcons.globe,
-                    url:
-                        'https://www.upwork.com/freelancers/~018c78c37a53bf3cac',
+                    url: widget.websiteLink,
                     color: Theme.of(context).colorScheme.secondary,
                   ),
                   SocialMediaButton(
                     icon: FontAwesomeIcons.plus,
-                    url:
-                        'https://www.upwork.com/freelancers/~018c78c37a53bf3cac',
+                    url: widget.otherLink,
                     color: Theme.of(context).colorScheme.secondary,
                   ),
                 ],
