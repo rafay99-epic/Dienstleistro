@@ -10,9 +10,53 @@ class UserProvider with ChangeNotifier {
   // ╚═╝  ╚═╝ ╚═════╝    ╚═╝   ╚═╝  ╚═╝    ╚═╝      ╚═════╝ ╚═╝  ╚═══╝ ╚═════╝   ╚═╝   ╚═╝ ╚═════╝ ╚═╝  ╚═══╝╚═╝  ╚═╝╚══════╝╚═╝   ╚═╝      ╚═╝
   //-----------------------------------------------------------------------------------------------------------------------------------------------------
 
-  String _email = '';
+  String _id = '';
   String _token = '';
   String _role = '';
+  String _email = '';
+
+  // Getters for Auth Functionality
+  String get id => _id;
+  String get token => _token;
+  String get role => _role;
+  String get email => _email;
+
+  // Setters for Auth Functionality
+  void setToken(String token) {
+    _token = token;
+    notifyListeners();
+  }
+
+  void setRole(String role) {
+    _role = role;
+    notifyListeners();
+  }
+
+  void setId(String id) {
+    _id = id;
+    notifyListeners();
+  }
+
+  void setEmail(String email) {
+    _email = email;
+    notifyListeners();
+  }
+
+  void clear() {
+    _token = '';
+    _role = '';
+    _id = "";
+    _email = "";
+    notifyListeners();
+  }
+
+// ███████╗███████╗████████╗ ██████╗██╗  ██╗    ██╗   ██╗███████╗███████╗██████╗     ██████╗ ██████╗  ██████╗ ███████╗██╗██╗     ███████╗
+// ██╔════╝██╔════╝╚══██╔══╝██╔════╝██║  ██║    ██║   ██║██╔════╝██╔════╝██╔══██╗    ██╔══██╗██╔══██╗██╔═══██╗██╔════╝██║██║     ██╔════╝
+// █████╗  █████╗     ██║   ██║     ███████║    ██║   ██║███████╗█████╗  ██████╔╝    ██████╔╝██████╔╝██║   ██║█████╗  ██║██║     █████╗
+// ██╔══╝  ██╔══╝     ██║   ██║     ██╔══██║    ██║   ██║╚════██║██╔══╝  ██╔══██╗    ██╔═══╝ ██╔══██╗██║   ██║██╔══╝  ██║██║     ██╔══╝
+// ██║     ███████╗   ██║   ╚██████╗██║  ██║    ╚██████╔╝███████║███████╗██║  ██║    ██║     ██║  ██║╚██████╔╝██║     ██║███████╗███████╗
+// ╚═╝     ╚══════╝   ╚═╝    ╚═════╝╚═╝  ╚═╝     ╚═════╝ ╚══════╝╚══════╝╚═╝  ╚═╝    ╚═╝     ╚═╝  ╚═╝ ╚═════╝ ╚═╝     ╚═╝╚══════╝╚══════╝
+
   String _name = '';
   String _profilePic = '';
   String _phoneNo = '';
@@ -31,10 +75,6 @@ class UserProvider with ChangeNotifier {
   String _usergender = '';
   String _youtube = '';
 
-  // Getters for Auth Functionality
-  String get email => _email;
-  String get token => _token;
-  String get role => _role;
   String get name => _name;
   String get profilePic => _profilePic;
   String get phoneNo => _phoneNo;
@@ -52,22 +92,6 @@ class UserProvider with ChangeNotifier {
   String get proffesion => _proffesion;
   String get usergender => _usergender;
   String get youtube => _youtube;
-
-  // Setters for Auth Functionality
-  void setEmail(String email) {
-    _email = email;
-    notifyListeners();
-  }
-
-  void setToken(String token) {
-    _token = token;
-    notifyListeners();
-  }
-
-  void setRole(String role) {
-    _role = role;
-    notifyListeners();
-  }
 
   void setName(String name) {
     _name = name;
@@ -155,29 +179,7 @@ class UserProvider with ChangeNotifier {
   }
 
   // Clear Functionality
-  void clear() {
-    _email = '';
-    _token = '';
-    _role = '';
-    _name = '';
-    _profilePic = '';
-    _phoneNo = '';
-    _address = '';
-    _country = '';
-    _state = '';
-    _userlanguage = '';
-    _userZipcode = '';
-    _aboutMe = '';
-    _facebook = '';
-    _twitter = '';
-    _instagram = '';
-    _website = '';
-    _other = '';
-    _proffesion = '';
-    _usergender = '';
-    _youtube = '';
-    notifyListeners();
-  }
+
   //------------------------------------------------------------------------------------------------------------------------------------
   // ██████╗ ███████╗ ██████╗ ██╗███████╗████████╗███████╗██████╗      █████╗  ██████╗ ██████╗ ██████╗ ██╗   ██╗███╗   ██╗████████╗
   // ██╔══██╗██╔════╝██╔════╝ ██║██╔════╝╚══██╔══╝██╔════╝██╔══██╗    ██╔══██╗██╔════╝██╔════╝██╔═══██╗██║   ██║████╗  ██║╚══██╔══╝

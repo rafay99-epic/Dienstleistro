@@ -4,6 +4,7 @@ import 'dart:io';
 
 import 'package:dienstleisto/backend/provider/provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -11,61 +12,9 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Authentication {
-  //-----------------
-  // Google Sign In
-  //-----------------
   final GoogleSignIn googleSignIn = GoogleSignIn();
+  final storage = const FlutterSecureStorage();
 
-  //-----------------------
-  // Login API
-  //  Role Based Login
-  //    1. Seller
-  //    2. Customer
-  //  Auth Gate
-  //----------------------
-  // Future<bool> loginAPI(
-  //     String email, String password, BuildContext context) async {
-  //   try {
-  //     final response = await http.post(
-  //       Uri.parse('http://dienstleisto.de/api/login'),
-  //       body: {
-  //         'email': email,
-  //         'password': password,
-  //       },
-  //     );
-
-  //     if (response.statusCode == 200) {
-  //       print('Login successful');
-  //       print('Response body: ${response.body}');
-  //       Map<String, dynamic> responseBody = jsonDecode(response.body);
-  //       print('Response body map: $responseBody');
-  //       String? token = responseBody['token'];
-  //       print('Token: $token');
-  //       Map<String, dynamic> user = responseBody['user'];
-  //       String? role = user['role'];
-  //       if (token != null) {
-  //         // Save the token to SharedPreferences
-  //         SharedPreferences prefs = await SharedPreferences.getInstance();
-  //         await prefs.setString('token', token);
-
-  //         // Save the token to UserProvider
-  //         Provider.of<UserProvider>(context, listen: false).setToken(token);
-  //         Provider.of<UserProvider>(context, listen: false).setRole(role ?? '');
-  //         return true;
-  //       } else {
-  //         print('Token is null');
-  //         return false;
-  //       }
-  //     } else {
-  //       print('Failed to login. Status code: ${response.statusCode}');
-  //       print('Response body: ${response.body}');
-  //       return false;
-  //     }
-  //   } catch (e) {
-  //     print('An error occurred: $e');
-  //     return false;
-  //   }
-  // }
   Future<bool> loginAPI(
       String email, String password, BuildContext context) async {
     try {
@@ -78,70 +27,24 @@ class Authentication {
       );
 
       if (response.statusCode == 200) {
-        print('Login successful');
-        // print('Response body: ${response.body}');
-        print("-----------------------------------");
-        print("respond Code: ${response.statusCode}");
-        print("---------------------------------------");
         Map<String, dynamic> responseBody = jsonDecode(response.body);
-        print('Response body map: $responseBody');
         String? token = responseBody['token'];
-        print('Token: $token');
         Map<String, dynamic> user = responseBody['user'];
         String? role = user['role'];
         if (token != null) {
-          // Save the token to SharedPreferences
+          await storage.write(key: 'User_login_token', value: token);
           SharedPreferences prefs = await SharedPreferences.getInstance();
-          await prefs.setString('token', token);
+          await prefs.setString('User_login_token', token);
+          await prefs.setInt('User_id_memory', user['id'] ?? 0);
 
           // Save the user data to UserProvider
           UserProvider userProvider =
               Provider.of<UserProvider>(context, listen: false);
-          userProvider.setToken(token);
+          userProvider.setId(user['id'].toString());
           userProvider.setToken(token);
           userProvider.setRole(role ?? '');
           userProvider.setEmail(user['email'] ?? '');
-          userProvider.setName(user['name'] ?? '');
-          userProvider.setProfilePic(user['profilepic'] ?? '');
-          userProvider.setPhoneNo(user['phoneno'] ?? '');
-          userProvider.setUserAddress(user['address'] ?? '');
-          userProvider.setUserCountry(user['country'] ?? '');
-          userProvider.setUserState(user['state'] ?? '');
-          userProvider.setUserLanguage(user['language'] ?? '');
-          userProvider.setUserZipcode(user['zipcode'] ?? '');
-          userProvider.setAboutMe(user['about'] ?? '');
-          userProvider.setTwitter(user['twitter'] ?? '');
-          userProvider.setInstagram(user['instagram'] ?? '');
-          userProvider.setWebsite(user['website'] ?? '');
-          userProvider.setUsergender(user['gender'] ?? '');
-          userProvider.setProffesion(user['proffesion'] ?? '');
-          userProvider.setOther(user['other'] ?? '');
-          userProvider.setYoutube(user['youtube'] ?? '');
-          userProvider.setFacebook(user['facebook'] ?? '');
 
-          print(
-              "------------------------Provider has Data--------------------------------------------");
-          print('Token: ${userProvider.token}');
-          print('Role: ${userProvider.role}');
-          print('Email: ${userProvider.email}');
-          print('Name: ${userProvider.name}');
-          print('Profile Pic: ${userProvider.profilePic}');
-          print('Phone No: ${userProvider.phoneNo}');
-          print('Address: ${userProvider.userAddress}');
-          print('Country: ${userProvider.userCountry}');
-          print('State: ${userProvider.userState}');
-          print('Language: ${userProvider.userlanguage}');
-          print('Zipcode: ${userProvider.userZipcode}');
-          print('About Me: ${userProvider.aboutMe}');
-          print('Facebook: ${userProvider.facebook}');
-          print('Twitter: ${userProvider.twitter}');
-          print('Instagram: ${userProvider.instagram}');
-          print('Website: ${userProvider.website}');
-          print('Other: ${userProvider.other}');
-          print('Proffesion: ${userProvider.proffesion}');
-          print('Youtube: ${userProvider.youtube}');
-          print(
-              "------------------------Provider has Data--------------------------------------------");
           return true;
         } else {
           print('Token is null');
@@ -158,25 +61,19 @@ class Authentication {
     }
   }
 
-  //---------------------------------
-  // Check for User is Logged in
-  //---------------------------------
-
   Future<bool> isLoggedIn(BuildContext context) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? token = prefs.getString('token');
+    String? token = await storage.read(key: 'User_login_token');
     return token != null && token.isNotEmpty;
   }
 
   //-----------------
   // Logout API
   //-----------------
-  Future<bool> logoutAPI(String email, BuildContext context) async {
-    UserProvider userProvider =
-        Provider.of<UserProvider>(context, listen: false);
-    String? token = userProvider.token;
 
-    if (token.isNotEmpty) {
+  Future<bool> logoutAPI(String email, BuildContext context) async {
+    String? token = await storage.read(key: 'User_login_token');
+
+    if (token != null && token.isNotEmpty) {
       final response = await http.post(
         Uri.parse('http://dienstleisto.de/api/logout'),
         headers: {
@@ -189,7 +86,7 @@ class Authentication {
 
       if (response.statusCode == 200) {
         print('Logout successful');
-        userProvider.clear();
+        await storage.delete(key: 'User_login_token');
         return true;
       } else {
         print('Failed to logout. Status code: ${response.statusCode}');
@@ -256,16 +153,12 @@ class Authentication {
       }
     } on SocketException {
       print('No Internet connection');
-      // handle the SocketException
     } on HttpException {
       print('Could not find the server');
-      // handle the HttpException
     } on FormatException {
       print('Bad response format');
-      // handle the FormatException
     } catch (e) {
       print('Error occurred while signing in with Google: $e');
-      // handle any other types of exceptions
     }
   }
 

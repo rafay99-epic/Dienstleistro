@@ -1,8 +1,12 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'package:dienstleisto/backend/api/profile/profile_api.dart';
+import 'package:dienstleisto/backend/provider/provider.dart';
 import 'package:dienstleisto/frontend/screens/home/home1Tab.dart';
 import 'package:dienstleisto/frontend/screens/home/search.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -13,11 +17,20 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> with TickerProviderStateMixin {
   TabController? _tabController;
+  final ProfileAPI profileAPI = ProfileAPI();
 
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 3, vsync: this);
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      int id = prefs.getInt('User_id_memory') ?? 0;
+      UserProvider userProvider =
+          Provider.of<UserProvider>(context, listen: false);
+
+      profileAPI.getUserProfile(id, context, userProvider);
+    });
   }
 
   @override
