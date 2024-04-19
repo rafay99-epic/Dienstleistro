@@ -346,11 +346,6 @@ class _AboutMeTemplateState extends State<AboutMeTemplate> {
                     color: Theme.of(context).colorScheme.secondary,
                   ),
                   SocialMediaButton(
-                    icon: FontAwesomeIcons.youtube,
-                    url: widget.youtubeLink,
-                    color: Theme.of(context).colorScheme.secondary,
-                  ),
-                  SocialMediaButton(
                     icon: FontAwesomeIcons.globe,
                     url: widget.websiteLink,
                     color: Theme.of(context).colorScheme.secondary,
@@ -362,7 +357,65 @@ class _AboutMeTemplateState extends State<AboutMeTemplate> {
                   ),
                 ],
               ),
-
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  MyText(
+                    text: 'My Education',
+                    fontFamily: "ABeeZee",
+                    fontWeight: FontWeight.w400,
+                    fontStyle: FontStyle.italic,
+                    fontSize: 17,
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+                  Container(
+                    padding: const EdgeInsets.all(8.0),
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey),
+                      borderRadius: BorderRadius.circular(20.0),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        const Icon(Icons.edit),
+                        const SizedBox(width: 4.0),
+                        MyText(
+                          text: 'Edit',
+                          fontFamily: "ABeeZee",
+                          fontWeight: FontWeight.w400,
+                          fontStyle: FontStyle.italic,
+                          fontSize: 13,
+                          color: Theme.of(context).colorScheme.primary,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              //education information
+              Card(
+                color: Theme.of(context).colorScheme.background,
+                child: ListTile(
+                  leading: Icon(
+                    Icons.school,
+                    color: Theme.of(context).colorScheme.secondary,
+                  ),
+                  title: MyText(
+                    text: 'BSc. Computer Science',
+                    fontFamily: "ABeeZee",
+                    fontWeight: FontWeight.w400,
+                    fontSize: 15,
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+                  subtitle: MyText(
+                    text: 'This is the education of ${widget.name}',
+                    fontFamily: "ABeeZee",
+                    fontWeight: FontWeight.w400,
+                    fontSize: 13,
+                    color: Theme.of(context).colorScheme.inversePrimary,
+                  ),
+                ),
+              ),
               // My Resume heading and edit clip button
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,

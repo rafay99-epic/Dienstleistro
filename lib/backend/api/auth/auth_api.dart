@@ -184,7 +184,6 @@ class Authentication {
       }
     } on SocketException {
       showErrorDialog(context, 'No Internet connection');
-      print("No Internet connection");
     } on HttpException {
       showErrorDialog(context, "HTTP error");
     } on FormatException {

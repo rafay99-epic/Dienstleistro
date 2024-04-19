@@ -24,9 +24,9 @@ class SocialMediaButton extends StatelessWidget {
       try {
         await launch(
           urlString,
-          forceSafariVC: true,
-          forceWebView: true,
-          universalLinksOnly: true,
+          forceSafariVC: false,
+          forceWebView: false,
+          universalLinksOnly: false,
         );
       } catch (e) {
         print('Could not launch $urlString. Exception: $e');

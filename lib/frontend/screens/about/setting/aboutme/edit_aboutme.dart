@@ -1,7 +1,14 @@
 // ignore_for_file: library_private_types_in_public_api
 
+import 'dart:io';
+
+import 'package:dienstleisto/backend/api/profile/profile_api.dart';
+import 'package:dienstleisto/backend/provider/provider.dart';
 import 'package:dienstleisto/constants/widgets/textStyle.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:flutter/services.dart' show rootBundle;
 
 class EditAboutMe extends StatefulWidget {
   const EditAboutMe({super.key});
@@ -12,6 +19,21 @@ class EditAboutMe extends StatefulWidget {
 
 class _EditAboutMeState extends State<EditAboutMe> {
   final TextEditingController aboutMeController = TextEditingController();
+  late UserProvider provider = UserProvider();
+
+  @override
+  void initState() {
+    super.initState();
+    provider = Provider.of<UserProvider>(context, listen: false);
+    aboutMeController.text = provider.aboutMe;
+  }
+
+  @override
+  void dispose() {
+    aboutMeController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,7 +59,8 @@ class _EditAboutMeState extends State<EditAboutMe> {
                   text: "Update About Me",
                   fontSize: 25,
                   color: Theme.of(context).colorScheme.primary,
-                  fontWeight: FontWeight.bold,
+                  fontWeight: FontWeight.w400,
+                  fontStyle: FontStyle.italic,
                   textAlign: TextAlign.center,
                   fontFamily: "ABeeZee",
                 ),
@@ -86,7 +109,7 @@ class _EditAboutMeState extends State<EditAboutMe> {
                           ),
                         ),
                         onPressed: () {
-                          // Handle button 1 click
+                          updateAboutme(context);
                         },
                         child: MyText(
                           text: 'Update',
@@ -113,7 +136,8 @@ class _EditAboutMeState extends State<EditAboutMe> {
                           ),
                         ),
                         onPressed: () {
-                          // Handle button 2 click
+                          aboutMeController.clear();
+                          Navigator.pop(context);
                         },
                         child: MyText(
                           text: 'Cancel',
@@ -130,5 +154,75 @@ class _EditAboutMeState extends State<EditAboutMe> {
             ),
           ),
         ));
+  }
+
+  Future<File> getImageFileFromAssets(String path) async {
+    final byteData = await rootBundle.load('assets/images/banner.jpg');
+
+    final file = File('${(await getTemporaryDirectory()).path}/banner.jpg');
+    await file.writeAsBytes(byteData.buffer
+        .asUint8List(byteData.offsetInBytes, byteData.lengthInBytes));
+
+    return file;
+  }
+
+  Future<void> updateAboutme(BuildContext context) async {
+    ProfileAPI profileAPI = ProfileAPI();
+    UserProvider userProvider =
+        Provider.of<UserProvider>(context, listen: false);
+    String aboutMe = aboutMeController.text;
+    userProvider.setAboutMe(aboutMe);
+
+    // Get the data from the provider
+    String name = userProvider.name;
+    String phoneNo = userProvider.phoneNo;
+    String usergender = userProvider.usergender;
+    String userlanguage = userProvider.userlanguage;
+    String userCountry = userProvider.userCountry;
+    String userAddress = userProvider.userAddress;
+    String userState = userProvider.userState;
+    String userZipcode = userProvider.userZipcode;
+    String aboutMeNew = userProvider.aboutMe;
+    String facebook = userProvider.facebook;
+    String youtube = userProvider.youtube;
+    String twitter = userProvider.twitter;
+    String instagram = userProvider.instagram;
+    String website = userProvider.website;
+    String other = userProvider.other;
+    String proffesion = userProvider.proffesion;
+    String imgCode = userProvider.profilePic;
+
+    // Create a File for the bannerImage
+    // File bannerImage = File('/assets/images/banner.jpg');
+
+    File bannerImage = await getImageFileFromAssets('assets/images/banner.jpg');
+
+    // Call the basicUpdate function
+    bool success = await profileAPI.basicUpdate(
+      bannerImage: bannerImage,
+      name: name,
+      phoneNo: phoneNo,
+      gender: usergender,
+      language: userlanguage,
+      country: userCountry,
+      address: userAddress,
+      state: userState,
+      zipCode: userZipcode,
+      about: aboutMeNew,
+      facebook: facebook,
+      youtube: youtube,
+      twitter: twitter,
+      instagram: instagram,
+      website: website,
+      other: other,
+      profession: proffesion,
+      imgCode: imgCode,
+    );
+
+    if (success) {
+      print('Profile updated successfully');
+    } else {
+      print('Failed to update profile');
+    }
   }
 }
