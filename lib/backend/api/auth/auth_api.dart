@@ -35,7 +35,6 @@ class Authentication {
         if (token != null) {
           await storage.write(key: 'User_login_token', value: token);
           SharedPreferences prefs = await SharedPreferences.getInstance();
-          await prefs.setString('User_login_token', token);
           await prefs.setInt('User_id_memory', user['id'] ?? 0);
 
           // Save the user data to UserProvider
@@ -159,8 +158,16 @@ class Authentication {
       String passwordConfirmation,
       BuildContext context) async {
     try {
+      String? token = await storage.read(key: 'User_login_token');
+      if (token == null || token.isEmpty) {
+        showErrorDialog(context, "Please login to update password");
+        return;
+      }
       final response = await http.post(
-        Uri.parse('http://dienstleisto.de/api/login'),
+        Uri.parse('http://dienstleisto.de/api/updatepassword'),
+        headers: {
+          'Authorization': 'Bearer $token',
+        },
         body: {
           'email': email,
           'current_password': currentPassword,
@@ -170,11 +177,14 @@ class Authentication {
       );
 
       if (response.statusCode == 200) {
+        print("Password updated successfully");
       } else {
+        print("Failed to update password: ${response.statusCode}");
         throw Exception('Failed to update password');
       }
     } on SocketException {
       showErrorDialog(context, 'No Internet connection');
+      print("No Internet connection");
     } on HttpException {
       showErrorDialog(context, "HTTP error");
     } on FormatException {
