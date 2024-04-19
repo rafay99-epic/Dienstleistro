@@ -1,8 +1,9 @@
-// ignore_for_file: use_build_context_synchronously, avoid_print, unnecessary_null_comparison
+// ignore_for_file: use_build_context_synchronously, , unnecessary_null_comparison
 
 import 'dart:io';
 
 import 'package:dienstleisto/backend/provider/provider.dart';
+import 'package:dienstleisto/constants/widgets/errorAndLoading/errorHandelling.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
@@ -47,16 +48,12 @@ class Authentication {
 
           return true;
         } else {
-          print('Token is null');
           return false;
         }
       } else {
-        print('Failed to login. Status code: ${response.statusCode}');
-        print('Response body: ${response.body}');
         return false;
       }
     } catch (e) {
-      print('An error occurred: $e');
       return false;
     }
   }
@@ -85,12 +82,9 @@ class Authentication {
       );
 
       if (response.statusCode == 200) {
-        print('Logout successful');
         await storage.delete(key: 'User_login_token');
         return true;
       } else {
-        print('Failed to logout. Status code: ${response.statusCode}');
-        print('Response body: ${response.body}');
         return false;
       }
     } else {
@@ -112,15 +106,11 @@ class Authentication {
       );
 
       if (response.statusCode == 200) {
-        print('Password reset successful');
-        print('Response body: ${response.body}');
         return true;
       } else {
-        print('Failed to reset password');
         return false;
       }
     } catch (e) {
-      print('An error occurred: $e');
       return false;
     }
   }
@@ -129,7 +119,7 @@ class Authentication {
   // Sign in with google
   //Problem: need to sign key
   //-------------------------------
-  Future<void> signInWithGoogle() async {
+  Future<void> signInWithGoogle(BuildContext context) async {
     try {
       final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
 
@@ -145,28 +135,29 @@ class Authentication {
       );
 
       if (response.statusCode == 200) {
-        print('Login successful');
       } else {
-        print('Failed to login. Status code: ${response.statusCode}');
-        print('Response body: ${response.body}');
         throw Exception('Failed to login');
       }
     } on SocketException {
-      print('No Internet connection');
+      showErrorDialog(context, 'No Internet connection');
     } on HttpException {
-      print('Could not find the server');
+      showErrorDialog(context, "HTTP error");
     } on FormatException {
-      print('Bad response format');
+      showErrorDialog(context, "Format Expection Error");
     } catch (e) {
-      print('Error occurred while signing in with Google: $e');
+      showErrorDialog(context, "error: $e");
     }
   }
 
   //-------------------------
   // Update the Password
   //-------------------------
-  Future<void> updatePassword(String email, String currentPassword,
-      String newPassword, String passwordConfirmation) async {
+  Future<void> updatePassword(
+      String email,
+      String currentPassword,
+      String newPassword,
+      String passwordConfirmation,
+      BuildContext context) async {
     try {
       final response = await http.post(
         Uri.parse('http://dienstleisto.de/api/login'),
@@ -179,24 +170,17 @@ class Authentication {
       );
 
       if (response.statusCode == 200) {
-        print('Password updated successfully');
       } else {
-        print('Failed to update password. Status code: ${response.statusCode}');
-        print('Response body: ${response.body}');
         throw Exception('Failed to update password');
       }
     } on SocketException {
-      print('No Internet connection');
-      // handle the SocketException
+      showErrorDialog(context, 'No Internet connection');
     } on HttpException {
-      print('Could not find the server');
-      // handle the HttpException
+      showErrorDialog(context, "HTTP error");
     } on FormatException {
-      print('Bad response format');
-      // handle the FormatException
+      showErrorDialog(context, "Format Expection Error");
     } catch (e) {
-      print('Error occurred while updating password: $e');
-      // handle any other types of exceptions
+      showErrorDialog(context, "error: $e");
     }
   }
 
@@ -238,15 +222,12 @@ class Authentication {
       );
 
       if (response.statusCode == 200 || response.statusCode == 201) {
-        print('User registered successfully');
         return {
           'success': true,
           'message':
               'User registered successfully!! Please check your email for verification link.'
         };
       } else {
-        print('Failed to register user. Status code: ${response.statusCode}');
-        print('Response body: ${response.body}');
         return {
           'success': false,
           'message':
@@ -254,16 +235,12 @@ class Authentication {
         };
       }
     } on SocketException {
-      print('No Internet connection');
       return {'success': false, 'message': 'No Internet connection'};
     } on HttpException {
-      print('Could not find the server');
       return {'success': false, 'message': 'Could not find the server'};
     } on FormatException {
-      print('Bad response format');
       return {'success': false, 'message': 'Bad response format'};
     } catch (e) {
-      print('An error occurred: $e');
       return {'success': false, 'message': 'An error occurred: $e'};
     }
   }

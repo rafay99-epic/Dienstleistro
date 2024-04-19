@@ -235,7 +235,7 @@ class _loginState extends State<login> {
     return CustomButton(
       onPressed: () async {
         try {
-          await _auth.signInWithGoogle();
+          await _auth.signInWithGoogle(context);
           // Navigate to the next page or update the UI here
         } catch (e) {
           print('Error occurred while signing in with Google: $e');

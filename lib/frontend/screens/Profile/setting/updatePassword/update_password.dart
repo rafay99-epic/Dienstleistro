@@ -109,6 +109,7 @@ class ChangePassword extends StatelessWidget {
                         currentPasswordController.text,
                         passwordController.text,
                         confirmPasswordController.text,
+                        context,
                       );
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
