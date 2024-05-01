@@ -1,3 +1,4 @@
+import 'package:dienstleisto/backend/class/awards_class.dart';
 import 'package:dienstleisto/backend/class/education.dart';
 import 'package:dienstleisto/backend/class/language_class.dart';
 import 'package:dienstleisto/backend/class/skill_class.dart';
@@ -80,9 +81,10 @@ class UserProvider with ChangeNotifier {
   List<UserLanguage> _languages = [];
   List<UserSkill> _skills = [];
   List<UserEducation> _educations = [];
+  List<UserAward> _awards = [];
 
   List<String> _experiences = [];
-  List<String> _awards = [];
+
   List<String> _services = [];
   List<String> _followers = [];
 
@@ -108,8 +110,10 @@ class UserProvider with ChangeNotifier {
   List<UserSkill> get skills => _skills;
   List<UserEducation> get educations => _educations;
 
+  List<UserAward> get awards => _awards;
+
   List<String> get experiences => _experiences;
-  List<String> get awards => _awards;
+
   List<String> get services => _services;
   List<String> get followers => _followers;
 
@@ -218,7 +222,7 @@ class UserProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void setAwards(List<String> value) {
+  void setAwards(List<UserAward> value) {
     _awards = value;
     notifyListeners();
   }

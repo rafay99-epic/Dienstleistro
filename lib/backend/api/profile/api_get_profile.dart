@@ -1,4 +1,5 @@
 // ignore_for_file: avoid_print, use_build_context_synchronously
+import 'package:dienstleisto/backend/class/awards_class.dart';
 import 'package:dienstleisto/backend/class/education.dart';
 import 'package:dienstleisto/backend/class/language_class.dart';
 import 'package:dienstleisto/backend/class/skill_class.dart';
@@ -52,6 +53,10 @@ class GetProfileAPI {
         List<dynamic> languagesJson = userProfile['languages'] ?? [];
         userProvider.setLanguages(
             languagesJson.map((json) => UserLanguage.fromJson(json)).toList());
+
+        List<dynamic> awardsJson = userProfile['awards'] ?? [];
+        userProvider.setAwards(
+            awardsJson.map((json) => UserAward.fromJson(json)).toList());
 
         // userProvider
         //     .setLanguages(List<String>.from(userProfile['languages'] ?? []));
