@@ -3,6 +3,7 @@
 
 import 'package:dienstleisto/backend/class/education.dart';
 import 'package:dienstleisto/backend/class/language_class.dart';
+import 'package:dienstleisto/frontend/screens/about/setting/language/update_language.dart';
 import 'package:flutter/material.dart';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -323,7 +324,6 @@ class _AboutMeTemplateState extends State<AboutMeTemplate> {
                 ],
               ),
               const SizedBox(height: 10),
-              // List of skills
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
@@ -454,26 +454,37 @@ class _AboutMeTemplateState extends State<AboutMeTemplate> {
                     fontSize: 17,
                     color: Theme.of(context).colorScheme.primary,
                   ),
-                  Container(
-                    padding: const EdgeInsets.all(8.0),
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey),
-                      borderRadius: BorderRadius.circular(20.0),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        const Icon(Icons.edit),
-                        const SizedBox(width: 4.0),
-                        MyText(
-                          text: 'Edit',
-                          fontFamily: "ABeeZee",
-                          fontWeight: FontWeight.w400,
-                          fontStyle: FontStyle.italic,
-                          fontSize: 13,
-                          color: Theme.of(context).colorScheme.primary,
+                  InkWell(
+                    onTap: () {
+                      Navigator.of(context).push(
+                        PageTransition(
+                          type: PageTransitionType.rightToLeftWithFade,
+                          child: const UpdateLanguagesScreen(),
+                          duration: const Duration(milliseconds: 500),
                         ),
-                      ],
+                      );
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.all(8.0),
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.grey),
+                        borderRadius: BorderRadius.circular(20.0),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          const Icon(Icons.edit),
+                          const SizedBox(width: 4.0),
+                          MyText(
+                            text: 'Edit',
+                            fontFamily: "ABeeZee",
+                            fontWeight: FontWeight.w400,
+                            fontStyle: FontStyle.italic,
+                            fontSize: 13,
+                            color: Theme.of(context).colorScheme.primary,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ],

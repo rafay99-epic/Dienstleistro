@@ -1,8 +1,8 @@
 class UserLanguage {
   final int id;
   final int userId;
-  final String name;
-  final int percentage;
+  late String name;
+  late int percentage;
 
   UserLanguage({
     required this.id,
