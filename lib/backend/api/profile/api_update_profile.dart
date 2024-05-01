@@ -31,7 +31,7 @@ class ProfileUpdate {
 
     Map<String, String> body = {
       'name': name,
-      'phoneNo': phoneNo,
+      'phoneno': phoneNo,
       'gender': gender,
       'language': language,
       'country': country,

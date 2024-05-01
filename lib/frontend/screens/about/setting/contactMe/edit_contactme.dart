@@ -1,7 +1,5 @@
 // ignore_for_file: use_build_context_synchronously
 
-import 'dart:ffi';
-
 import 'package:csc_picker/csc_picker.dart';
 import 'package:dienstleisto/backend/api/profile/api_update_profile.dart';
 import 'package:dienstleisto/backend/provider/provider.dart';
@@ -24,6 +22,8 @@ class _UpdateContactInformationState extends State<UpdateContactInformation> {
   final TextEditingController stateController = TextEditingController();
   final TextEditingController cityController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
+  final TextEditingController addressController = TextEditingController();
+  final TextEditingController zipCodeController = TextEditingController();
 
   @override
   void dispose() {
@@ -77,7 +77,7 @@ class _UpdateContactInformationState extends State<UpdateContactInformation> {
               MyTextField(
                 hintText: 'Address',
                 icon: Icons.location_on,
-                controller: phoneController,
+                controller: addressController,
               ),
               const SizedBox(
                 height: 15,
@@ -133,6 +133,14 @@ class _UpdateContactInformationState extends State<UpdateContactInformation> {
                     cityController.text = 'City: $value';
                   });
                 },
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              MyTextField(
+                hintText: 'Zip Code',
+                icon: Icons.location_city,
+                controller: zipCodeController,
               ),
               const SizedBox(
                 height: 25,
@@ -211,9 +219,18 @@ class _UpdateContactInformationState extends State<UpdateContactInformation> {
     //Provider
     UserProvider userProvider =
         Provider.of<UserProvider>(context, listen: false);
-
     //passing controller into the provider
-    // Set values from controllers to provider
+    String phoneNo = phoneController.text;
+    userProvider.setPhoneNo(phoneNo);
+
+    String country = countryController.text;
+    userProvider.setUserCountry(country);
+
+    String state = stateController.text;
+    userProvider.setUserState(state);
+
+    String address = addressController.text;
+    userProvider.setUserAddress(address);
 
     //Passign Provider Values in the Update Profile API
     bool success = await profileUpdate.updateProfile(
@@ -222,9 +239,9 @@ class _UpdateContactInformationState extends State<UpdateContactInformation> {
       gender: userProvider.usergender,
       language: userProvider.userlanguage,
       country: userProvider.userCountry,
-      address: userProvider.address,
-      state: userProvider.state,
-      zipCode: userProvider.userZipcode,
+      address: addressController.text,
+      state: stateController.text,
+      zipCode: zipCodeController.text,
       about: userProvider.aboutMe,
       facebook: userProvider.facebook,
       youtube: userProvider.youtube,
