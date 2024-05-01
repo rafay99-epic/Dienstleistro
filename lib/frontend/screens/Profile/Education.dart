@@ -13,6 +13,8 @@ class Education extends StatefulWidget {
 
   @override
   _EducationState createState() => _EducationState();
+
+  static fromJson(json) {}
 }
 
 class _EducationState extends State<Education> {

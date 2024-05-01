@@ -1,6 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
 
-import 'package:dienstleisto/backend/api/profile/api_profile_update.dart';
+import 'package:dienstleisto/backend/api/profile/api_get_profile.dart';
 import 'package:dienstleisto/backend/provider/provider.dart';
 import 'package:dienstleisto/frontend/screens/home/home1Tab.dart';
 import 'package:dienstleisto/frontend/screens/home/search.dart';
@@ -17,7 +17,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> with TickerProviderStateMixin {
   TabController? _tabController;
-  final ProfileAPI profileAPI = ProfileAPI();
+  final GetProfileAPI getprofileAPI = GetProfileAPI();
 
   @override
   void initState() {
@@ -30,7 +30,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
       UserProvider userProvider =
           Provider.of<UserProvider>(context, listen: false);
 
-      profileAPI.getUserProfile(id, context, userProvider);
+      getprofileAPI.getUserProfile(id, context, userProvider);
       print("--------------------------------");
       print('User id: $id');
       print("--------------------------------");

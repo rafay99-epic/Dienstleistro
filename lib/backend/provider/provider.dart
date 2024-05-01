@@ -1,3 +1,4 @@
+import 'package:dienstleisto/backend/class/education.dart';
 import 'package:flutter/foundation.dart';
 
 class UserProvider with ChangeNotifier {
@@ -74,6 +75,13 @@ class UserProvider with ChangeNotifier {
   String _proffesion = '';
   String _usergender = '';
   String _youtube = '';
+  List<String> _languages = [];
+  List<String> _skills = [];
+  List<UserEducation> _educations = [];
+  List<String> _experiences = [];
+  List<String> _awards = [];
+  List<String> _services = [];
+  List<String> _followers = [];
 
   String get name => _name;
   String get profilePic => _profilePic;
@@ -92,6 +100,14 @@ class UserProvider with ChangeNotifier {
   String get proffesion => _proffesion;
   String get usergender => _usergender;
   String get youtube => _youtube;
+
+  List<String> get languages => _languages;
+  List<String> get skills => _skills;
+  List<UserEducation> get educations => _educations;
+  List<String> get experiences => _experiences;
+  List<String> get awards => _awards;
+  List<String> get services => _services;
+  List<String> get followers => _followers;
 
   void setName(String name) {
     _name = name;
@@ -175,6 +191,41 @@ class UserProvider with ChangeNotifier {
 
   void setYoutube(String youtube) {
     _youtube = youtube;
+    notifyListeners();
+  }
+
+  void setLanguages(List<String> value) {
+    _languages = value;
+    notifyListeners();
+  }
+
+  void setSkills(List<String> value) {
+    _skills = value;
+    notifyListeners();
+  }
+
+  void setEducations(List<UserEducation> value) {
+    _educations = value;
+    notifyListeners();
+  }
+
+  void setExperiences(List<String> value) {
+    _experiences = value;
+    notifyListeners();
+  }
+
+  void setAwards(List<String> value) {
+    _awards = value;
+    notifyListeners();
+  }
+
+  void setServices(List<String> value) {
+    _services = value;
+    notifyListeners();
+  }
+
+  void setFollowers(List<String> value) {
+    _followers = value;
     notifyListeners();
   }
 

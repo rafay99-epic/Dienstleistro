@@ -1,6 +1,6 @@
 // ignore_for_file: library_private_types_in_public_api, use_build_context_synchronously
 
-import 'package:dienstleisto/backend/api/profile/api_profile_update.dart';
+import 'package:dienstleisto/backend/api/profile/api_get_profile.dart';
 import 'package:dienstleisto/backend/provider/provider.dart';
 import 'package:dienstleisto/frontend/screens/about/aboutmetemplate.dart';
 import 'package:dienstleisto/frontend/screens/about/setting/setting.dart';
@@ -20,8 +20,7 @@ class AboutMe extends StatefulWidget {
 }
 
 class _AboutMeState extends State<AboutMe> {
-  final ProfileAPI profileAPI = ProfileAPI();
-
+  final GetProfileAPI getprofileAPI = GetProfileAPI();
   @override
   void initState() {
     super.initState();
@@ -32,7 +31,7 @@ class _AboutMeState extends State<AboutMe> {
       UserProvider userProvider =
           Provider.of<UserProvider>(context, listen: false);
 
-      profileAPI.getUserProfile(id, context, userProvider);
+      getprofileAPI.getUserProfile(id, context, userProvider);
     });
   }
 
