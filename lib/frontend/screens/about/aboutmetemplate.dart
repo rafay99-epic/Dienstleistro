@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 // ignore_for_file: library_private_types_in_public_api
 
+import 'package:dienstleisto/backend/class/education.dart';
 import 'package:dienstleisto/backend/class/language_class.dart';
 import 'package:flutter/material.dart';
 
@@ -30,6 +31,7 @@ class AboutMeTemplate extends StatefulWidget {
   final String youtubeLink;
 
   final List<UserLanguage> languages;
+  final List<UserEducation> usereducation;
   const AboutMeTemplate({
     Key? key,
     required this.name,
@@ -46,6 +48,7 @@ class AboutMeTemplate extends StatefulWidget {
     required this.otherLink,
     required this.youtubeLink,
     required this.languages,
+    required this.usereducation,
   }) : super(key: key);
 
   @override
@@ -204,11 +207,7 @@ class _AboutMeTemplateState extends State<AboutMeTemplate> {
                   ),
                 ],
               ),
-              // three contacts
 
-              // 1. Phone  Number
-              // 2. Email
-              // 3. Address
               Column(
                 children: <Widget>[
                   ListTile(
@@ -230,7 +229,7 @@ class _AboutMeTemplateState extends State<AboutMeTemplate> {
                       fontSize: 15,
                       color: Theme.of(context).colorScheme.primary,
                       fontStyle: FontStyle.italic,
-                    ), // Replace with your mobile phone number
+                    ),
                   ),
                   ListTile(
                     leading: Icon(
@@ -276,7 +275,7 @@ class _AboutMeTemplateState extends State<AboutMeTemplate> {
                   ),
                 ],
               ),
-              // Skill heading and edit clip button
+
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
@@ -396,46 +395,53 @@ class _AboutMeTemplateState extends State<AboutMeTemplate> {
                 ],
               ),
               const SizedBox(height: 10),
-              //education information
-              // title
-              //university name
-              // starting year
-              // ending year
-              // description or summary
-              Card(
-                color: Theme.of(context).colorScheme.background,
-                child: ListTile(
-                  leading: Icon(
-                    Icons.school,
-                    color: Theme.of(context).colorScheme.secondary,
-                  ),
-                  title: MyText(
-                    text: 'BSc. Computer Science',
-                    fontFamily: "ABeeZee",
-                    fontWeight: FontWeight.w400,
-                    fontSize: 15,
-                    color: Theme.of(context).colorScheme.primary,
-                  ),
-                  subtitle: MyText(
-                    text: 'This is the education of ${widget.name}',
-                    fontFamily: "ABeeZee",
-                    fontWeight: FontWeight.w400,
-                    fontSize: 13,
-                    color: Theme.of(context).colorScheme.inversePrimary,
-                  ),
-                ),
+              Column(
+                children: widget.usereducation.map((UserEducation education) {
+                  return Card(
+                    color: Theme.of(context).colorScheme.background,
+                    child: ListTile(
+                      leading: Icon(
+                        Icons.school,
+                        color: Theme.of(context).colorScheme.secondary,
+                      ),
+                      title: MyText(
+                        text: education.title,
+                        fontFamily: "ABeeZee",
+                        fontWeight: FontWeight.w400,
+                        fontSize: 15,
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                      subtitle: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          MyText(
+                            text: education.summary,
+                            fontFamily: "ABeeZee",
+                            fontWeight: FontWeight.w400,
+                            fontSize: 13,
+                            color: Theme.of(context).colorScheme.inversePrimary,
+                          ),
+                          MyText(
+                            text: 'Start Date: ${education.startYear}',
+                            fontFamily: "ABeeZee",
+                            fontWeight: FontWeight.w400,
+                            fontSize: 13,
+                            color: Theme.of(context).colorScheme.inversePrimary,
+                          ),
+                          MyText(
+                            text: 'End Date: ${education.endYear}',
+                            fontFamily: "ABeeZee",
+                            fontWeight: FontWeight.w400,
+                            fontSize: 13,
+                            color: Theme.of(context).colorScheme.inversePrimary,
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                }).toList(),
               ),
               const SizedBox(height: 10),
-              // My Resume heading and edit clip button
-
-              // Column(
-              //   children: widget.languages.map((UserLanguage language) {
-              //     return ListTile(
-              //       title: Text(language.name),
-              //       subtitle: Text('Percentage: ${language.percentage}%'),
-              //     );
-              //   }).toList(),
-              // ),
 
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
