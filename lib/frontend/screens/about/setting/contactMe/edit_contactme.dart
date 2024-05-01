@@ -1,7 +1,15 @@
+// ignore_for_file: use_build_context_synchronously
+
+import 'dart:ffi';
+
 import 'package:csc_picker/csc_picker.dart';
+import 'package:dienstleisto/backend/api/profile/api_update_profile.dart';
+import 'package:dienstleisto/backend/provider/provider.dart';
+import 'package:dienstleisto/constants/widgets/errorAndLoading/snakbar/snakbar.dart';
 import 'package:dienstleisto/constants/widgets/textStyle.dart';
 import 'package:dienstleisto/constants/widgets/textfeild2.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class UpdateContactInformation extends StatefulWidget {
   const UpdateContactInformation({super.key});
@@ -147,9 +155,7 @@ class _UpdateContactInformationState extends State<UpdateContactInformation> {
                           ),
                         ),
                       ),
-                      onPressed: () {
-                        // Handle button 1 click
-                      },
+                      onPressed: () => updateContactInformation(context),
                       child: MyText(
                         text: 'Update',
                         color: Theme.of(context).colorScheme.background,
@@ -178,6 +184,7 @@ class _UpdateContactInformationState extends State<UpdateContactInformation> {
                         stateController.clear();
                         cityController.clear();
                         phoneController.clear();
+                        Navigator.pop(context);
                       },
                       child: MyText(
                         text: 'Cancel',
@@ -195,5 +202,44 @@ class _UpdateContactInformationState extends State<UpdateContactInformation> {
         ),
       ),
     );
+  }
+
+  Future<void> updateContactInformation(BuildContext context) async {
+    // Profile Update
+    ProfileUpdate profileUpdate = ProfileUpdate();
+
+    //Provider
+    UserProvider userProvider =
+        Provider.of<UserProvider>(context, listen: false);
+
+    //passing controller into the provider
+    // Set values from controllers to provider
+
+    //Passign Provider Values in the Update Profile API
+    bool success = await profileUpdate.updateProfile(
+      name: userProvider.name,
+      phoneNo: userProvider.phoneNo,
+      gender: userProvider.usergender,
+      language: userProvider.userlanguage,
+      country: userProvider.userCountry,
+      address: userProvider.address,
+      state: userProvider.state,
+      zipCode: userProvider.userZipcode,
+      about: userProvider.aboutMe,
+      facebook: userProvider.facebook,
+      youtube: userProvider.youtube,
+      twitter: userProvider.twitter,
+      instagram: userProvider.instagram,
+      website: userProvider.website,
+      other: userProvider.other,
+      profession: userProvider.proffesion,
+    );
+
+    if (success) {
+      showSnackBar(context, 'Abdout Me  Successfully');
+      Navigator.pop(context);
+    } else {
+      showSnackBar(context, 'Failed to Update About Me');
+    }
   }
 }

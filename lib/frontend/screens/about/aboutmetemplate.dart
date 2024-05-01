@@ -57,11 +57,10 @@ class _AboutMeTemplateState extends State<AboutMeTemplate> {
           padding: const EdgeInsets.all(20.0),
           child: Column(
             children: <Widget>[
-              //Profile Image and Name plus job title
               Row(
                 children: <Widget>[
                   CircleAvatar(
-                    radius: 43, // 86/2
+                    radius: 43,
                     backgroundImage: NetworkImage(widget.profileImageUrl),
                   ),
                   const SizedBox(width: 10),
@@ -392,7 +391,13 @@ class _AboutMeTemplateState extends State<AboutMeTemplate> {
                   ),
                 ],
               ),
+              const SizedBox(height: 10),
               //education information
+              // title
+              //university name
+              // starting year
+              // ending year
+              // description or summary
               Card(
                 color: Theme.of(context).colorScheme.background,
                 child: ListTile(
@@ -416,6 +421,7 @@ class _AboutMeTemplateState extends State<AboutMeTemplate> {
                   ),
                 ),
               ),
+              const SizedBox(height: 10),
               // My Resume heading and edit clip button
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,

@@ -1,7 +1,6 @@
 // ignore_for_file: avoid_print, use_build_context_synchronously
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'dart:io';
 import 'dart:convert';
 import 'package:dienstleisto/backend/provider/provider.dart';
 
@@ -39,101 +38,24 @@ class ProfileAPI {
     }
   }
 
-  //basic profile
-  Future<bool> basicUpdate({
-    required File bannerImage,
-    required String name,
-    required String phoneNo,
-    required String gender,
-    required String language,
-    required String country,
-    required String address,
-    required String state,
-    required String zipCode,
-    required String about,
-    required String facebook,
-    required String youtube,
-    required String twitter,
-    required String instagram,
-    required String website,
-    required String other,
-    required String profession,
-    required String imgCode,
-  }) async {
-    try {
-      var request = http.MultipartRequest(
-          'POST', Uri.parse('http://dienstleisto.de/api/basicupdate'));
+  //fetch Education infor using the ID
+  Future<bool> getUserEducation(int userId) async {
+    final response = await http.get(
+      Uri.parse('http://dienstleisto.de/api/education/$userId'),
+    );
 
-      request.files.add(
-          await http.MultipartFile.fromPath('Bannerimage', bannerImage.path));
-
-      request.fields['name'] = name;
-      request.fields['phoneno'] = phoneNo;
-      request.fields['gender'] = gender;
-      request.fields['language'] = language;
-      request.fields['country'] = country;
-      request.fields['address'] = address;
-      request.fields['state'] = state;
-      request.fields['zipcode'] = zipCode;
-      request.fields['about'] = about;
-      request.fields['facebook'] = facebook;
-      request.fields['youtube'] = youtube;
-      request.fields['twitter'] = twitter;
-      request.fields['instagram'] = instagram;
-      request.fields['website'] = website;
-      request.fields['other'] = other;
-      request.fields['Proffesion'] = profession;
-      request.fields['imgcode'] = imgCode;
-
-      var response = await request.send();
-
-      if (response.statusCode == 200) {
-        final respStr = await response.stream.bytesToString();
-        Map<String, dynamic> responseBody = jsonDecode(respStr);
-        if (responseBody['success']) {
-          print('Profile updated successfully');
-          return true;
-        } else {
-          print('Failed to update profile: ${responseBody['message']}');
-          return false;
-        }
-      } else {
-        print('Failed to update profile. Status code: ${response.statusCode}');
-        return false;
-      }
-    } catch (e) {
-      print('An error occurred: $e');
-      return false;
-    }
-  }
-
-  //update Education
-  Future<bool> updateEducation({
-    required List<String> titles,
-    required List<String> types,
-    required List<String> startYears,
-    required List<String> endYears,
-    required List<String> summaries,
-  }) async {
-    if (titles.length != types.length ||
-        types.length != startYears.length ||
-        startYears.length != endYears.length ||
-        endYears.length != summaries.length) {
+    if (response.statusCode == 200) {
+      String education = jsonDecode(response.body)['education'];
+      print("--------------------------------------------");
+      print('User education: $education');
+      print("--------------------------------------------");
+      return true;
+    } else {
       print(
-          'The number of titles, types, start years, end years, and summaries must be the same.');
+          'Failed to fetch user education. Status code: ${response.statusCode}');
       return false;
+      // throw Exception('Failed to load user education');
     }
-
-    Map<String, String> body = {};
-    for (int i = 0; i < titles.length; i++) {
-      body['d_title[$i]'] = titles[i];
-      body['d_type[$i]'] = types[i];
-      body['d_syear[$i]'] = startYears[i];
-      body['d_eyear[$i]'] = endYears[i];
-      body['d_summary[$i]'] = summaries[i];
-    }
-
-    return postRequest('http://dienstleisto.de/api/education', body);
   }
 
   //update Expereince
@@ -165,7 +87,40 @@ class ProfileAPI {
     return postRequest('http://dienstleisto.de/api/experience', body);
   }
 
-  // Update Skills
+  //get user laguage
+  Future<bool> getUserLanguages(int userId) async {
+    try {
+      final response = await http.get(
+        Uri.parse('http://dienstleisto.de/api/language/$userId'),
+      );
+
+      if (response.statusCode == 200) {
+        Map<String, dynamic> responseBody = jsonDecode(response.body);
+        List<dynamic> languages = responseBody['languages'];
+        List<dynamic> professions = responseBody['p_lang'];
+        print("-------------------------------------------------");
+        print('User languages: $languages');
+        print('User professions: $professions');
+        print("-------------------------------------------------");
+        return true;
+      } else {
+        print(
+            "-------------------------------------------------------------------");
+        print(
+            'Failed to load user languages. Status code: ${response.statusCode}');
+        print(
+            "------------------------------------------------------------------");
+        return false;
+      }
+    } catch (e) {
+      print("-------------------------------------------------");
+      print('An error occurred: $e');
+      print("-------------------------------------------------");
+      return false;
+    }
+  }
+
+  // Update la  nguage
   Future<bool> updateLanguages({
     required List<String> languages,
     required List<String> proficiencies,

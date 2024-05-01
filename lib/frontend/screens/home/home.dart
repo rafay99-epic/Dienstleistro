@@ -1,6 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
 
-import 'package:dienstleisto/backend/api/profile/profile_api.dart';
+import 'package:dienstleisto/backend/api/profile/api_profile_update.dart';
 import 'package:dienstleisto/backend/provider/provider.dart';
 import 'package:dienstleisto/frontend/screens/home/home1Tab.dart';
 import 'package:dienstleisto/frontend/screens/home/search.dart';
@@ -23,6 +23,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
   void initState() {
     super.initState();
     _tabController = TabController(length: 3, vsync: this);
+    //fetching user Profile
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       int id = prefs.getInt('User_id_memory') ?? 0;
@@ -30,6 +31,17 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
           Provider.of<UserProvider>(context, listen: false);
 
       profileAPI.getUserProfile(id, context, userProvider);
+      print("--------------------------------");
+      print('User id: $id');
+      print("--------------------------------");
+      print("");
+
+      // print("--------------------------------");
+      // print('User Language');
+      // print("--------------------------------");
+      // profileAPI.getUserLanguages(id);
+      //getting user education and there is an issue, not fetching and issue with the API.
+      // profileAPI.getUserEducation(id);
     });
   }
 
@@ -99,10 +111,8 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                   Padding(
                     padding: const EdgeInsets.only(left: 20, right: 20),
                     child: TextField(
-                      readOnly:
-                          true, // Make TextField read-only to ensure onTap is always triggered
+                      readOnly: true,
                       onTap: () {
-                        // Handle tap event here
                         Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -152,6 +162,8 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
               child: TabBarView(
                 controller: _tabController,
                 children: const [
+                  Tab01(),
+                  Tab01(),
                   Tab01(),
                 ],
               ),

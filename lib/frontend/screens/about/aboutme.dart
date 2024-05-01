@@ -1,6 +1,6 @@
 // ignore_for_file: library_private_types_in_public_api, use_build_context_synchronously
 
-import 'package:dienstleisto/backend/api/profile/profile_api.dart';
+import 'package:dienstleisto/backend/api/profile/api_profile_update.dart';
 import 'package:dienstleisto/backend/provider/provider.dart';
 import 'package:dienstleisto/frontend/screens/about/aboutmetemplate.dart';
 import 'package:dienstleisto/frontend/screens/about/setting/setting.dart';
@@ -53,7 +53,9 @@ class _AboutMeState extends State<AboutMe> {
     String websiteLink = userProvider.website;
     String otherLink = userProvider.other;
     String youtubeLink = userProvider.youtube;
-
+    print("-----------------------------------------------");
+    print("Profile URL: $profileImageUrl");
+    print("-----------------------------------------------");
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBar(
