@@ -289,7 +289,7 @@ class _AboutMeTemplateState extends State<AboutMeTemplate> {
                       Navigator.of(context).push(
                         PageTransition(
                           type: PageTransitionType.rightToLeftWithFade,
-                          child: const updateSocailAccount(),
+                          child: updateSocailAccount(),
                           duration: const Duration(milliseconds: 500),
                         ),
                       );

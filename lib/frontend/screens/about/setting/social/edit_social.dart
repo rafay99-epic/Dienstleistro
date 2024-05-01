@@ -1,21 +1,24 @@
+import 'package:dienstleisto/backend/api/profile/api_update_profile.dart';
+import 'package:dienstleisto/backend/provider/provider.dart';
+import 'package:dienstleisto/constants/widgets/errorAndLoading/snakbar/snakbar.dart';
 import 'package:dienstleisto/constants/widgets/textStyle.dart';
 import 'package:dienstleisto/constants/widgets/textfeild2.dart';
 import 'package:flutter/material.dart';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 
 class updateSocailAccount extends StatelessWidget {
-  const updateSocailAccount({super.key});
+  updateSocailAccount({super.key});
 
+  final TextEditingController facebookController = TextEditingController();
+  final TextEditingController youtubeController = TextEditingController();
+  final TextEditingController twitterController = TextEditingController();
+  final TextEditingController instagramController = TextEditingController();
+  final TextEditingController websiteController = TextEditingController();
+  final TextEditingController otherController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    final TextEditingController facebookController = TextEditingController();
-    final TextEditingController youtubeController = TextEditingController();
-    final TextEditingController twitterController = TextEditingController();
-    final TextEditingController instagramController = TextEditingController();
-    final TextEditingController websiteController = TextEditingController();
-    final TextEditingController otherController = TextEditingController();
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.background,
@@ -111,9 +114,7 @@ class updateSocailAccount extends StatelessWidget {
                           ),
                         ),
                       ),
-                      onPressed: () {
-                        // Handle button 1 click
-                      },
+                      onPressed: () => updateSocialMedia(context),
                       child: MyText(
                         text: 'Update',
                         color: Theme.of(context).colorScheme.background,
@@ -161,5 +162,55 @@ class updateSocailAccount extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future<void> updateSocialMedia(BuildContext context) async {
+    // Profile Update
+    ProfileUpdate profileUpdate = ProfileUpdate();
+
+    //Provider
+    UserProvider userProvider =
+        Provider.of<UserProvider>(context, listen: false);
+
+    //passing controller into the provider
+    String facebook = facebookController.text;
+    userProvider.setFacebook(facebook);
+    String youtube = youtubeController.text;
+    userProvider.setYoutube(youtube);
+    String twitter = twitterController.text;
+    userProvider.setTwitter(twitter);
+    String instagram = instagramController.text;
+    userProvider.setInstagram(instagram);
+    String website = websiteController.text;
+    userProvider.setWebsite(website);
+    String other = otherController.text;
+    userProvider.setOther(other);
+
+    //Passign Provider Values in the Update Profile API
+    bool success = await profileUpdate.updateProfile(
+      name: userProvider.name,
+      phoneNo: userProvider.phoneNo,
+      gender: userProvider.usergender,
+      language: userProvider.userlanguage,
+      country: userProvider.userCountry,
+      address: userProvider.userAddress,
+      state: userProvider.userState,
+      zipCode: userProvider.userZipcode,
+      about: userProvider.aboutMe,
+      facebook: facebookController.text,
+      youtube: youtubeController.text,
+      twitter: twitterController.text,
+      instagram: instagramController.text,
+      website: websiteController.text,
+      other: otherController.text,
+      profession: userProvider.proffesion,
+    );
+
+    if (success) {
+      showSnackBar(context, 'Abdout Me  Successfully');
+      Navigator.pop(context);
+    } else {
+      showSnackBar(context, 'Failed to Update About Me');
+    }
   }
 }
