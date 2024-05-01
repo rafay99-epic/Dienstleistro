@@ -1,5 +1,6 @@
 // ignore_for_file: avoid_print, use_build_context_synchronously
 import 'package:dienstleisto/backend/class/education.dart';
+import 'package:dienstleisto/backend/class/language_class.dart';
 import 'package:dienstleisto/backend/class/skill_class.dart';
 import 'package:dienstleisto/backend/provider/provider.dart';
 import 'package:flutter/material.dart';
@@ -41,22 +42,16 @@ class GetProfileAPI {
         List<dynamic> skillsJson = userProfile['skills'] ?? [];
         userProvider.setSkills(
             skillsJson.map((json) => UserSkill.fromJson(json)).toList());
-        print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-        print('skills: ${userProfile['skills']}');
-        print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 
         //user education
         List<dynamic> educationsJson = userProfile['educations'] ?? [];
         userProvider.setEducations(educationsJson.map((json) {
           UserEducation education = UserEducation.fromJson(json);
-          print(
-              "0000000000000000000000000000000000000000000000000000000000000000000000000000000000000");
-          print(
-              'Education: ${education.title}, ${education.type}, ${education.startYear} - ${education.endYear}');
-          print(
-              "0000000000000000000000000000000000000000000000000000000000000000000000000000000000000");
           return education;
         }).toList());
+        List<dynamic> languagesJson = userProfile['languages'] ?? [];
+        userProvider.setLanguages(
+            languagesJson.map((json) => UserLanguage.fromJson(json)).toList());
 
         // userProvider
         //     .setLanguages(List<String>.from(userProfile['languages'] ?? []));
