@@ -1,4 +1,5 @@
 import 'package:dienstleisto/backend/class/education.dart';
+import 'package:dienstleisto/backend/class/skill_class.dart';
 import 'package:flutter/foundation.dart';
 
 class UserProvider with ChangeNotifier {
@@ -76,7 +77,7 @@ class UserProvider with ChangeNotifier {
   String _usergender = '';
   String _youtube = '';
   List<String> _languages = [];
-  List<String> _skills = [];
+  List<UserSkill> _skills = [];
   List<UserEducation> _educations = [];
   List<String> _experiences = [];
   List<String> _awards = [];
@@ -102,7 +103,8 @@ class UserProvider with ChangeNotifier {
   String get youtube => _youtube;
 
   List<String> get languages => _languages;
-  List<String> get skills => _skills;
+  List<UserSkill> get skills => _skills;
+
   List<UserEducation> get educations => _educations;
   List<String> get experiences => _experiences;
   List<String> get awards => _awards;
@@ -199,7 +201,7 @@ class UserProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void setSkills(List<String> value) {
+  void setSkills(List<UserSkill> value) {
     _skills = value;
     notifyListeners();
   }

@@ -1,5 +1,6 @@
 // ignore_for_file: avoid_print, use_build_context_synchronously
 import 'package:dienstleisto/backend/class/education.dart';
+import 'package:dienstleisto/backend/class/skill_class.dart';
 import 'package:dienstleisto/backend/provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -37,13 +38,14 @@ class GetProfileAPI {
         userProvider.setUsergender(userProfile['gender'] ?? '');
         userProvider.setYoutube(userProfile['youtube'] ?? '');
 
-        userProvider
-            .setLanguages(List<String>.from(userProfile['languages'] ?? []));
-        userProvider.setSkills(List<String>.from(userProfile['skills'] ?? []));
-        // List<dynamic> educationsJson = userProfile['educations'] ?? [];
-        // userProvider.setEducations(educationsJson
-        //     .map((json) => UserEducation.fromJson(json))
-        //     .toList());
+        List<dynamic> skillsJson = userProfile['skills'] ?? [];
+        userProvider.setSkills(
+            skillsJson.map((json) => UserSkill.fromJson(json)).toList());
+        print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+        print('skills: ${userProfile['skills']}');
+        print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+
+        //user education
         List<dynamic> educationsJson = userProfile['educations'] ?? [];
         userProvider.setEducations(educationsJson.map((json) {
           UserEducation education = UserEducation.fromJson(json);
@@ -56,13 +58,15 @@ class GetProfileAPI {
           return education;
         }).toList());
 
-        userProvider.setExperiences(
-            List<String>.from(userProfile['experiences'] ?? []));
-        userProvider.setAwards(List<String>.from(userProfile['awards'] ?? []));
-        userProvider
-            .setServices(List<String>.from(userProfile['services'] ?? []));
-        userProvider
-            .setFollowers(List<String>.from(userProfile['followers'] ?? []));
+        // userProvider
+        //     .setLanguages(List<String>.from(userProfile['languages'] ?? []));
+        // userProvider.setExperiences(
+        //     List<String>.from(userProfile['experiences'] ?? []));
+        // userProvider.setAwards(List<String>.from(userProfile['awards'] ?? []));
+        // userProvider
+        //     .setServices(List<String>.from(userProfile['services'] ?? []));
+        // userProvider
+        //     .setFollowers(List<String>.from(userProfile['followers'] ?? []));
 
         return true;
       } else {
