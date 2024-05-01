@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 // ignore_for_file: library_private_types_in_public_api
 
+import 'package:dienstleisto/backend/class/language_class.dart';
 import 'package:flutter/material.dart';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -27,6 +28,8 @@ class AboutMeTemplate extends StatefulWidget {
   final String websiteLink;
   final String otherLink;
   final String youtubeLink;
+
+  final List<UserLanguage> languages;
   const AboutMeTemplate({
     Key? key,
     required this.name,
@@ -42,6 +45,7 @@ class AboutMeTemplate extends StatefulWidget {
     required this.websiteLink,
     required this.otherLink,
     required this.youtubeLink,
+    required this.languages,
   }) : super(key: key);
 
   @override
@@ -423,6 +427,79 @@ class _AboutMeTemplateState extends State<AboutMeTemplate> {
               ),
               const SizedBox(height: 10),
               // My Resume heading and edit clip button
+
+              // Column(
+              //   children: widget.languages.map((UserLanguage language) {
+              //     return ListTile(
+              //       title: Text(language.name),
+              //       subtitle: Text('Percentage: ${language.percentage}%'),
+              //     );
+              //   }).toList(),
+              // ),
+
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  MyText(
+                    text: 'Languages',
+                    fontFamily: "ABeeZee",
+                    fontWeight: FontWeight.w400,
+                    fontStyle: FontStyle.italic,
+                    fontSize: 17,
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+                  Container(
+                    padding: const EdgeInsets.all(8.0),
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey),
+                      borderRadius: BorderRadius.circular(20.0),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        const Icon(Icons.edit),
+                        const SizedBox(width: 4.0),
+                        MyText(
+                          text: 'Edit',
+                          fontFamily: "ABeeZee",
+                          fontWeight: FontWeight.w400,
+                          fontStyle: FontStyle.italic,
+                          fontSize: 13,
+                          color: Theme.of(context).colorScheme.primary,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 10),
+              Column(
+                children: widget.languages.map((UserLanguage language) {
+                  return Card(
+                    color: Theme.of(context).colorScheme.background,
+                    child: ListTile(
+                      leading: Icon(
+                        Icons.language,
+                        color: Theme.of(context).colorScheme.secondary,
+                      ),
+                      title: MyText(
+                        text: language.name,
+                        fontFamily: "ABeeZee",
+                        fontWeight: FontWeight.w400,
+                        fontSize: 15,
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                      subtitle: MyText(
+                        text: 'Percentage: ${language.percentage}%',
+                        fontFamily: "ABeeZee",
+                        fontWeight: FontWeight.w400,
+                        fontSize: 13,
+                        color: Theme.of(context).colorScheme.inversePrimary,
+                      ),
+                    ),
+                  );
+                }).toList(),
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[

@@ -28,7 +28,6 @@ class GetProfileAPI {
         userProvider.setUserAddress(userProfile['address'] ?? '');
         userProvider.setUserCountry(userProfile['country'] ?? '');
         userProvider.setUserState(userProfile['state'] ?? '');
-        userProvider.setUserLanguage(userProfile['language'] ?? '');
         userProvider.setUserZipcode(userProfile['zipcode'] ?? '');
         userProvider.setAboutMe(userProfile['about'] ?? '');
         userProvider.setFacebook(userProfile['facebook'] ?? '');
@@ -57,16 +56,6 @@ class GetProfileAPI {
         List<dynamic> awardsJson = userProfile['awards'] ?? [];
         userProvider.setAwards(
             awardsJson.map((json) => UserAward.fromJson(json)).toList());
-
-        // userProvider
-        //     .setLanguages(List<String>.from(userProfile['languages'] ?? []));
-        // userProvider.setExperiences(
-        //     List<String>.from(userProfile['experiences'] ?? []));
-        // userProvider.setAwards(List<String>.from(userProfile['awards'] ?? []));
-        // userProvider
-        //     .setServices(List<String>.from(userProfile['services'] ?? []));
-        // userProvider
-        //     .setFollowers(List<String>.from(userProfile['followers'] ?? []));
 
         return true;
       } else {

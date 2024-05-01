@@ -136,6 +136,7 @@ class _AboutMeState extends State<AboutMe> {
         websiteLink: websiteLink,
         otherLink: otherLink,
         youtubeLink: youtubeLink,
+        languages: userProvider.languages,
       ),
     );
   }

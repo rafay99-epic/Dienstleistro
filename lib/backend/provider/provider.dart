@@ -81,12 +81,11 @@ class UserProvider with ChangeNotifier {
   List<UserLanguage> _languages = [];
   List<UserSkill> _skills = [];
   List<UserEducation> _educations = [];
-  List<UserAward> _awards = [];
 
   List<String> _experiences = [];
-
   List<String> _services = [];
   List<String> _followers = [];
+  List<UserAward> _awards = [];
 
   String get name => _name;
   String get profilePic => _profilePic;
@@ -106,11 +105,10 @@ class UserProvider with ChangeNotifier {
   String get usergender => _usergender;
   String get youtube => _youtube;
 
+  List<UserAward> get awards => _awards;
   List<UserLanguage> get languages => _languages;
   List<UserSkill> get skills => _skills;
   List<UserEducation> get educations => _educations;
-
-  List<UserAward> get awards => _awards;
 
   List<String> get experiences => _experiences;
 
