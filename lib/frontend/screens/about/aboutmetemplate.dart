@@ -1,9 +1,19 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 // ignore_for_file: library_private_types_in_public_api
 
-import 'package:dienstleisto/frontend/widgets/choiceChip.dart';
-import 'package:dienstleisto/frontend/widgets/textStyle.dart';
+import 'package:dienstleisto/backend/class/education.dart';
+import 'package:dienstleisto/backend/class/language_class.dart';
+import 'package:dienstleisto/frontend/screens/about/setting/language/update_language.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_animation_progress_bar/flutter_animation_progress_bar.dart';
+
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:page_transition/page_transition.dart';
+
+import 'package:dienstleisto/constants/widgets/social.dart';
+import 'package:dienstleisto/constants/widgets/textStyle.dart';
+import 'package:dienstleisto/frontend/screens/about/setting/aboutme/edit_aboutme.dart';
+import 'package:dienstleisto/frontend/screens/about/setting/contactMe/edit_contactme.dart';
+import 'package:dienstleisto/frontend/screens/about/setting/social/edit_social.dart';
 
 class AboutMeTemplate extends StatefulWidget {
   final String name;
@@ -12,12 +22,19 @@ class AboutMeTemplate extends StatefulWidget {
   final String aboutMeText;
   final String mobilePhone;
   final String emailAddress;
-  final int profileComplete;
-  final String address;
-  final List<String> skills;
 
+  final String address;
+  final String facebookLink;
+  final String twitterLink;
+  final String instagramLink;
+  final String websiteLink;
+  final String otherLink;
+  final String youtubeLink;
+
+  final List<UserLanguage> languages;
+  final List<UserEducation> usereducation;
   const AboutMeTemplate({
-    super.key,
+    Key? key,
     required this.name,
     required this.jobTitle,
     required this.profileImageUrl,
@@ -25,9 +42,15 @@ class AboutMeTemplate extends StatefulWidget {
     required this.mobilePhone,
     required this.emailAddress,
     required this.address,
-    required this.skills,
-    required this.profileComplete,
-  });
+    required this.facebookLink,
+    required this.twitterLink,
+    required this.instagramLink,
+    required this.websiteLink,
+    required this.otherLink,
+    required this.youtubeLink,
+    required this.languages,
+    required this.usereducation,
+  }) : super(key: key);
 
   @override
   _AboutMeTemplateState createState() => _AboutMeTemplateState();
@@ -42,13 +65,11 @@ class _AboutMeTemplateState extends State<AboutMeTemplate> {
           padding: const EdgeInsets.all(20.0),
           child: Column(
             children: <Widget>[
-              //Profile Image and Name plus job title
               Row(
                 children: <Widget>[
                   CircleAvatar(
-                    radius: 43, // 86/2
-                    backgroundImage: NetworkImage(
-                        widget.profileImageUrl), // Replace with your image URL
+                    radius: 43,
+                    backgroundImage: NetworkImage(widget.profileImageUrl),
                   ),
                   const SizedBox(width: 10),
                   Column(
@@ -75,29 +96,7 @@ class _AboutMeTemplateState extends State<AboutMeTemplate> {
                 ],
               ),
               const SizedBox(height: 20),
-              //Progress bar commpletetion
-              Align(
-                alignment: Alignment.centerLeft,
-                child: MyText(
-                  text: 'Profile completeness ${widget.profileComplete}%',
-                  fontSize: 15,
-                  fontWeight: FontWeight.w400,
-                  fontFamily: "ABeeZee",
-                  color: Theme.of(context).colorScheme.primary,
-                  fontStyle: FontStyle.normal,
-                  textAlign: TextAlign.left,
-                ),
-              ),
-              FAProgressBar(
-                currentValue: widget.profileComplete.toDouble(),
-                backgroundColor: Colors.grey.shade300,
-                progressColor: Theme.of(context).colorScheme.secondary,
-                maxValue: 100,
-                animatedDuration: const Duration(seconds: 2),
-                direction: Axis.horizontal,
-                size: 5,
-              ),
-              const SizedBox(height: 15),
+
               //about me heading and clip edit button
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -110,28 +109,39 @@ class _AboutMeTemplateState extends State<AboutMeTemplate> {
                     fontSize: 17,
                     color: Theme.of(context).colorScheme.primary,
                   ),
-                  Container(
-                    padding: const EdgeInsets.all(8.0), // Add some padding
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey),
-                      borderRadius: BorderRadius.circular(
-                          20.0), // Make the border rounded
-                    ),
-                    child: Row(
-                      mainAxisAlignment:
-                          MainAxisAlignment.center, // Center the text and icon
-                      children: <Widget>[
-                        const Icon(Icons.edit),
-                        const SizedBox(width: 4.0),
-                        MyText(
-                          text: 'Edit',
-                          fontFamily: "ABeeZee",
-                          fontWeight: FontWeight.w400,
-                          fontStyle: FontStyle.italic,
-                          fontSize: 13,
-                          color: Theme.of(context).colorScheme.primary,
+                  InkWell(
+                    onTap: () {
+                      Navigator.of(context).push(
+                        PageTransition(
+                          type: PageTransitionType.rightToLeftWithFade,
+                          child: const EditAboutMe(),
+                          duration: const Duration(milliseconds: 500),
                         ),
-                      ],
+                      );
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.all(8.0), // Add some padding
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.grey),
+                        borderRadius: BorderRadius.circular(
+                            20.0), // Make the border rounded
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment
+                            .center, // Center the text and icon
+                        children: <Widget>[
+                          const Icon(Icons.edit),
+                          const SizedBox(width: 4.0),
+                          MyText(
+                            text: 'Edit',
+                            fontFamily: "ABeeZee",
+                            fontWeight: FontWeight.w400,
+                            fontStyle: FontStyle.italic,
+                            fontSize: 13,
+                            color: Theme.of(context).colorScheme.primary,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ],
@@ -161,37 +171,44 @@ class _AboutMeTemplateState extends State<AboutMeTemplate> {
                     fontSize: 17,
                     color: Theme.of(context).colorScheme.primary,
                   ),
-                  Container(
-                    padding: const EdgeInsets.all(8.0), // Add some padding
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey),
-                      borderRadius: BorderRadius.circular(
-                          20.0), // Make the border rounded
-                    ),
-                    child: Row(
-                      mainAxisAlignment:
-                          MainAxisAlignment.center, // Center the text and icon
-                      children: <Widget>[
-                        const Icon(Icons.edit),
-                        const SizedBox(width: 4.0),
-                        MyText(
-                          text: 'Edit',
-                          fontFamily: "ABeeZee",
-                          fontWeight: FontWeight.w400,
-                          fontStyle: FontStyle.italic,
-                          fontSize: 13,
-                          color: Theme.of(context).colorScheme.primary,
+                  InkWell(
+                    onTap: () {
+                      Navigator.of(context).push(
+                        PageTransition(
+                          type: PageTransitionType.rightToLeftWithFade,
+                          child: const UpdateContactInformation(),
+                          duration: const Duration(milliseconds: 500),
                         ),
-                      ],
+                      );
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.all(8.0), // Add some padding
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.grey),
+                        borderRadius: BorderRadius.circular(
+                            20.0), // Make the border rounded
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment
+                            .center, // Center the text and icon
+                        children: <Widget>[
+                          const Icon(Icons.edit),
+                          const SizedBox(width: 4.0),
+                          MyText(
+                            text: 'Edit',
+                            fontFamily: "ABeeZee",
+                            fontWeight: FontWeight.w400,
+                            fontStyle: FontStyle.italic,
+                            fontSize: 13,
+                            color: Theme.of(context).colorScheme.primary,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ],
               ),
-              // three contacts
 
-              // 1. Phone  Number
-              // 2. Email
-              // 3. Address
               Column(
                 children: <Widget>[
                   ListTile(
@@ -213,7 +230,7 @@ class _AboutMeTemplateState extends State<AboutMeTemplate> {
                       fontSize: 15,
                       color: Theme.of(context).colorScheme.primary,
                       fontStyle: FontStyle.italic,
-                    ), // Replace with your mobile phone number
+                    ),
                   ),
                   ListTile(
                     leading: Icon(
@@ -259,12 +276,94 @@ class _AboutMeTemplateState extends State<AboutMeTemplate> {
                   ),
                 ],
               ),
-              // Skill heading and edit clip button
+
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   MyText(
-                    text: 'Skills',
+                    text: 'Socials',
+                    fontFamily: "ABeeZee",
+                    fontWeight: FontWeight.w400,
+                    fontStyle: FontStyle.italic,
+                    fontSize: 17,
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+                  InkWell(
+                    onTap: () {
+                      Navigator.of(context).push(
+                        PageTransition(
+                          type: PageTransitionType.rightToLeftWithFade,
+                          child: updateSocailAccount(),
+                          duration: const Duration(milliseconds: 500),
+                        ),
+                      );
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.all(8.0),
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.grey),
+                        borderRadius: BorderRadius.circular(20.0),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          const Icon(Icons.edit),
+                          const SizedBox(width: 4.0),
+                          MyText(
+                            text: 'Edit',
+                            fontFamily: "ABeeZee",
+                            fontWeight: FontWeight.w400,
+                            fontStyle: FontStyle.italic,
+                            fontSize: 13,
+                            color: Theme.of(context).colorScheme.primary,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  SocialMediaButton(
+                    icon: FontAwesomeIcons.facebook,
+                    url: widget.facebookLink,
+                    color: Theme.of(context).colorScheme.secondary,
+                  ),
+                  SocialMediaButton(
+                    icon: FontAwesomeIcons.youtube,
+                    url: widget.youtubeLink,
+                    color: Theme.of(context).colorScheme.secondary,
+                  ),
+                  SocialMediaButton(
+                    icon: FontAwesomeIcons.twitter,
+                    url: widget.twitterLink,
+                    color: Theme.of(context).colorScheme.secondary,
+                  ),
+                  SocialMediaButton(
+                    icon: FontAwesomeIcons.instagram,
+                    url: widget.instagramLink,
+                    color: Theme.of(context).colorScheme.secondary,
+                  ),
+                  SocialMediaButton(
+                    icon: FontAwesomeIcons.globe,
+                    url: widget.websiteLink,
+                    color: Theme.of(context).colorScheme.secondary,
+                  ),
+                  SocialMediaButton(
+                    icon: FontAwesomeIcons.plus,
+                    url: widget.otherLink,
+                    color: Theme.of(context).colorScheme.secondary,
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  MyText(
+                    text: 'My Education',
                     fontFamily: "ABeeZee",
                     fontWeight: FontWeight.w400,
                     fontStyle: FontStyle.italic,
@@ -296,16 +395,128 @@ class _AboutMeTemplateState extends State<AboutMeTemplate> {
                 ],
               ),
               const SizedBox(height: 10),
-              // List of skills
-              Wrap(
-                spacing: 4.0,
-                runSpacing: 4.0,
-                children: widget.skills
-                    .map((skill) => CustomChoiceChip(label: skill))
-                    .toList(),
+              Column(
+                children: widget.usereducation.map((UserEducation education) {
+                  return Card(
+                    color: Theme.of(context).colorScheme.background,
+                    child: ListTile(
+                      leading: Icon(
+                        Icons.school,
+                        color: Theme.of(context).colorScheme.secondary,
+                      ),
+                      title: MyText(
+                        text: education.title,
+                        fontFamily: "ABeeZee",
+                        fontWeight: FontWeight.w400,
+                        fontSize: 15,
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                      subtitle: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          MyText(
+                            text: education.summary,
+                            fontFamily: "ABeeZee",
+                            fontWeight: FontWeight.w400,
+                            fontSize: 13,
+                            color: Theme.of(context).colorScheme.inversePrimary,
+                          ),
+                          MyText(
+                            text: 'Start Date: ${education.startYear}',
+                            fontFamily: "ABeeZee",
+                            fontWeight: FontWeight.w400,
+                            fontSize: 13,
+                            color: Theme.of(context).colorScheme.inversePrimary,
+                          ),
+                          MyText(
+                            text: 'End Date: ${education.endYear}',
+                            fontFamily: "ABeeZee",
+                            fontWeight: FontWeight.w400,
+                            fontSize: 13,
+                            color: Theme.of(context).colorScheme.inversePrimary,
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                }).toList(),
               ),
+              const SizedBox(height: 10),
 
-              // My Resume heading and edit clip button
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  MyText(
+                    text: 'Languages',
+                    fontFamily: "ABeeZee",
+                    fontWeight: FontWeight.w400,
+                    fontStyle: FontStyle.italic,
+                    fontSize: 17,
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+                  InkWell(
+                    onTap: () {
+                      Navigator.of(context).push(
+                        PageTransition(
+                          type: PageTransitionType.rightToLeftWithFade,
+                          child: const UpdateLanguagesScreen(),
+                          duration: const Duration(milliseconds: 500),
+                        ),
+                      );
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.all(8.0),
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.grey),
+                        borderRadius: BorderRadius.circular(20.0),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          const Icon(Icons.edit),
+                          const SizedBox(width: 4.0),
+                          MyText(
+                            text: 'Edit',
+                            fontFamily: "ABeeZee",
+                            fontWeight: FontWeight.w400,
+                            fontStyle: FontStyle.italic,
+                            fontSize: 13,
+                            color: Theme.of(context).colorScheme.primary,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 10),
+              Column(
+                children: widget.languages.map((UserLanguage language) {
+                  return Card(
+                    color: Theme.of(context).colorScheme.background,
+                    child: ListTile(
+                      leading: Icon(
+                        Icons.language,
+                        color: Theme.of(context).colorScheme.secondary,
+                      ),
+                      title: MyText(
+                        text: language.name,
+                        fontFamily: "ABeeZee",
+                        fontWeight: FontWeight.w400,
+                        fontSize: 15,
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                      subtitle: MyText(
+                        text: 'Percentage: ${language.percentage}%',
+                        fontFamily: "ABeeZee",
+                        fontWeight: FontWeight.w400,
+                        fontSize: 13,
+                        color: Theme.of(context).colorScheme.inversePrimary,
+                      ),
+                    ),
+                  );
+                }).toList(),
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[

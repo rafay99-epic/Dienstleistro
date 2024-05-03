@@ -1,11 +1,11 @@
 // ignore_for_file: library_private_types_in_public_api
 
-import 'package:dienstleisto/frontend/widgets/button.dart';
-import 'package:dienstleisto/frontend/widgets/choiceChip.dart';
-import 'package:dienstleisto/frontend/widgets/jobtype.dart';
-import 'package:dienstleisto/frontend/widgets/rating.dart';
-import 'package:dienstleisto/frontend/widgets/scablecontainer.dart';
-import 'package:dienstleisto/frontend/widgets/textStyle.dart';
+import 'package:dienstleisto/constants/widgets/button.dart';
+import 'package:dienstleisto/constants/widgets/choiceChip.dart';
+import 'package:dienstleisto/constants/widgets/jobtype.dart';
+import 'package:dienstleisto/constants/widgets/rating.dart';
+import 'package:dienstleisto/constants/widgets/scablecontainer.dart';
+import 'package:dienstleisto/constants/widgets/textStyle.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_xlider/flutter_xlider.dart';
 

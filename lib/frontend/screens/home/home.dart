@@ -1,8 +1,12 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'package:dienstleisto/backend/api/profile/api_get_profile.dart';
+import 'package:dienstleisto/backend/provider/provider.dart';
 import 'package:dienstleisto/frontend/screens/home/home1Tab.dart';
 import 'package:dienstleisto/frontend/screens/home/search.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -13,11 +17,32 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> with TickerProviderStateMixin {
   TabController? _tabController;
+  final GetProfileAPI getprofileAPI = GetProfileAPI();
 
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 3, vsync: this);
+    //fetching user Profile
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      int id = prefs.getInt('User_id_memory') ?? 0;
+      UserProvider userProvider =
+          Provider.of<UserProvider>(context, listen: false);
+
+      getprofileAPI.getUserProfile(id, context, userProvider);
+      print("--------------------------------");
+      print('User id: $id');
+      print("--------------------------------");
+      print("");
+
+      // print("--------------------------------");
+      // print('User Language');
+      // print("--------------------------------");
+      // profileAPI.getUserLanguages(id);
+      //getting user education and there is an issue, not fetching and issue with the API.
+      // profileAPI.getUserEducation(id);
+    });
   }
 
   @override
@@ -45,30 +70,37 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                     padding: const EdgeInsets.only(left: 20, right: 20),
                     child: Align(
                       alignment: Alignment.centerLeft,
-                      child: RichText(
-                        text: TextSpan(
-                          children: <TextSpan>[
-                            TextSpan(
-                              text: 'Find your dream jon in',
-                              style: TextStyle(
-                                fontSize: 28,
-                                fontWeight: FontWeight.w400,
-                                color: Theme.of(context).colorScheme.background,
-                                fontStyle: FontStyle.italic,
-                                fontFamily: "ABeeZee",
-                              ),
+                      child: Center(
+                        child: Align(
+                          alignment: Alignment.center,
+                          child: RichText(
+                            text: TextSpan(
+                              children: <TextSpan>[
+                                TextSpan(
+                                  text: 'Get the Perfect Workers & Projects',
+                                  style: TextStyle(
+                                    fontSize: 28,
+                                    fontWeight: FontWeight.w400,
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .background,
+                                    fontStyle: FontStyle.italic,
+                                    fontFamily: "ABeeZee",
+                                  ),
+                                ),
+                                // TextSpan(
+                                //   text: '\nSan Francisco',
+                                //   style: TextStyle(
+                                //     fontSize: 28,
+                                //     fontWeight: FontWeight.w400,
+                                //     color: Theme.of(context).colorScheme.background,
+                                //     fontStyle: FontStyle.italic,
+                                //     fontFamily: "ABeeZee",
+                                //   ),
+                                // ),
+                              ],
                             ),
-                            TextSpan(
-                              text: '\nSan Francisco',
-                              style: TextStyle(
-                                fontSize: 28,
-                                fontWeight: FontWeight.w400,
-                                color: Theme.of(context).colorScheme.background,
-                                fontStyle: FontStyle.italic,
-                                fontFamily: "ABeeZee",
-                              ),
-                            ),
-                          ],
+                          ),
                         ),
                       ),
                     ),
@@ -79,10 +111,8 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                   Padding(
                     padding: const EdgeInsets.only(left: 20, right: 20),
                     child: TextField(
-                      readOnly:
-                          true, // Make TextField read-only to ensure onTap is always triggered
+                      readOnly: true,
                       onTap: () {
-                        // Handle tap event here
                         Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -132,6 +162,8 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
               child: TabBarView(
                 controller: _tabController,
                 children: const [
+                  Tab01(),
+                  Tab01(),
                   Tab01(),
                 ],
               ),

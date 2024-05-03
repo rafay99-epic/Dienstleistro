@@ -1,9 +1,9 @@
 // ignore_for_file: library_private_types_in_public_api
 
-import 'package:dienstleisto/frontend/screens/functionality/job/apply/savedCard.dart';
+import 'package:dienstleisto/frontend/screens/jobs/apply/savedCard.dart';
 import 'package:dienstleisto/frontend/screens/home/filter.dart';
-import 'package:dienstleisto/frontend/widgets/cardSlider.dart';
-import 'package:dienstleisto/frontend/widgets/textStyle.dart';
+import 'package:dienstleisto/constants/widgets/cardSlider.dart';
+import 'package:dienstleisto/constants/widgets/textStyle.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:page_transition/page_transition.dart';
